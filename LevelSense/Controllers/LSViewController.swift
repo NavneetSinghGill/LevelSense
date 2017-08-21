@@ -40,6 +40,7 @@ class LSViewController: UIViewController {
             
             menuBarButton = UIBarButtonItem(customView: menuButton())
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
             self.navigationItem.leftBarButtonItem = menuBarButton!
             
             self.revealViewController().rearViewRevealWidth = screenWidth - 80 //80 is the width of main screens that will the seen when left menu is open
