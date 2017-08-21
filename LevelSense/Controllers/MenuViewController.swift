@@ -2,8 +2,8 @@
 //  MenuViewController.swift
 //  LevelSense
 //
-//  Created by BestPeers on 8/18/17.
-//  Copyright © 2017 BestPeers. All rights reserved.
+//  Created by Zoeb Sheikh on 8/18/17.
+//  Copyright © 2017 Zoeb Sheikh. All rights reserved.
 //
 
 import UIKit

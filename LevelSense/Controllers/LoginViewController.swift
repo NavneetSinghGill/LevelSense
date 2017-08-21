@@ -2,8 +2,8 @@
 //  LoginViewController.swift
 //  LevelSense
 //
-//  Created by BestPeers on 11/08/17.
-//  Copyright © 2017 BestPeers. All rights reserved.
+//  Created by Zoeb Sheikh on 11/08/17.
+//  Copyright © 2017 Zoeb Sheikh. All rights reserved.
 //
 
 import UIKit
@@ -37,7 +37,7 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
         }
         
         //Show Banner
-        print("message: \(message)")
+        Banner.showFailureWithTitle(title:message)
         return message.characters.count == 0
     }
     
@@ -47,6 +47,7 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
             //perform api call
             LoginRequestManager.postLoginAPICallWith(email: (emailTextField?.text)!, password: (passwordTextField?.text)!, block: { (success, response, error) in
                 if success {
+                    Banner.showSuccessWithTitle(title:"Login Successfull")
                     let sessionKey = (response as! Dictionary<String, AnyObject>)["sessionKey"]!
                     if sessionKey.boolValue! {
                         UserDefaults.standard.setValue(sessionKey, forKey: kSessionKey)

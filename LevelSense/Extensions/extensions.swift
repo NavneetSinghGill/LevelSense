@@ -2,8 +2,8 @@
 //  extensions.swift
 //  LevelSense
 //
-//  Created by Navneet on 8/21/17.
-//  Copyright © 2017 Navneet Singh. All rights reserved.
+//  Created by Zoeb Sheikh on 8/21/17.
+//  Copyright © 2017 Zoeb Sheikh. All rights reserved.
 //
 
 import Foundation
@@ -22,4 +22,16 @@ extension String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+}
+
+extension UIView {
+    @IBInspectable var borderWidth : CGFloat {
+        set {
+            layer.borderWidth = newValue
+        }
+        
+        get {
+            return layer.borderWidth
+        }
+    }
 }

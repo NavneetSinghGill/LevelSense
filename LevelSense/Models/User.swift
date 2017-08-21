@@ -2,8 +2,8 @@
 //  User.swift
 //  LevelSense
 //
-//  Created by BestPeers on 12/08/17.
-//  Copyright © 2017 BestPeers. All rights reserved.
+//  Created by Zoeb Sheikh on 12/08/17.
+//  Copyright © 2017 Zoeb Sheikh. All rights reserved.
 //
 
 import Foundation

@@ -8,5 +8,6 @@ target 'LevelSense' do
   # Pods for LevelSense
 
 pod 'Alamofire'
+pod 'NotificationBannerSwift'
 
 end
