@@ -12,10 +12,8 @@ class LoginRequest: Request {
 
     func createLoginRequestWith(email:String, password:String) -> LoginRequest {
         
-        parameters[kUsername] = email
+        parameters[kEmail] = email
         parameters[kPassword] = password
-        parameters["grant_type"] = "password"
-        parameters["scope"] = "user"
         
         self.urlPath = kLoginApiUrl
         return self

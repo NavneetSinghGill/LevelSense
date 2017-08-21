@@ -8,16 +8,14 @@
 
 import UIKit
 
-class LoginViewController: LSViewController {
+class LoginViewController: LSViewController,UITextFieldDelegate {
+    
+    @IBOutlet weak var emailTextField: UITextField?
+    @IBOutlet weak var passwordTextField: UITextField?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //MARK: IBAction methods
@@ -28,15 +26,48 @@ class LoginViewController: LSViewController {
     
     //MARK: Private methods
 
+    func areEntriesValid() -> Bool {
+        var message: String! = ""
+        if emailTextField?.text?.trim().characters.count == 0 {
+            message = "Please enter email"
+        } else if (emailTextField?.text?.trim().isValidEmail())! {
+            message = "Please enter a valid email"
+        } else if passwordTextField?.text?.characters.count == 0 {
+            message = "Please enter password"
+        }
+        
+        //Show Banner
+        print("message: \(message)")
+        return message.characters.count == 0
+    }
+    
     func performLogin() -> Void {
-//            showLoader()
+        if areEntriesValid() {
+            //showLoader()
             //perform api call
-            LoginRequestManager.postLoginAPICallWith(email: "sqfos18@jombay.com", password: "test123", block: { (success, response, error) in
+            LoginRequestManager.postLoginAPICallWith(email: (emailTextField?.text)!, password: (passwordTextField?.text)!, block: { (success, response, error) in
                 if success {
-                    
+                    let sessionKey = (response as! Dictionary<String, AnyObject>)["sessionKey"]!
+                    if sessionKey.boolValue! {
+                        UserDefaults.standard.setValue(sessionKey, forKey: kSessionKey)
+                        UserDefaults.standard.synchronize()
+                    }
                 }
-//                self.removeLoader()
+                //self.removeLoader()
             })
+        }
+    }
+    
+    //MARK:- TextField Delegate methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            passwordTextField?.becomeFirstResponder()
+        } else {
+            passwordTextField?.resignFirstResponder()
+            performLogin()
+        }
+        return true
     }
 
 }

@@ -46,15 +46,6 @@ class LSViewController: UIViewController {
         }
     }
     
-    func menuButton() -> UIButton {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        button.backgroundColor = .clear
-        button.setImage(UIImage(named: "menuIcon"), for: .normal)
-        button.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-        
-        return button
-    }
-    
     func setNavigationTitle(title:String) {
         if (navigationTitleLabel == nil) {
             navigationTitleLabel = UILabel()
@@ -65,6 +56,17 @@ class LSViewController: UIViewController {
         navigationTitleLabel.sizeToFit()
         
         self.navigationController?.navigationBar.topItem?.titleView = navigationTitleLabel
+    }
+    
+    //MARK: Private methods
+    
+    private func menuButton() -> UIButton {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "menuIcon"), for: .normal)
+        button.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+        
+        return button
     }
     
     //MARK:- IBAction methods

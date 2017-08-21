@@ -28,8 +28,16 @@ class LoginInterface: Interface {
     //MARK: Parsing methods
     
     func parseLoginReponse(response : Dictionary<String, Any>) {
-        User.handleLoginResponse(loginResponse: response)
-        self.interfaceBlock!(true, "", nil)
+        if response.keys.count != 0 || response["success"] != nil{
+            let success = response["success"] as! Bool
+            if success {
+                self.interfaceBlock!(success, response, nil)
+            } else {
+                self.interfaceBlock!(success, response["message"] ?? kErrorOccured, nil)
+            }
+        } else {
+            self.interfaceBlock!(false, kErrorOccured, nil)
+        }
     }
     
 }

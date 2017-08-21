@@ -16,6 +16,7 @@
 		2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */; };
 		2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */; };
 		2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */; };
+		5366569E1F4AD381003A5E71 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5366569D1F4AD381003A5E71 /* extensions.swift */; };
 		7D5CD34E198412BBCCA56C63 /* Pods_LevelSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E033AA869FE6722239659C82 /* Pods_LevelSense.framework */; };
 		F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */; };
 		F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE651F3DB03D007F14FF /* LevelSense.xcdatamodeld */; };
@@ -44,6 +45,7 @@
 		2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		2A7C55E41F46D8BC00A3CD91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5366569D1F4AD381003A5E71 /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.release.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.release.xcconfig"; sourceTree = "<group>"; };
 		D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.debug.xcconfig"; sourceTree = "<group>"; };
 		E033AA869FE6722239659C82 /* Pods_LevelSense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LevelSense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +150,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5366569C1F4AD370003A5E71 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5366569D1F4AD381003A5E71 /* extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F19DAE521F3DB03D007F14FF = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +187,7 @@
 				F19DAE8A1F3ECBED007F14FF /* Models */,
 				F19DAE771F3DD139007F14FF /* NetworkManager */,
 				F19DAE681F3DB03D007F14FF /* Assets.xcassets */,
+				5366569C1F4AD370003A5E71 /* Extensions */,
 				2A6D2AE11F46FA1D00C98631 /* CustomFiles */,
 				2A60C1BC1F45D29F003F4C9B /* Main.storyboard */,
 				2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */,
@@ -368,6 +379,7 @@
 				2A6D2AF31F4705CA00C98631 /* MyDevicesViewController.swift in Sources */,
 				F19DAE831F3DD3BC007F14FF /* LoginRequest.swift in Sources */,
 				F19DAE851F3DD46C007F14FF /* Interface.swift in Sources */,
+				5366569E1F4AD381003A5E71 /* extensions.swift in Sources */,
 				F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */,
 				F19DAE891F3DD8D0007F14FF /* NetworkHttpClient.swift in Sources */,
 				F19DAE7F1F3DD1F4007F14FF /* LoginInterface.swift in Sources */,

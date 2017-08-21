@@ -11,7 +11,7 @@ import UIKit
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-public typealias requestCompletionBlock = (_ success: Bool, _ response: Any, _ error: Error?) -> Void
+public typealias requestCompletionBlock = (_ success: Bool, _ response: Any?, _ error: Error?) -> Void
 
 //MARK: Colors
 
@@ -22,14 +22,19 @@ let screenHeight = UIScreen.main.bounds.height
 
 //MARK: Parameters
 
-let kUsername = "username"
+let kEmail = "email"
 let kPassword = "password"
 let kAccessToken = "access_token"
 let kAuthorization = "Authorization"
 
+let kSessionKey = "sessionKey"
 
 //MARK: Api URLs
+let kSuperBaseUrl = "http://104.192.5.181"
+let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/v1/"
 
-let kBaseUrl = "https://api.es-q.co"
+let kLoginApiUrl = "login"
 
-let kLoginApiUrl = "/oauth/token.json"
+
+//MARK: Constant sentences
+let kErrorOccured = "An error occured while processing your request."

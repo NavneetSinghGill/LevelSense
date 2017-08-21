@@ -17,6 +17,7 @@ class LoginRequestManager: NSObject {
             
         } else{
             //TODO: show network failure error
+            //Show Banner
         }
         
     }

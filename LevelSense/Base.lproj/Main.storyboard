@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NMa-5Y-eic">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fhv-5v-AVA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,31 +21,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="51o-EJ-ngH">
-                                <rect key="frame" x="15" y="135" width="345" height="30"/>
+                                <rect key="frame" x="15" y="155" width="345" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="fhv-5v-AVA" id="mbb-Hm-cgq"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ard-rf-wku">
-                                <rect key="frame" x="15" y="100" width="345" height="20"/>
+                                <rect key="frame" x="15" y="120" width="345" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.43137254901960786" blue="0.74509803921568629" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sO9-ze-IFs">
-                                <rect key="frame" x="15" y="220" width="345" height="30"/>
+                                <rect key="frame" x="15" y="240" width="345" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="fhv-5v-AVA" id="dWf-el-6k8"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqs-Wy-OHW">
-                                <rect key="frame" x="15" y="185" width="345" height="20"/>
+                                <rect key="frame" x="15" y="205" width="345" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4v-tH-HKS">
-                                <rect key="frame" x="15" y="350" width="345" height="35"/>
+                                <rect key="frame" x="15" y="370" width="345" height="35"/>
                                 <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                 <state key="normal" title="Login"/>
@@ -63,7 +68,7 @@
                             <constraint firstItem="Sqs-Wy-OHW" firstAttribute="leading" secondItem="ard-rf-wku" secondAttribute="leading" id="EPK-rs-HpH"/>
                             <constraint firstItem="h4v-tH-HKS" firstAttribute="centerX" secondItem="9J9-Oa-V5X" secondAttribute="centerX" id="Gte-gj-LI0"/>
                             <constraint firstItem="51o-EJ-ngH" firstAttribute="top" secondItem="ard-rf-wku" secondAttribute="bottom" constant="15" id="Ydx-rC-wgc"/>
-                            <constraint firstItem="ard-rf-wku" firstAttribute="top" secondItem="yeK-E8-RTk" secondAttribute="bottom" constant="80" id="hFY-ch-fd8"/>
+                            <constraint firstItem="ard-rf-wku" firstAttribute="top" secondItem="yeK-E8-RTk" secondAttribute="bottom" constant="100" id="hFY-ch-fd8"/>
                             <constraint firstItem="sO9-ze-IFs" firstAttribute="top" secondItem="Sqs-Wy-OHW" secondAttribute="bottom" constant="15" id="igR-A6-Aik"/>
                             <constraint firstItem="sO9-ze-IFs" firstAttribute="leading" secondItem="ard-rf-wku" secondAttribute="leading" id="jML-SP-gSz"/>
                             <constraint firstItem="h4v-tH-HKS" firstAttribute="width" secondItem="sO9-ze-IFs" secondAttribute="width" id="jQe-TZ-HsO"/>
@@ -74,6 +79,10 @@
                             <constraint firstItem="Sqs-Wy-OHW" firstAttribute="top" secondItem="51o-EJ-ngH" secondAttribute="bottom" constant="20" id="ySh-eg-SI9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="51o-EJ-ngH" id="tUI-Z9-JYf"/>
+                        <outlet property="passwordTextField" destination="sO9-ze-IFs" id="Yiu-gH-hgw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTE-a2-gNl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
