@@ -16,8 +16,8 @@ class LoginRequestManager: NSObject {
             LoginInterface().performLoginWith(request: LoginRequest().createLoginRequestWith(email: email, password: password), withCompletionBlock: block)
             
         } else{
-            //TODO: show network failure error
-            //Show Banner
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
         }
         
     }

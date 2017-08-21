@@ -43,7 +43,8 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
     
     func performLogin() -> Void {
         if areEntriesValid() {
-            //showLoader()
+            
+            startAnimating()
             //perform api call
             LoginRequestManager.postLoginAPICallWith(email: (emailTextField?.text)!, password: (passwordTextField?.text)!, block: { (success, response, error) in
                 if success {
@@ -54,7 +55,7 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
                         UserDefaults.standard.synchronize()
                     }
                 }
-                //self.removeLoader()
+                self.stopAnimating()
             })
         }
     }

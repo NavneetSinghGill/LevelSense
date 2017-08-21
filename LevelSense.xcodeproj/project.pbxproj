@@ -21,6 +21,7 @@
 		536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A51F4AE39F003A5E71 /* SnapKit.framework */; };
 		536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */; };
 		536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536656A91F4AE3B8003A5E71 /* Banner.swift */; };
+		53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */; };
 		7D5CD34E198412BBCCA56C63 /* Pods_LevelSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E033AA869FE6722239659C82 /* Pods_LevelSense.framework */; };
 		F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */; };
 		F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE651F3DB03D007F14FF /* LevelSense.xcdatamodeld */; };
@@ -54,6 +55,7 @@
 		536656A51F4AE39F003A5E71 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/MarqueeLabel/MarqueeLabel.framework"; sourceTree = "<group>"; };
 		536656A91F4AE3B8003A5E71 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/NVActivityIndicatorView/NVActivityIndicatorView.framework"; sourceTree = "<group>"; };
 		BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.release.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.release.xcconfig"; sourceTree = "<group>"; };
 		D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.debug.xcconfig"; sourceTree = "<group>"; };
 		E033AA869FE6722239659C82 /* Pods_LevelSense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LevelSense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */,
 				536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */,
 				536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */,
 				536656A41F4AE386003A5E71 /* NotificationBannerSwift.framework in Frameworks */,
@@ -92,6 +95,7 @@
 		07413B0771216111676D104C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */,
 				536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */,
 				536656A51F4AE39F003A5E71 /* SnapKit.framework */,
 				536656A31F4AE386003A5E71 /* NotificationBannerSwift.framework */,
@@ -372,6 +376,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
@@ -379,6 +384,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);

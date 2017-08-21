@@ -16,8 +16,9 @@
  */
 
 import UIKit
+import NVActivityIndicatorView
 
-class LSViewController: UIViewController {
+class LSViewController: UIViewController, NVActivityIndicatorViewable {
     
     var menuBarButton: UIBarButtonItem!
     var navigationTitleLabel: UILabel!
@@ -26,6 +27,8 @@ class LSViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

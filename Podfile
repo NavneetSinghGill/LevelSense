@@ -9,5 +9,6 @@ target 'LevelSense' do
 
 pod 'Alamofire'
 pod 'NotificationBannerSwift'
+pod 'NVActivityIndicatorView'
 
 end

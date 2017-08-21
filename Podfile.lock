@@ -4,18 +4,23 @@ PODS:
   - NotificationBannerSwift (1.4.2):
     - MarqueeLabel/Swift
     - SnapKit (~> 3.2)
+  - NVActivityIndicatorView (3.7.0):
+    - NVActivityIndicatorView/Presenter (= 3.7.0)
+  - NVActivityIndicatorView/Presenter (3.7.0)
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
   - Alamofire
   - NotificationBannerSwift
+  - NVActivityIndicatorView
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
   MarqueeLabel: fcd7057a779422d86589be759036f1510b08c6a0
   NotificationBannerSwift: 23be55635199b78cd34ea63f980718f85011ad73
+  NVActivityIndicatorView: d3738df7e2e476aca0ba6bf32a8c9fbcfc33d64b
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 5f0afe2b42d142323ca6fa9f01f5110293ed44ef
+PODFILE CHECKSUM: 9e57ef71d8538fef71522725c8501459e0403b2d
 
 COCOAPODS: 1.3.1

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import NVActivityIndicatorView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,10 +50,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return reachability!.isReachable
     }
 
+    
+    func setupForLoader() {
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballPulseSync
+        NVActivityIndicatorView.DEFAULT_BLOCKER_MESSAGE = "Loading.."
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        setupForLoader()
+        
         return true
     }
 

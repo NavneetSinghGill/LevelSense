@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
@@ -37,3 +38,4 @@ let kLoginApiUrl = "login"
 
 //MARK: Constant sentences
 let kErrorOccured = "An error occured while processing your request."
+let kNoNetwork = "No network available"
