@@ -33,6 +33,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         setNavigationTitle(title: "MY DEVICES")
         tableView.registerNib(withIdentifierAndNibName: "MyDevicesTableViewCell")
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 30
+        
     }
 
     //MARK:- TableView DataSource

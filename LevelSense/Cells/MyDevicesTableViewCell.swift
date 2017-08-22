@@ -11,6 +11,9 @@ import UIKit
 class MyDevicesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var deviceNameLabel: UILabel!
+    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var onlineOfflineLabel: UILabel!
+    
     @IBOutlet weak var selectionView: UIView!
 
     override func awakeFromNib() {
@@ -24,6 +27,7 @@ class MyDevicesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    //MARK:- Public methods
     func changeViewIf(isSelected:Bool) {
         if isSelected {
             UIView.animate(withDuration: kMyDevicesAnimationDuration, animations: { 

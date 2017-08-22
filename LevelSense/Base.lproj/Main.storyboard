@@ -140,7 +140,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eT9-sE-SYF" userLabel="TopSeperatorView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
-                                        <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="DNr-11-VuQ"/>
                                         </constraints>
@@ -213,6 +213,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.94117647059999998" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="LjF-6r-RzE" secondAttribute="trailing" id="1e2-kL-hGv"/>
                                     <constraint firstAttribute="trailing" secondItem="eT9-sE-SYF" secondAttribute="trailing" id="8B0-0v-qaW"/>
@@ -306,7 +307,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="O03-c4-jVN" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0ma-J1-pE6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="0ma-J1-pE6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
