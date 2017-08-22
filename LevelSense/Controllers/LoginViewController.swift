@@ -16,6 +16,8 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        emailTextField?.text = "patildipakr@gmail.com"
+        passwordTextField?.text = "Welcome123"
     }
     
     //MARK: IBAction methods
@@ -26,22 +28,24 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
     
     //MARK: Private methods
 
-    func areEntriesValid() -> Bool {
+    private func areEntriesValid() -> Bool {
         var message: String! = ""
         if emailTextField?.text?.trim().characters.count == 0 {
             message = "Please enter email"
-        } else if (emailTextField?.text?.trim().isValidEmail())! {
+        } else if !(emailTextField?.text?.trim().isValidEmail())! {
             message = "Please enter a valid email"
         } else if passwordTextField?.text?.characters.count == 0 {
             message = "Please enter password"
         }
         
         //Show Banner
-        Banner.showFailureWithTitle(title:message)
+        if message.characters.count != 0 {
+            Banner.showFailureWithTitle(title:message)
+        }
         return message.characters.count == 0
     }
     
-    func performLogin() -> Void {
+    private func performLogin() -> Void {
         if areEntriesValid() {
             
             startAnimating()
@@ -53,10 +57,23 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
                     if sessionKey.boolValue! {
                         UserDefaults.standard.setValue(sessionKey, forKey: kSessionKey)
                         UserDefaults.standard.synchronize()
+                        
+                        self.openMenuWithChilds()
                     }
                 }
                 self.stopAnimating()
             })
+        }
+    }
+    
+    private func openMenuWithChilds() {
+        let rearController = storyboard?.instantiateViewController(withIdentifier: "MenuViewController")
+        let frontController = UINavigationController.init(rootViewController: (storyboard?.instantiateViewController(withIdentifier: "MyDevicesViewController"))!)
+        
+        let swController = SWRevealViewController.init(rearViewController: rearController, frontViewController: frontController)
+        
+        DispatchQueue.main.async {
+            appDelegate.window?.rootViewController = swController
         }
     }
     
