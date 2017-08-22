@@ -15,7 +15,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var heightConstaintOfActionView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstaintOfActionView: NSLayoutConstraint!
     
-    var currentSelectedIndex:NSInteger = -1
+    var currentSelectedIndex:IndexPath = IndexPath.init(row: -1, section: 0)
     var devices: NSMutableArray!
     
     let myDevicesTableViewCellIdentifier = "MyDevicesTableViewCell"
@@ -35,7 +35,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 30
-        
+     
+        //API
+        getDevices()
     }
 
     //MARK:- TableView DataSource
@@ -47,6 +49,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: myDevicesTableViewCellIdentifier, for: indexPath) as! MyDevicesTableViewCell
         cell.deviceNameLabel.text = "assssssssas"+"\(indexPath.row)"
+        cell.changeViewIf(isSelected: indexPath.row == currentSelectedIndex.row, withAnimation: false)
         
         return cell
     }
@@ -55,32 +58,32 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if currentSelectedIndex == -1 {
+        if currentSelectedIndex.row == -1 {
             
             //Select new cell
-            currentSelectedIndex = indexPath.row
-            let cell = tableView.cellForRow(at: NSIndexPath.init(row: currentSelectedIndex, section: 0) as IndexPath) as! MyDevicesTableViewCell
-            cell.changeViewIf(isSelected: true)
+            currentSelectedIndex = indexPath
+            let cell = tableView.cellForRow(at: currentSelectedIndex) as! MyDevicesTableViewCell
+            cell.changeViewIf(isSelected: true, withAnimation: true)
             openBottomView()
             
-        } else if currentSelectedIndex == indexPath.row {
+        } else if currentSelectedIndex.row == indexPath.row {
             
             //Deselect selected cell
-            let cell = tableView.cellForRow(at: NSIndexPath.init(row: currentSelectedIndex, section: 0) as IndexPath) as! MyDevicesTableViewCell
-                cell.changeViewIf(isSelected: false)
-            currentSelectedIndex = -1
+            let cell = tableView.cellForRow(at: currentSelectedIndex) as! MyDevicesTableViewCell
+                cell.changeViewIf(isSelected: false, withAnimation: true)
+            currentSelectedIndex = IndexPath.init(row: -1, section: 0)
             closeBottomView()
             
         } else {
             
             //Deselect selected cell
-            var cell = tableView.cellForRow(at: NSIndexPath.init(row: currentSelectedIndex, section: 0) as IndexPath) as! MyDevicesTableViewCell
-            cell.changeViewIf(isSelected: false)
+            var cell = tableView.cellForRow(at: currentSelectedIndex) as? MyDevicesTableViewCell
+            cell?.changeViewIf(isSelected: false, withAnimation: true)
             
             //Select new cell
-            currentSelectedIndex = indexPath.row
-            cell = tableView.cellForRow(at: NSIndexPath.init(row: currentSelectedIndex, section: 0) as IndexPath) as! MyDevicesTableViewCell
-            cell.changeViewIf(isSelected: true)
+            currentSelectedIndex = indexPath
+            cell = tableView.cellForRow(at: currentSelectedIndex) as? MyDevicesTableViewCell
+            cell?.changeViewIf(isSelected: true, withAnimation: true)
         }
         
     }
@@ -98,6 +101,16 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         UIView.animate(withDuration: kMyDevicesAnimationDuration) {
             self.bottomConstaintOfActionView.constant = -self.heightConstaintOfActionView.constant
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    func getDevices() {
+        startAnimating()
+        UserRequestManager.getDevicesAPICallWith() { (success, response, error) in
+            if success {
+                
+            }
+            self.stopAnimating()
         }
     }
     

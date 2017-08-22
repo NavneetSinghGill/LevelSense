@@ -2,8 +2,8 @@
 //  Banner.swift
 //  LevelSense
 //
-//  Created by Navneet on 8/21/17.
-//  Copyright © 2017 Navneet Singh. All rights reserved.
+//  Created by Zoeb Sheikh on 8/21/17.
+//  Copyright © 2017 Zoeb Sheikh. All rights reserved.
 //
 
 import Foundation

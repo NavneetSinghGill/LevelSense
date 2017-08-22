@@ -16,8 +16,10 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        emailTextField?.text = "patildipakr@gmail.com"
-        passwordTextField?.text = "Welcome123"
+//        emailTextField?.text = "patildipakr@gmail.com"
+//        passwordTextField?.text = "Welcome123"
+        emailTextField?.text = "nishuk0007@gmail.com"
+        passwordTextField?.text = "123456"
     }
     
     //MARK: IBAction methods

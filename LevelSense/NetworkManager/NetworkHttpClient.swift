@@ -59,8 +59,8 @@ class NetworkHttpClient: NSObject {
     
     class func getHeader() -> Dictionary<String, Any> {
         var header: HTTPHeaders = [String : String]()
-        if User.accessToken != nil {
-            header[kAuthorization] = User.tokenType + " " + User.accessToken
+        if UserDefaults.standard.value(forKey: kSessionKey) != nil {
+            header[kSessionKey] = UserDefaults.standard.value(forKey: kSessionKey) as? String
         }
         NSLog("Header: \(header)")
         return header

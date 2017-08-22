@@ -18,6 +18,9 @@
 		2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */; };
 		53590D4D1F4C129D001F414A /* MyDevicesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */; };
 		53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */; };
+		53590D501F4C3EC5001F414A /* UserRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D4F1F4C3EC5001F414A /* UserRequestManager.swift */; };
+		53590D521F4C3F30001F414A /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D511F4C3F30001F414A /* UserRequest.swift */; };
+		53590D541F4C4164001F414A /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D531F4C4164001F414A /* UserInterface.swift */; };
 		5366569E1F4AD381003A5E71 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5366569D1F4AD381003A5E71 /* extensions.swift */; };
 		536656A41F4AE386003A5E71 /* NotificationBannerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A31F4AE386003A5E71 /* NotificationBannerSwift.framework */; };
 		536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A51F4AE39F003A5E71 /* SnapKit.framework */; };
@@ -54,6 +57,9 @@
 		2A7C55E41F46D8BC00A3CD91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesTableViewCell.swift; sourceTree = "<group>"; };
 		53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyDevicesTableViewCell.xib; sourceTree = "<group>"; };
+		53590D4F1F4C3EC5001F414A /* UserRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequestManager.swift; sourceTree = "<group>"; };
+		53590D511F4C3F30001F414A /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
+		53590D531F4C4164001F414A /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		5366569D1F4AD381003A5E71 /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		536656A31F4AE386003A5E71 /* NotificationBannerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationBannerSwift.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/NotificationBannerSwift/NotificationBannerSwift.framework"; sourceTree = "<group>"; };
 		536656A51F4AE39F003A5E71 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				F19DAE781F3DD14A007F14FF /* LoginRequestManager.swift */,
+				53590D4F1F4C3EC5001F414A /* UserRequestManager.swift */,
 				F19DAE861F3DD846007F14FF /* RealAPI.swift */,
 				F19DAE881F3DD8D0007F14FF /* NetworkHttpClient.swift */,
 				F19DAE7B1F3DD17E007F14FF /* Interfaces */,
@@ -247,6 +254,7 @@
 			children = (
 				F19DAE7C1F3DD1C3007F14FF /* Request.swift */,
 				F19DAE821F3DD3BC007F14FF /* LoginRequest.swift */,
+				53590D511F4C3F30001F414A /* UserRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 			children = (
 				F19DAE841F3DD46C007F14FF /* Interface.swift */,
 				F19DAE7E1F3DD1F4007F14FF /* LoginInterface.swift */,
+				53590D531F4C4164001F414A /* UserInterface.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -410,9 +419,11 @@
 				2A6D2AE71F46FDDD00C98631 /* LoginViewController.swift in Sources */,
 				2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */,
 				F19DAE8C1F3ECC1E007F14FF /* User.swift in Sources */,
+				53590D521F4C3F30001F414A /* UserRequest.swift in Sources */,
 				2A6D2AF31F4705CA00C98631 /* MyDevicesViewController.swift in Sources */,
 				53590D4D1F4C129D001F414A /* MyDevicesTableViewCell.swift in Sources */,
 				F19DAE831F3DD3BC007F14FF /* LoginRequest.swift in Sources */,
+				53590D501F4C3EC5001F414A /* UserRequestManager.swift in Sources */,
 				F19DAE851F3DD46C007F14FF /* Interface.swift in Sources */,
 				5366569E1F4AD381003A5E71 /* extensions.swift in Sources */,
 				F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */,
@@ -427,6 +438,7 @@
 				F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */,
 				536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */,
 				F19DAE791F3DD14A007F14FF /* LoginRequestManager.swift in Sources */,
+				53590D541F4C4164001F414A /* UserInterface.swift in Sources */,
 				2A6D2AEC1F47014700C98631 /* LSViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

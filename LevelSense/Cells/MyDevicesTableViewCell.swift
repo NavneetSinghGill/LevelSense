@@ -28,15 +28,23 @@ class MyDevicesTableViewCell: UITableViewCell {
     }
     
     //MARK:- Public methods
-    func changeViewIf(isSelected:Bool) {
-        if isSelected {
-            UIView.animate(withDuration: kMyDevicesAnimationDuration, animations: { 
-                self.selectionView.layer.backgroundColor = myDevicesCellBackgroundSelectionColor.cgColor
-            })
+    func changeViewIf(isSelected:Bool, withAnimation:Bool) {
+        if withAnimation {
+            if isSelected {
+                UIView.animate(withDuration: kMyDevicesAnimationDuration, animations: {
+                    self.selectionView.layer.backgroundColor = myDevicesCellBackgroundSelectionColor.cgColor
+                })
+            } else {
+                UIView.animate(withDuration: kMyDevicesAnimationDuration, animations: {
+                    self.selectionView.layer.backgroundColor = UIColor.white.cgColor
+                })
+            }
         } else {
-            UIView.animate(withDuration: kMyDevicesAnimationDuration, animations: {
+            if isSelected {
+                self.selectionView.layer.backgroundColor = myDevicesCellBackgroundSelectionColor.cgColor
+            } else {
                 self.selectionView.layer.backgroundColor = UIColor.white.cgColor
-            })
+            }
         }
     }
     

@@ -78,6 +78,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="deviceNameLabel" destination="sTP-G1-AfS" id="xxZ-9z-fbq"/>
+                <outlet property="onlineOfflineLabel" destination="hte-3K-lNq" id="jlg-Ve-FhT"/>
                 <outlet property="selectionView" destination="viM-se-Gsy" id="X9F-EK-YfR"/>
                 <outlet property="stateLabel" destination="lfG-eH-0he" id="bVE-Fi-jCu"/>
             </connections>
