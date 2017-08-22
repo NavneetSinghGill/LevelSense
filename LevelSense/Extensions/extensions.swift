@@ -55,3 +55,10 @@ extension UIView {
         }
     }
 }
+
+extension UITableView {
+    func registerNib(withIdentifierAndNibName: String) -> Void {
+        let nib = UINib(nibName: withIdentifierAndNibName, bundle: nil)
+        self.register(nib, forCellReuseIdentifier: withIdentifierAndNibName)
+    }
+}

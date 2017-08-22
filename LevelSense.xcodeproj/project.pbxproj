@@ -16,6 +16,8 @@
 		2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */; };
 		2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */; };
 		2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */; };
+		53590D4D1F4C129D001F414A /* MyDevicesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */; };
+		53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */; };
 		5366569E1F4AD381003A5E71 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5366569D1F4AD381003A5E71 /* extensions.swift */; };
 		536656A41F4AE386003A5E71 /* NotificationBannerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A31F4AE386003A5E71 /* NotificationBannerSwift.framework */; };
 		536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A51F4AE39F003A5E71 /* SnapKit.framework */; };
@@ -50,6 +52,8 @@
 		2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		2A7C55E41F46D8BC00A3CD91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesTableViewCell.swift; sourceTree = "<group>"; };
+		53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyDevicesTableViewCell.xib; sourceTree = "<group>"; };
 		5366569D1F4AD381003A5E71 /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		536656A31F4AE386003A5E71 /* NotificationBannerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationBannerSwift.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/NotificationBannerSwift/NotificationBannerSwift.framework"; sourceTree = "<group>"; };
 		536656A51F4AE39F003A5E71 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 			children = (
 				2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */,
 				2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */,
+				53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */,
+				53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -327,6 +333,7 @@
 				2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */,
 				F19DAE691F3DB03D007F14FF /* Assets.xcassets in Resources */,
 				2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */,
+				53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */,
 				2A60C1BE1F45D29F003F4C9B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +411,7 @@
 				2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */,
 				F19DAE8C1F3ECC1E007F14FF /* User.swift in Sources */,
 				2A6D2AF31F4705CA00C98631 /* MyDevicesViewController.swift in Sources */,
+				53590D4D1F4C129D001F414A /* MyDevicesTableViewCell.swift in Sources */,
 				F19DAE831F3DD3BC007F14FF /* LoginRequest.swift in Sources */,
 				F19DAE851F3DD46C007F14FF /* Interface.swift in Sources */,
 				5366569E1F4AD381003A5E71 /* extensions.swift in Sources */,
