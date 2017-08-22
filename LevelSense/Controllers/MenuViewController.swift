@@ -15,6 +15,11 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
     var optionNames: NSArray!
     var optionImageNames: NSArray!
     
+    var screenToShow: UIViewController!
+    var indexOfSelectedScreen: NSInteger = 0
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +30,8 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Logout"]
         optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","logout"]
     }
+    
+    //MARK:- Tableview datasource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return optionNames.count;
@@ -38,10 +45,40 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         return menuCell
     }
     
+    //MARK:- Tableview delegate methods
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let halfViewHeight = self.view.frame.size.height/2
         return (halfViewHeight/CGFloat(optionNames.count))
         //This will make tableview fit all cell to half of tableview height
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //Shouldnt open screen which is already open
+        if indexOfSelectedScreen == indexPath.row {
+            return
+        }
+        
+        switch indexPath.row {
+        case 0:
+            screenToShow = storyboard?.instantiateViewController(withIdentifier: "MyDevicesViewController")
+        case 1:
+            screenToShow = storyboard?.instantiateViewController(withIdentifier: "ClaimDeviceViewController")
+        case 2:
+            screenToShow = storyboard?.instantiateViewController(withIdentifier: "NotificationsViewController")
+        case 3:
+            screenToShow = storyboard?.instantiateViewController(withIdentifier: "PersonalInfoViewController")
+        case 4:
+            appDelegate.logout()
+        default:
+            break
+        }
+        
+        if screenToShow != nil {
+            indexOfSelectedScreen = indexPath.row
+            revealViewController().pushFrontViewController(UINavigationController.init(rootViewController: screenToShow!), animated: true)
+        }
     }
 
 }

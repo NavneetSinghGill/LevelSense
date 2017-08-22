@@ -42,6 +42,13 @@ let kLoginApiUrl = "login"
 let kGetDevices = "getDeviceList"
 
 
+//MARK: Segue identifiers
+
+let kMyDeviceSegueIdentifier = "kMyDeviceSegueIdentifier"
+let kClaimDeviceSegueIdentifier = "kClaimDeviceSegueIdentifier"
+let kNotificationsSegueIdentifier = "kNotificationsSegueIdentifier"
+let kPersonalInfoSegueIdentifier = "kPersonalInfoSegueIdentifier"
+
 //MARK: Constant sentences
 let kErrorOccured = "An error occured while processing your request."
 let kNoNetwork = "No network available"

@@ -49,21 +49,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return reachability!.isReachable
     }
+    
+    
 
     func openLoginScreenIfRequired() {
         if UserDefaults.standard.value(forKey: kSessionKey) == nil {
-            let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
-            let loginController = mainStoryBoard.instantiateViewController(withIdentifier: "LoginViewController")
-            
-            appDelegate.window?.rootViewController = loginController
+            openLoginScreen()
         }
+    }
+    
+    func openLoginScreen() {
+        let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let loginController = mainStoryBoard.instantiateViewController(withIdentifier: "LoginViewController")
+        
+        appDelegate.window?.rootViewController = loginController
+    }
+    
+    func logout() {
+        UserDefaults.standard.setValue(nil, forKey: kSessionKey)
+        
+        openLoginScreen()
     }
     
     func setupForLoader() {
         NVActivityIndicatorView.DEFAULT_TYPE = .ballPulseSync
         NVActivityIndicatorView.DEFAULT_BLOCKER_MESSAGE = "Loading.."
     }
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

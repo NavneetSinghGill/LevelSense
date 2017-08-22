@@ -11,7 +11,6 @@
 		2A6D2AE71F46FDDD00C98631 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AE61F46FDDD00C98631 /* LoginViewController.swift */; };
 		2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AE81F46FDF600C98631 /* MenuViewController.swift */; };
 		2A6D2AEC1F47014700C98631 /* LSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AEB1F47014700C98631 /* LSViewController.swift */; };
-		2A6D2AF31F4705CA00C98631 /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF21F4705CA00C98631 /* MyDevicesViewController.swift */; };
 		2A6D2AF71F47080500C98631 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF61F47080500C98631 /* SWRevealViewController.m */; };
 		2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */; };
 		2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */; };
@@ -27,6 +26,10 @@
 		536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A51F4AE39F003A5E71 /* SnapKit.framework */; };
 		536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */; };
 		536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536656A91F4AE3B8003A5E71 /* Banner.swift */; };
+		5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */; };
+		5397E76A1F4D82710060F3C7 /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */; };
+		5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */; };
+		5397E76E1F4D8EC90060F3C7 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */; };
 		53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */; };
 		7D5CD34E198412BBCCA56C63 /* Pods_LevelSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E033AA869FE6722239659C82 /* Pods_LevelSense.framework */; };
 		F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */; };
@@ -49,7 +52,6 @@
 		2A6D2AE61F46FDDD00C98631 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2A6D2AE81F46FDF600C98631 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		2A6D2AEB1F47014700C98631 /* LSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LSViewController.swift; sourceTree = "<group>"; };
-		2A6D2AF21F4705CA00C98631 /* MyDevicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyDevicesViewController.swift; path = LevelSense/Controllers/MenuChilds/MyDevicesViewController.swift; sourceTree = SOURCE_ROOT; };
 		2A6D2AF41F47080500C98631 /* LevelSense-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LevelSense-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A6D2AF51F47080500C98631 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		2A6D2AF61F47080500C98631 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -67,6 +69,10 @@
 		536656A51F4AE39F003A5E71 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/MarqueeLabel/MarqueeLabel.framework"; sourceTree = "<group>"; };
 		536656A91F4AE3B8003A5E71 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimDeviceViewController.swift; sourceTree = "<group>"; };
+		5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesViewController.swift; sourceTree = "<group>"; };
+		5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/NVActivityIndicatorView/NVActivityIndicatorView.framework"; sourceTree = "<group>"; };
 		BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.release.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.release.xcconfig"; sourceTree = "<group>"; };
 		D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,7 +139,7 @@
 				2A6D2AEB1F47014700C98631 /* LSViewController.swift */,
 				2A6D2AE61F46FDDD00C98631 /* LoginViewController.swift */,
 				2A6D2AE81F46FDF600C98631 /* MenuViewController.swift */,
-				2A6D2AED1F4703D600C98631 /* MenuChilds */,
+				5397E7641F4D82710060F3C7 /* MenuChilds */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -147,31 +153,6 @@
 				53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		2A6D2AED1F4703D600C98631 /* MenuChilds */ = {
-			isa = PBXGroup;
-			children = (
-				2A6D2AF21F4705CA00C98631 /* MyDevicesViewController.swift */,
-				2A6D2AEE1F4703D600C98631 /* MyDevices */,
-				2A6D2AEF1F4703D600C98631 /* Notifications */,
-			);
-			name = MenuChilds;
-			path = LeftmenuChilds;
-			sourceTree = "<group>";
-		};
-		2A6D2AEE1F4703D600C98631 /* MyDevices */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MyDevices;
-			sourceTree = "<group>";
-		};
-		2A6D2AEF1F4703D600C98631 /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notifications;
 			sourceTree = "<group>";
 		};
 		30891B5E28594AED7F3DA25F /* Pods */ = {
@@ -189,6 +170,17 @@
 				5366569D1F4AD381003A5E71 /* extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5397E7641F4D82710060F3C7 /* MenuChilds */ = {
+			isa = PBXGroup;
+			children = (
+				5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */,
+				5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */,
+				5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */,
+				5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */,
+			);
+			path = MenuChilds;
 			sourceTree = "<group>";
 		};
 		F19DAE521F3DB03D007F14FF = {
@@ -423,7 +415,7 @@
 				2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */,
 				F19DAE8C1F3ECC1E007F14FF /* User.swift in Sources */,
 				53590D521F4C3F30001F414A /* UserRequest.swift in Sources */,
-				2A6D2AF31F4705CA00C98631 /* MyDevicesViewController.swift in Sources */,
+				5397E76E1F4D8EC90060F3C7 /* PersonalInfoViewController.swift in Sources */,
 				53590D4D1F4C129D001F414A /* MyDevicesTableViewCell.swift in Sources */,
 				F19DAE831F3DD3BC007F14FF /* LoginRequest.swift in Sources */,
 				53590D501F4C3EC5001F414A /* UserRequestManager.swift in Sources */,
@@ -436,11 +428,14 @@
 				F19DAE811F3DD316007F14FF /* Constant.swift in Sources */,
 				2A6D2AF71F47080500C98631 /* SWRevealViewController.m in Sources */,
 				F19DAE871F3DD846007F14FF /* RealAPI.swift in Sources */,
+				5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */,
 				F19DAE761F3DCCBB007F14FF /* Reachability.swift in Sources */,
+				5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */,
 				2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */,
 				F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */,
 				536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */,
 				F19DAE791F3DD14A007F14FF /* LoginRequestManager.swift in Sources */,
+				5397E76A1F4D82710060F3C7 /* MyDevicesViewController.swift in Sources */,
 				53590D541F4C4164001F414A /* UserInterface.swift in Sources */,
 				2A6D2AEC1F47014700C98631 /* LSViewController.swift in Sources */,
 				530D61751F4C6DB300AB583F /* Device.swift in Sources */,

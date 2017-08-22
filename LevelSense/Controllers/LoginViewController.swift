@@ -20,6 +20,7 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
 //        passwordTextField?.text = "Welcome123"
         emailTextField?.text = "nishuk0007@gmail.com"
         passwordTextField?.text = "123456"
+        emailTextField?.becomeFirstResponder()
     }
     
     //MARK: IBAction methods
