@@ -28,6 +28,11 @@ class MyDevicesTableViewCell: UITableViewCell {
     }
     
     //MARK:- Public methods
+    
+    func updateUIfor(device: Device) {
+        self.deviceNameLabel.text = device.displayName
+    }
+    
     func changeViewIf(isSelected:Bool, withAnimation:Bool) {
         if withAnimation {
             if isSelected {

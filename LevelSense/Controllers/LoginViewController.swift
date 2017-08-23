@@ -55,8 +55,8 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
             LoginRequestManager.postLoginAPICallWith(email: (emailTextField?.text)!, password: (passwordTextField?.text)!, block: { (success, response, error) in
                 if success {
                     Banner.showSuccessWithTitle(title:"Login Successfull")
-                    let sessionKey = (response as! Dictionary<String, AnyObject>)["sessionKey"]!
-                    if sessionKey.boolValue! {
+                    let sessionKey = (response as! Dictionary<String, AnyObject>)["sessionKey"]
+                    if sessionKey != nil {
                         UserDefaults.standard.setValue(sessionKey, forKey: kSessionKey)
                         UserDefaults.standard.synchronize()
                         
