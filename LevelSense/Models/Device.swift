@@ -22,16 +22,6 @@ class Device: NSObject {
     var sirenState: NSInteger!
     var checkinFailCount: CheckInFailCount!
     
-    enum CheckInFailCount {
-        case Online
-        case Offline
-    }
-    
-    enum DeviceState {
-        case Normal
-        case Alarm
-    }
-    
     class func initWithDictionary(dictionary: Dictionary<String, Any>!) -> Device {
         let device = Device()
         if dictionary!["displayName"] != nil {

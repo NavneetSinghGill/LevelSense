@@ -181,9 +181,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JM0-ku-ecj" userLabel="View1">
                                         <rect key="frame" x="0.0" y="30" width="75" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1r-Ix-Dh0">
-                                                <rect key="frame" x="22" y="10" width="30" height="30"/>
-                                                <state key="normal" title="B1"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1r-Ix-Dh0">
+                                                <rect key="frame" x="14.5" y="2.5" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="45" id="GDf-I4-iki"/>
+                                                    <constraint firstAttribute="height" constant="45" id="s3o-Tz-tU6"/>
+                                                </constraints>
+                                                <state key="normal" image="deviceEdit"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -195,9 +199,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKH-tK-Ywr" userLabel="View2">
                                         <rect key="frame" x="75" y="30" width="75" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7W-aX-4AV">
-                                                <rect key="frame" x="22" y="10" width="30" height="30"/>
-                                                <state key="normal" title="B2"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7W-aX-4AV">
+                                                <rect key="frame" x="14.5" y="2.5" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="YhZ-ow-aVy"/>
+                                                    <constraint firstAttribute="width" constant="45" id="c6t-fX-x5V"/>
+                                                </constraints>
+                                                <state key="normal" image="deviceNotification"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -209,9 +217,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fx-RI-3fE" userLabel="View3">
                                         <rect key="frame" x="150" y="30" width="75" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QtB-z2-peU">
-                                                <rect key="frame" x="22" y="10" width="30" height="30"/>
-                                                <state key="normal" title="B3"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QtB-z2-peU">
+                                                <rect key="frame" x="14.5" y="2.5" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="LxA-aa-TDd"/>
+                                                    <constraint firstAttribute="width" constant="45" id="chj-EC-Qmn"/>
+                                                </constraints>
+                                                <state key="normal" image="deviceDelete"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -223,9 +235,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXf-Y4-6kE" userLabel="View4">
                                         <rect key="frame" x="225" y="30" width="75" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wCi-3A-wNn">
-                                                <rect key="frame" x="22" y="10" width="30" height="30"/>
-                                                <state key="normal" title="B4"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wCi-3A-wNn">
+                                                <rect key="frame" x="14.5" y="2.5" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="45" id="Svi-QW-TPg"/>
+                                                    <constraint firstAttribute="height" constant="45" id="T8v-4V-VfS"/>
+                                                </constraints>
+                                                <state key="normal" image="deviceGraph"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -237,9 +253,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LjF-6r-RzE" userLabel="View5">
                                         <rect key="frame" x="300" y="30" width="75" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6O9-4h-NmZ">
-                                                <rect key="frame" x="22" y="10" width="30" height="30"/>
-                                                <state key="normal" title="B5"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6O9-4h-NmZ">
+                                                <rect key="frame" x="14.5" y="2.5" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="45" id="7B1-P5-SIJ"/>
+                                                    <constraint firstAttribute="height" constant="45" id="aQY-ih-765"/>
+                                                </constraints>
+                                                <state key="normal" image="deviceAlarm"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -704,6 +724,13 @@
             <point key="canvasLocation" x="1833" y="1069"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="deviceAlarm" width="42" height="42"/>
+        <image name="deviceDelete" width="42" height="42"/>
+        <image name="deviceEdit" width="42" height="42"/>
+        <image name="deviceGraph" width="42" height="42"/>
+        <image name="deviceNotification" width="42" height="42"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="X1M-iX-uIP"/>
         <segue reference="6Ax-Uu-jST"/>

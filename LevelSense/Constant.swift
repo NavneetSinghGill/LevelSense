@@ -13,13 +13,15 @@ let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
 public typealias requestCompletionBlock = (_ success: Bool, _ response: Any?, _ error: Error?) -> Void
 
+let screenWidth = UIScreen.main.bounds.width
+let screenHeight = UIScreen.main.bounds.height
+
 //MARK: Colors
 
 let blueColor = UIColor.init(colorLiteralRed: 0, green: 110/255.0, blue: 190/255, alpha: 1.0)
 let myDevicesCellBackgroundSelectionColor = UIColor.init(colorLiteralRed: 230/255.0, green: 240/255.0, blue: 1.0, alpha: 1.0)
-
-let screenWidth = UIScreen.main.bounds.width
-let screenHeight = UIScreen.main.bounds.height
+let onlineGreen = UIColor.init(colorLiteralRed: 0, green: 200/255.0, blue: 0, alpha: 1.0)
+let offlineRed = UIColor.init(colorLiteralRed: 200/255.0, green: 0, blue: 0, alpha: 1.0)
 
 //MARK: Animation durations
 
@@ -53,3 +55,16 @@ let kPersonalInfoSegueIdentifier = "kPersonalInfoSegueIdentifier"
 //MARK: Constant sentences
 let kErrorOccured = "An error occured while processing your request."
 let kNoNetwork = "No network available"
+
+//MARK: Enums
+
+enum CheckInFailCount {
+    case Online
+    case Offline
+}
+
+enum DeviceState {
+    case Normal
+    case Alarm
+}
+

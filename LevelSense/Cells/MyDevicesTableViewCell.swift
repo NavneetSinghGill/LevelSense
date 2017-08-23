@@ -31,6 +31,51 @@ class MyDevicesTableViewCell: UITableViewCell {
     
     func updateUIfor(device: Device) {
         self.deviceNameLabel.text = device.displayName
+        
+        if device.deviceState == DeviceState.Normal {
+            let str = "STATUS: NORMAL"
+            let biggerFont: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 13.0)! ]
+            let smallerFont: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue", size: 11.0)! ]
+            let attString:NSMutableAttributedString = NSMutableAttributedString.init(string: str)
+            
+            attString.addAttributes(biggerFont, range: NSMakeRange(0, str.characters.count))
+            attString.addAttributes(smallerFont, range: NSMakeRange(0, "STATUS: ".characters.count))
+            
+            stateLabel.attributedText = attString
+        } else {
+            let str = "STATUS: ALARM"
+            let color: Dictionary = [ NSForegroundColorAttributeName: offlineRed]
+            let biggerFont: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 13.0)! ]
+            let smallerFont: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue", size: 11.0)! ]
+            let attString:NSMutableAttributedString = NSMutableAttributedString.init(string: str)
+            
+            attString.addAttributes(biggerFont, range: NSMakeRange(0, str.characters.count))
+            attString.addAttributes(smallerFont, range: NSMakeRange(0, "STATUS: ".characters.count))
+            attString.addAttributes(color, range: NSMakeRange("STATUS: ".characters.count, "ALARM".characters.count))
+            
+            stateLabel.attributedText = attString
+        }
+        
+        if device.checkinFailCount == CheckInFailCount.Online {
+            let str = "ONLINE"
+            let color: Dictionary = [ NSForegroundColorAttributeName: onlineGreen]
+            let font: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 13.0)! ]
+            let attString:NSMutableAttributedString = NSMutableAttributedString.init(string: str)
+            attString.addAttributes(color, range: NSMakeRange(0, str.characters.count))
+            attString.addAttributes(font, range: NSMakeRange(0, str.characters.count))
+            
+            onlineOfflineLabel.attributedText = attString
+            
+        } else {
+            let str = "OFFLINE"
+            let color: Dictionary = [ NSForegroundColorAttributeName: offlineRed]
+            let font: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 13.0)! ]
+            let attString:NSMutableAttributedString = NSMutableAttributedString.init(string: str)
+            attString.addAttributes(color, range: NSMakeRange(0, str.characters.count))
+            attString.addAttributes(font, range: NSMakeRange(0, str.characters.count))
+            
+            onlineOfflineLabel.attributedText = attString
+        }
     }
     
     func changeViewIf(isSelected:Bool, withAnimation:Bool) {
