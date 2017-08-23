@@ -22,4 +22,17 @@ class LoginRequestManager: NSObject {
         
     }
     
+    
+    static func postLogoutAPICallWith(block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            LoginInterface().performLogoutWith(request: LoginRequest().createLogoutRequest(), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
 }

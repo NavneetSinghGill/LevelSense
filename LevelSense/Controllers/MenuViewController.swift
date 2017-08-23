@@ -70,7 +70,8 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         case 3:
             screenToShow = storyboard?.instantiateViewController(withIdentifier: "PersonalInfoViewController")
         case 4:
-            appDelegate.logout()
+            screenToShow = nil
+            performLogout()
         default:
             break
         }
@@ -78,6 +79,19 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         if screenToShow != nil {
             indexOfSelectedScreen = indexPath.row
             revealViewController().pushFrontViewController(UINavigationController.init(rootViewController: screenToShow!), animated: true)
+        }
+    }
+    
+    //MARK: Private methods
+    
+    private func performLogout() {
+        
+        startAnimating()
+        LoginRequestManager.postLogoutAPICallWith { (success, response, error) in
+            if success {
+                appDelegate.logout()
+            }
+            self.stopAnimating()
         }
     }
 

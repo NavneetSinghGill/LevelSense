@@ -39,6 +39,7 @@ let kSuperBaseUrl = "http://104.192.5.181"
 let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/v1/"
 
 let kLoginApiUrl = "login"
+let kLogoutApiUrl = "logout"
 let kGetDevices = "getDeviceList"
 
 

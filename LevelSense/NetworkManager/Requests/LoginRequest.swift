@@ -19,4 +19,10 @@ class LoginRequest: Request {
         return self
     }
     
+    func createLogoutRequest() -> LoginRequest {
+        
+        self.urlPath = kLogoutApiUrl
+        return self
+    }
+    
 }
