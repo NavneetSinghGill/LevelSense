@@ -14,13 +14,23 @@ class Device: NSObject {
     var capSenseMax: NSInteger!
     var capSenseMinOffset: NSInteger!
     var deviceSerialNumber: String!
-    var deviceState: NSInteger!
+    var deviceState: DeviceState!
     var displayName: String!
     var id: String!
     var latitude: CGFloat!
     var longitude: CGFloat!
     var sirenState: NSInteger!
+    var checkinFailCount: CheckInFailCount!
     
+    enum CheckInFailCount {
+        case Online
+        case Offline
+    }
+    
+    enum DeviceState {
+        case Normal
+        case Alarm
+    }
     
     class func initWithDictionary(dictionary: Dictionary<String, Any>!) -> Device {
         let device = Device()
@@ -29,6 +39,26 @@ class Device: NSObject {
         }
         if dictionary!["id"] != nil {
             device.id = dictionary!["id"] as! String
+        }
+        if dictionary!["checkinFailCount"] != nil {
+            let count = dictionary!["checkinFailCount"] as! NSInteger
+            if count == 0 {
+                device.checkinFailCount = CheckInFailCount.Online
+            } else {
+                device.checkinFailCount = CheckInFailCount.Offline
+            }
+        } else {
+            device.checkinFailCount = CheckInFailCount.Offline
+        }
+        if dictionary!["deviceState"] != nil {
+            let count = dictionary!["deviceState"] as! NSInteger
+            if count == 0 {
+                device.deviceState = DeviceState.Normal
+            } else {
+                device.deviceState = DeviceState.Alarm
+            }
+        } else {
+            device.deviceState = DeviceState.Normal
         }
         return device
         
