@@ -28,7 +28,12 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
 
         // Do any additional setup after loading the view.
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,21 +67,38 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         self.navigationController?.navigationBar.topItem?.titleView = navigationTitleLabel
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        //Overrider this method in derived controllers
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        //Overrider this method in derived controllers
+    }
+    
     //MARK: Private methods
     
     private func menuButton() -> UIButton {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         button.backgroundColor = .clear
         button.setImage(UIImage(named: "menuIcon"), for: .normal)
-        button.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(revealToggle), for: .touchUpInside)
         
         return button
+    }
+    
+    func revealToggle() {
+        view.endEditing(true)
+        self.revealViewController().performSelector(onMainThread: #selector(SWRevealViewController.revealToggle(_:)), with: nil, waitUntilDone: false)
     }
     
     //MARK:- IBAction methods
     
     @IBAction func menuButtonTapped(sender: UIButton) {
         self.revealViewController().revealToggle(self)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
 }
