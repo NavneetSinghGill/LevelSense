@@ -94,9 +94,9 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     
     //MARK:- IBAction methods
     
-    @IBAction func menuButtonTapped(sender: UIButton) {
-        self.revealViewController().revealToggle(self)
-    }
+//    @IBAction func menuButtonTapped(sender: UIButton) {
+//        self.revealViewController().revealToggle(self)
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

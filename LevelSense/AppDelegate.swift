@@ -69,6 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(nil, forKey: kSessionKey)
         UserDefaults.standard.synchronize()
         
+        User.deleteUser()
+        
         openLoginScreen()
     }
     

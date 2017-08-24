@@ -121,6 +121,9 @@ class User : NSObject {
         UserDefaults.standard.removeObject(forKey: "email")
         UserDefaults.standard.removeObject(forKey: "state")
         UserDefaults.standard.removeObject(forKey: "userStatus")
+        UserDefaults.standard.synchronize()
+        
+        User.user = nil
     }
     
 }

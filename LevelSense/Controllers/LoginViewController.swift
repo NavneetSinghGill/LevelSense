@@ -59,6 +59,8 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
                     if sessionKey != nil {
                         UserDefaults.standard.setValue(sessionKey, forKey: kSessionKey)
                         UserDefaults.standard.synchronize()
+                        
+                        self.getUserDetails()
                     }
                 } else {
                     self.stopAnimating()

@@ -8,7 +8,12 @@
 
 import UIKit
 
-class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+enum OptionSelectionInProgress {
+    case country
+    case state
+}
+
+class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, SelectedOption {
     
     let textFieldBaseTag = 901
     @IBOutlet var scrollView: UIScrollView!
@@ -26,6 +31,13 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     @IBOutlet var countryButton: UIButton!
     @IBOutlet var stateButton: UIButton!
     @IBOutlet var submitButton: UIButton!
+    
+    var countries : NSArray = []
+    var states : NSArray = []
+    
+    var optionSelectionInProgress: OptionSelectionInProgress!
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +55,35 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     @IBAction func submitButtonTapped() {
         view.endEditing(true)
         postUserDetails()
+    }
+    
+    @IBAction func countryButtonTapped(button: UIButton) {
+        let optionVC : OptionSelectionViewController = getOptionVC()
+        
+        optionVC.options = ["c1","c2","c3","c4","c5"]
+        countries = optionVC.options
+        optionSelectionInProgress = .country
+        
+        self.present(optionVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func stateButtonTapped(button: UIButton) {
+        let optionVC : OptionSelectionViewController = getOptionVC()
+        optionVC.options = ["s1","s2","s3","s4","s5"]
+        states = optionVC.options
+        optionSelectionInProgress = .state
+        
+        self.present(optionVC, animated: true, completion: nil)
+    }
+    
+    //MARK:- selectedOption protocol method
+    
+    func selectedOption(index: NSInteger) {
+        if optionSelectionInProgress == .country {
+            countryTextField.text = countries[index] as? String
+        } else {
+            stateTextField.text = states[index] as? String
+        }
     }
     
     //MARK:- Private methods
@@ -65,6 +106,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
             if success {
                 let user = User.user
                 self.setDetailsOf(user: user!)
+                
+                self.postUserRefresh()
             }
             self.stopAnimating()
         }
@@ -123,10 +166,23 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                 
                 Banner.showSuccessWithTitle(title: "User details updated successfully")
                 
-                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: LNRefreshUser), object: nil)
+                self.postUserRefresh()
             }
             self.stopAnimating()
         }
+    }
+    
+    func postUserRefresh() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: LNRefreshUser), object: nil)
+    }
+    
+    func getOptionVC() -> OptionSelectionViewController {
+        let optionVC : OptionSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "OptionSelectionViewController") as! OptionSelectionViewController
+        optionVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        optionVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        optionVC.delegate = self;
+        
+        return optionVC
     }
 
     //MARK:- Textfield delegate methods

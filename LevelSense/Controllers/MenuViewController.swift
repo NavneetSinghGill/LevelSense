@@ -39,10 +39,12 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         let firstName = User.user.firstName
         let lastName = User.user.lastName
         
-        if lastName?.characters.count != 0 {
+        if firstName != nil && lastName != nil {
             userNameLabel.text = "\(firstName!) \(lastName!)"
-        } else {
+        } else if firstName != nil {
             userNameLabel.text = "\(firstName!)"
+        } else {
+            userNameLabel.text = ""
         }
     }
     
