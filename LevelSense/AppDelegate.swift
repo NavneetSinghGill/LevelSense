@@ -67,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func logout() {
         UserDefaults.standard.setValue(nil, forKey: kSessionKey)
+        UserDefaults.standard.synchronize()
         
         openLoginScreen()
     }

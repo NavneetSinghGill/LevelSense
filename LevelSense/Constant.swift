@@ -44,6 +44,7 @@ let kLoginApiUrl = "login"
 let kLogoutApiUrl = "logout"
 let kGetDevices = "getDeviceList"
 let kGetUser = "getUser"
+let kEditUser = "editUser"
 
 
 //MARK: Segue identifiers
@@ -56,6 +57,9 @@ let kPersonalInfoSegueIdentifier = "kPersonalInfoSegueIdentifier"
 //MARK: Constant sentences
 let kErrorOccured = "An error occured while processing your request."
 let kNoNetwork = "No network available"
+
+//MARK: Local notifications key
+let LNRefreshUser = "LNRefreshUser"
 
 //MARK: Enums
 

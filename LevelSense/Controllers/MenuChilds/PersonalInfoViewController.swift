@@ -38,13 +38,14 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         getUserDetails()
     }
     
-    //MARK: IBActions methods
+    //MARK:- IBActions methods
     
     @IBAction func submitButtonTapped() {
-        
+        view.endEditing(true)
+        postUserDetails()
     }
     
-    //MARK: Private methods
+    //MARK:- Private methods
     
     private func setDetailsOf(user: User) {
         firstNameTextField.text = user.firstName
@@ -68,8 +69,67 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
             self.stopAnimating()
         }
     }
+    
+    private func areEntriesValid() -> Bool {
+        var message: String! = ""
+        if firstNameTextField?.text?.trim().characters.count == 0 {
+            message = "Please enter first name"
+        } else if lastNameTextField?.text?.characters.count == 0 {
+            message = "Please enter last name"
+        } else if emailTextField?.text?.characters.count == 0 {
+            message = "Please enter email"
+        } else if addressTextField?.text?.characters.count == 0 {
+            message = "Please enter address"
+        } else if cityTextField?.text?.characters.count == 0 {
+            message = "Please enter city"
+        } else if postalCodeTextField?.text?.characters.count == 0 {
+            message = "Please enter postalCode"
+        } else if countryTextField?.text?.characters.count == 0 {
+            message = "Please enter country"
+        } else if stateTextField?.text?.characters.count == 0 {
+            message = "Please enter state"
+        }
+        
+        //Show Banner
+        if message.characters.count != 0 {
+            Banner.showFailureWithTitle(title:message)
+        }
+        return message.characters.count == 0
+    }
+    
+    func postUserDetails() {
+        if areEntriesValid() {
+            let user = User()
+            user.firstName = firstNameTextField.text?.trim()
+            user.lastName = lastNameTextField.text?.trim()
+            user.email = emailTextField.text?.trim()
+            user.address = addressTextField.text?.trim()
+            user.city = cityTextField.text?.trim()
+            user.zipcode = postalCodeTextField.text?.trim()
+            user.country = countryTextField.text?.trim()
+            user.state = stateTextField.text?.trim()
+            
+            postUserDetailsOf(newUser: user)
+        }
+    }
+    
+    func postUserDetailsOf(newUser: User) {
+        
+        startAnimating()
+        UserRequestManager.postEditUserAPICallWith(user: newUser) { (success, response, error) in
+            if success {
+                self.setDetailsOf(user: newUser)
+                newUser.saveUser()
+                
+                Banner.showSuccessWithTitle(title: "User details updated successfully")
+                
+                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: LNRefreshUser), object: nil)
+            }
+            self.stopAnimating()
+        }
+    }
 
-    //MARK: Textfield delegate methods
+    //MARK:- Textfield delegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextField = view.viewWithTag(textField.tag + 1)
@@ -83,7 +143,7 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         return true
     }
     
-    //MARK: Notification methods
+    //MARK:- Notification methods
     
     override func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {

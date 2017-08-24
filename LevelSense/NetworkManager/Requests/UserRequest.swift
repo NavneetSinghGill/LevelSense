@@ -16,6 +16,14 @@ class UserRequest: Request {
         return self
     }
     
+    func createEditUserRequestWith(user: User) -> UserRequest {
+        
+        self.parameters = user.toDictionary()
+            
+        self.urlPath = kEditUser
+        return self
+    }
+    
     func createGetDevicesRequestWith() -> UserRequest {
         
         self.urlPath = kGetDevices

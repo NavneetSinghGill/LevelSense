@@ -21,6 +21,17 @@ class UserRequestManager: NSObject {
         }
         
     }
+    static func postEditUserAPICallWith(user: User, block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().postEditUserWith(request: UserRequest().createEditUserRequestWith(user: user), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
     
     static func getDevicesAPICallWith(block:@escaping requestCompletionBlock)
     {

@@ -333,24 +333,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mJZ-e9-ja1">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="597"/>
                                 <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="eCp-zh-IFL" id="WYU-IF-LLc"/>
                                     <outlet property="delegate" destination="eCp-zh-IFL" id="J3p-Qo-Bm2"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h3Q-Rf-CxJ">
+                                <rect key="frame" x="0.0" y="20" width="375" height="2"/>
+                                <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="sIZ-4c-KZA"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xec-jA-8Vf">
+                                <rect key="frame" x="15" y="22" width="345" height="48"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mJZ-e9-ja1" firstAttribute="top" secondItem="Ur1-yA-BdY" secondAttribute="bottom" id="48G-ZK-QQU"/>
+                            <constraint firstItem="mJZ-e9-ja1" firstAttribute="top" secondItem="Ur1-yA-BdY" secondAttribute="bottom" constant="50" id="48G-ZK-QQU"/>
+                            <constraint firstItem="h3Q-Rf-CxJ" firstAttribute="leading" secondItem="QCi-7w-FMV" secondAttribute="leading" id="60N-Th-Q0h"/>
                             <constraint firstItem="mJZ-e9-ja1" firstAttribute="leading" secondItem="QCi-7w-FMV" secondAttribute="leading" id="6f7-Nj-b1i"/>
+                            <constraint firstItem="mJZ-e9-ja1" firstAttribute="top" secondItem="xec-jA-8Vf" secondAttribute="bottom" id="6j9-Sq-gnf"/>
+                            <constraint firstItem="xec-jA-8Vf" firstAttribute="leading" secondItem="QCi-7w-FMV" secondAttribute="leading" constant="15" id="Mch-xH-UmF"/>
                             <constraint firstAttribute="trailing" secondItem="mJZ-e9-ja1" secondAttribute="trailing" id="PcP-Bn-oSs"/>
+                            <constraint firstItem="xec-jA-8Vf" firstAttribute="top" secondItem="h3Q-Rf-CxJ" secondAttribute="bottom" id="VQD-Wz-gyc"/>
+                            <constraint firstAttribute="trailing" secondItem="h3Q-Rf-CxJ" secondAttribute="trailing" id="W9m-nH-kGd"/>
+                            <constraint firstItem="h3Q-Rf-CxJ" firstAttribute="top" secondItem="Ur1-yA-BdY" secondAttribute="bottom" id="ZF8-gC-kWf"/>
+                            <constraint firstAttribute="trailing" secondItem="xec-jA-8Vf" secondAttribute="trailing" constant="15" id="eWD-vV-aHJ"/>
                             <constraint firstItem="qg3-AY-Dtu" firstAttribute="top" secondItem="mJZ-e9-ja1" secondAttribute="bottom" id="rv3-YP-ceO"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="mJZ-e9-ja1" id="SF6-9L-4Kf"/>
+                        <outlet property="userNameLabel" destination="xec-jA-8Vf" id="YIS-bH-hC2"/>
                         <segue destination="Zny-ig-DyM" kind="custom" identifier="kClaimDeviceSegueIdentifier" customClass="SWRevealViewControllerSegueSetController" id="X7r-v1-jBE"/>
                         <segue destination="bJd-ou-v8s" kind="custom" identifier="kNotificationsSegueIdentifier" customClass="SWRevealViewControllerSegueSetController" id="X3q-8B-4GQ"/>
                         <segue destination="nte-1U-72p" kind="custom" identifier="kPersonalInfoSegueIdentifier" customClass="SWRevealViewControllerSegueSetController" id="WF1-Fo-bRa"/>
@@ -359,7 +380,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LFK-q2-rO6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="878" y="757"/>
+            <point key="canvasLocation" x="877.60000000000002" y="756.97151424287858"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OeU-gt-MIC">
@@ -744,7 +765,7 @@
         <image name="deviceNotification" width="42" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="X1M-iX-uIP"/>
+        <segue reference="5wU-yC-Dya"/>
         <segue reference="6Ax-Uu-jST"/>
     </inferredMetricsTieBreakers>
 </document>

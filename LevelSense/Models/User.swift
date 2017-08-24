@@ -35,7 +35,7 @@ class User : NSObject {
         
         //Set final user
         User.user = user
-        user.saveUserToDefaults()
+        user.saveUser()
     }
     
     //MARK: Class methods
@@ -63,7 +63,22 @@ class User : NSObject {
         
     }
     
-    func saveUserToDefaults() {
+    func toDictionary() -> Dictionary<String, Any> {
+        var dict = [String: Any]()
+        dict["address"] = address
+        dict["city"] = city
+        dict["firstName"] = firstName
+        dict["id"] = userID
+        dict["country"] = country
+        dict["state"] = state
+        dict["zipcode"] = zipcode
+        dict["email"] = email
+        dict["userStatus"] = userStatus
+        
+        return dict
+    }
+    
+    func saveUser() {
         UserDefaults.standard.setValue(address, forKey: "address")
         UserDefaults.standard.setValue(city, forKey: "city")
         UserDefaults.standard.setValue(firstName, forKey: "firstName")
@@ -74,6 +89,9 @@ class User : NSObject {
         UserDefaults.standard.setValue(email, forKey: "email")
         UserDefaults.standard.setValue(state, forKey: "state")
         UserDefaults.standard.setValue(userStatus, forKey: "userStatus")
+        UserDefaults.standard.synchronize()
+        
+        User.user = self
     }
     
     class func setUserFromDefaults() {

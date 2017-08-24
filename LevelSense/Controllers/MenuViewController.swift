@@ -18,7 +18,7 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
     var screenToShow: UIViewController!
     var indexOfSelectedScreen: NSInteger = 0
     
-    
+    @IBOutlet weak var userNameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,21 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         
         optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Logout"]
         optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","logout"]
+        
+        refreshUser()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUser), name: NSNotification.Name(rawValue: LNRefreshUser), object: nil)
+    }
+    
+    func refreshUser() {
+        let firstName = User.user.firstName
+        let lastName = User.user.lastName
+        
+        if lastName?.characters.count != 0 {
+            userNameLabel.text = "\(firstName!) \(lastName!)"
+        } else {
+            userNameLabel.text = "\(firstName!)"
+        }
     }
     
     //MARK:- Tableview datasource methods

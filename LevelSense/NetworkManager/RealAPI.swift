@@ -13,7 +13,10 @@ class RealAPI: NSObject {
     public func performGetAPICallWith(request:Request, completionBlock:@escaping requestCompletionBlock) {
         
         let requestUrl = request.urlPath!
-        NetworkHttpClient.performGetAPICallWith(url: requestUrl, withParams: request.getParams(), block: completionBlock)
+        let params = request.getParams()
+        printAPIDetails(url: requestUrl, params: params)
+        
+        NetworkHttpClient.performGetAPICallWith(url: requestUrl, withParams: params, block: completionBlock)
     }
     
     
@@ -21,8 +24,13 @@ class RealAPI: NSObject {
         
         let requestUrl = request.urlPath!
         let params = request.getParams()
+        printAPIDetails(url: requestUrl, params: params)
         
         NetworkHttpClient.performPostAPICallWith(url: requestUrl, params: params, block: completionBlock)
+    }
+    
+    func printAPIDetails(url: String, params: Dictionary<String, Any>) {
+        NSLog("\n\n URL:[\(kBaseUrl)\(url)] \nParams: \n \(params)")
     }
     
 }
