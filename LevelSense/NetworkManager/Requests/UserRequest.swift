@@ -9,7 +9,13 @@
 import UIKit
 
 class UserRequest: Request {
-
+    
+    func createGetUserRequestWith() -> UserRequest {
+        
+        self.urlPath = kGetUser
+        return self
+    }
+    
     func createGetDevicesRequestWith() -> UserRequest {
         
         self.urlPath = kGetDevices

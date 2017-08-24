@@ -9,15 +9,19 @@
 import Foundation
 
 class User : NSObject {
-    
-    static var accessToken: String!
-    static var expiresIn: Int64!
-    static var tokenType: String!
     static var user: User!
     
+    var address: String!
+    var city: String!
+    var firstName: String!
     var userID: String!
-    var companyIDs: NSArray!
-    
+    var country: String!
+    var zipcode: String!
+    var status: String!
+    var email: String!
+    var state: String!
+    var lastName: String!
+    var userStatus: String!
     
     
     override init() {
@@ -27,11 +31,11 @@ class User : NSObject {
     
     init(userJson: Dictionary<String, Any>) {
         let user = User()
-        
         user.initWithDictionary(dictionary: userJson)
         
         //Set final user
         User.user = user
+        user.saveUserToDefaults()
     }
     
     //MARK: Class methods
@@ -44,12 +48,61 @@ class User : NSObject {
     //MARK: Private methods
     
     private func initWithDictionary(dictionary : Dictionary<String, Any>) {
-        let user = dictionary["user"] as! Dictionary<String, Any>
+        let user = dictionary["user"] as? Dictionary<String, Any>
         
-        let companyIDs: NSArray = user["company_ids"] as! NSArray
-        self.companyIDs = companyIDs
+        address = user?["address"] as? String
+        city = user?["city"] as? String
+        firstName = user?["firstName"] as? String
+        lastName = user?["lastName"] as? String
+        userID = user?["id"] as? String
+        country = user?["country"] as? String
+        state = user?["state"] as? String
+        zipcode = user?["zipcode"] as? String
+        email = user?["email"] as? String
+        userStatus = user?["userStatus"] as? String
         
-        self.userID = user["_id"] as! String
+    }
+    
+    func saveUserToDefaults() {
+        UserDefaults.standard.setValue(address, forKey: "address")
+        UserDefaults.standard.setValue(city, forKey: "city")
+        UserDefaults.standard.setValue(firstName, forKey: "firstName")
+        UserDefaults.standard.setValue(lastName, forKey: "lastName")
+        UserDefaults.standard.setValue(userID, forKey: "userID")
+        UserDefaults.standard.setValue(country, forKey: "country")
+        UserDefaults.standard.setValue(zipcode, forKey: "zipcode")
+        UserDefaults.standard.setValue(email, forKey: "email")
+        UserDefaults.standard.setValue(state, forKey: "state")
+        UserDefaults.standard.setValue(userStatus, forKey: "userStatus")
+    }
+    
+    class func setUserFromDefaults() {
+        let user = User()
+        user.address = UserDefaults.standard.value(forKey: "address") as? String
+        user.city = UserDefaults.standard.value(forKey: "city") as? String
+        user.firstName = UserDefaults.standard.value(forKey: "firstName") as? String
+        user.lastName = UserDefaults.standard.value(forKey: "lastName") as? String
+        user.userID = UserDefaults.standard.value(forKey: "userID") as? String
+        user.country = UserDefaults.standard.value(forKey: "country") as? String
+        user.zipcode = UserDefaults.standard.value(forKey: "zipcode") as? String
+        user.email = UserDefaults.standard.value(forKey: "email") as? String
+        user.state = UserDefaults.standard.value(forKey: "state") as? String
+        user.userStatus = UserDefaults.standard.value(forKey: "userStatus") as? String
+        
+        User.user = user
+    }
+    
+    class func deleteUser() {
+        UserDefaults.standard.removeObject(forKey: "address")
+        UserDefaults.standard.removeObject(forKey: "city")
+        UserDefaults.standard.removeObject(forKey: "firstName")
+        UserDefaults.standard.removeObject(forKey: "lastName")
+        UserDefaults.standard.removeObject(forKey: "userID")
+        UserDefaults.standard.removeObject(forKey: "country")
+        UserDefaults.standard.removeObject(forKey: "zipcode")
+        UserDefaults.standard.removeObject(forKey: "email")
+        UserDefaults.standard.removeObject(forKey: "state")
+        UserDefaults.standard.removeObject(forKey: "userStatus")
     }
     
 }

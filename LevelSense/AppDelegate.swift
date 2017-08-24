@@ -81,6 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         openLoginScreenIfRequired()
         
+        User.setUserFromDefaults()
+        
         setupForLoader()
         
         return true

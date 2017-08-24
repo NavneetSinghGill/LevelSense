@@ -43,6 +43,7 @@ let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/v1/"
 let kLoginApiUrl = "login"
 let kLogoutApiUrl = "logout"
 let kGetDevices = "getDeviceList"
+let kGetUser = "getUser"
 
 
 //MARK: Segue identifiers

@@ -607,6 +607,7 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="logInButtonTapped:" destination="fhv-5v-AVA" eventType="touchUpInside" id="Bct-lS-Iqb"/>
+                                                    <action selector="submitButtonTapped" destination="yZH-Ne-3Yu" eventType="touchUpInside" id="Z7o-qP-RW5"/>
                                                 </connections>
                                             </button>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Country" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CD5-y5-VRp">
@@ -697,8 +698,19 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="900"/>
                     <connections>
+                        <outlet property="addressTextField" destination="qzY-zu-u3k" id="1Gj-qD-cRa"/>
+                        <outlet property="cityTextField" destination="t3D-jq-3Ue" id="IUe-3k-5OJ"/>
+                        <outlet property="countryButton" destination="a1A-P0-u4A" id="iww-aj-oNo"/>
+                        <outlet property="countryTextField" destination="CD5-y5-VRp" id="cMD-qp-Dbj"/>
+                        <outlet property="emailTextField" destination="jso-UH-d6d" id="EYl-MM-fKw"/>
+                        <outlet property="firstNameTextField" destination="4xc-9u-LMl" id="W8b-5T-Agb"/>
+                        <outlet property="lastNameTextField" destination="4pJ-dW-TTo" id="FlE-hL-sJq"/>
+                        <outlet property="postalCodeTextField" destination="T1r-MQ-aa0" id="ucS-7Y-N7g"/>
                         <outlet property="scrollView" destination="sbg-0o-gCL" id="kX4-a6-FND"/>
                         <outlet property="scrollViewBottomConstraint" destination="paB-sm-6uL" id="ynd-aD-RCL"/>
+                        <outlet property="stateButton" destination="0wy-tg-pXp" id="3HM-bM-c1c"/>
+                        <outlet property="stateTextField" destination="iNJ-sG-HlC" id="wVq-fL-enA"/>
+                        <outlet property="submitButton" destination="J8a-6O-KpO" id="aQX-hD-Xzg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VMU-wg-x27" userLabel="First Responder" sceneMemberID="firstResponder"/>

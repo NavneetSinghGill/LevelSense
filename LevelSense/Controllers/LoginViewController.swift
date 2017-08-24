@@ -59,12 +59,20 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
                     if sessionKey != nil {
                         UserDefaults.standard.setValue(sessionKey, forKey: kSessionKey)
                         UserDefaults.standard.synchronize()
-                        
-                        self.openMenuWithChilds()
                     }
+                } else {
+                    self.stopAnimating()
                 }
-                self.stopAnimating()
             })
+        }
+    }
+    
+    private func getUserDetails() {
+        UserRequestManager.getUserAPICallWith { (success, response, error) in
+            if success {
+                self.openMenuWithChilds()
+            }
+            self.stopAnimating()
         }
     }
     

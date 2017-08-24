@@ -9,7 +9,19 @@
 import UIKit
 
 class UserRequestManager: NSObject {
-
+    
+    static func getUserAPICallWith(block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().getUserWith(request: UserRequest().createGetUserRequestWith(), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
     static func getDevicesAPICallWith(block:@escaping requestCompletionBlock)
     {
         if appDelegate.isNetworkAvailable {
