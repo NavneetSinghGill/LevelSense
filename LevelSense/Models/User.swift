@@ -67,6 +67,7 @@ class User : NSObject {
         dict["address"] = address
         dict["city"] = city
         dict["firstName"] = firstName
+        dict["lastName"] = lastName
         dict["id"] = userID
         dict["country"] = country
         dict["state"] = state
