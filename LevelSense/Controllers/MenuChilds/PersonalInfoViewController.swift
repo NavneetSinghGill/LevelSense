@@ -67,13 +67,20 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         optionVC.options = self.countries.value(forKey: "name") as! NSArray
         optionSelectionInProgress = .country
         
+        let startIndex: Int! = optionVC.options.index(of: self.countryTextField.text!)
+        optionVC.startIndex =  (startIndex != Int.max) ? startIndex : 0
+        
         self.present(optionVC, animated: true, completion: nil)
     }
     
     @IBAction func stateButtonTapped(button: UIButton) {
         let optionVC : OptionSelectionViewController = getOptionVC()
+        
         optionVC.options = self.countryStates.value(forKey: "name") as! NSArray
         optionSelectionInProgress = .state
+        
+        let startIndex: Int! = optionVC.options.index(of: self.stateTextField.text!)
+        optionVC.startIndex =  (startIndex != Int.max) ? startIndex : 0
         
         self.present(optionVC, animated: true, completion: nil)
     }
@@ -138,14 +145,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                 
                 let countryNames: NSArray = (countryList.value(forKey: "name") as! NSArray)
                 
-                for countryName in countryNames  {
-                    
-                    if (countryName as! String) == self.countryTextField.text?.trim() {
-                        let indexOfCountryName : Int! = countryNames.index(of: countryName) 
-                        self.countryID = (countryList.value(forKey: "id") as! NSArray).object(at: indexOfCountryName) as! Int
-                        self.countryTextField.text = countryName as? String
-                        break
-                    }
+                if countryNames.index(of: self.countryTextField.text!) != Int.max {
+                    self.countryID = countryNames.index(of: self.countryTextField.text!)
                 }
                 
                 if self.countryID == -1 {
@@ -170,14 +171,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                     
                     let stateNames: NSArray = (stateList.value(forKey: "name") as! NSArray)
                     
-                    for stateName in stateNames  {
-                        
-                        if (stateName as! String) == self.stateTextField.text?.trim() {
-                            let indexOfStateName : Int! = stateNames.index(of: stateName)
-                            self.stateID = (stateList.value(forKey: "id") as! NSArray).object(at: indexOfStateName) as! Int
-                            self.stateTextField.text = stateName as? String
-                            break
-                        }
+                    if stateNames.index(of: self.stateTextField.text!) != Int.max {
+                        self.stateID = stateNames.index(of: self.countryTextField.text!)
                     }
                     
                 } else {

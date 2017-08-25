@@ -19,11 +19,17 @@ class OptionSelectionViewController: LSViewController, UIPickerViewDelegate, UIP
     
     var delegate: SelectedOption!
     var currentIndex: NSInteger = 0
+    var startIndex: Int! = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        pickerView.reloadAllComponents()
+        if startIndex < options.count {
+            pickerView.selectRow(startIndex, inComponent: 0, animated: false)
+        }
     }
     
     //MARK: IBAction methods
