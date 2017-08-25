@@ -13,7 +13,7 @@ enum OptionSelectionInProgress {
     case state
 }
 
-class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, SelectedOption {
+class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, SelectedOptionProtocol {
     
     let textFieldBaseTag = 901
     @IBOutlet var scrollView: UIScrollView!
@@ -87,7 +87,7 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     
     //MARK:- selectedOption protocol method
     
-    func selectedOption(index: NSInteger) {
+    func selectedOption(index: NSInteger, sender: Any?) {
         if optionSelectionInProgress == .country {
             countryTextField.text = (self.countries.value(forKey: "name") as! NSArray)[index] as? String
             

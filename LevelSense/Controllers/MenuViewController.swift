@@ -105,7 +105,7 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         
         startAnimating()
         LoginRequestManager.postLogoutAPICallWith { (success, response, error) in
-            if success {
+            if success || (response as? String) == "Please provide session key" {
                 appDelegate.logout()
             }
             self.stopAnimating()
