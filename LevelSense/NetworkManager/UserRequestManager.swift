@@ -45,4 +45,28 @@ class UserRequestManager: NSObject {
         
     }
     
+    static func getCountryListAPICallWith(block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().getCountryListWith(request: UserRequest().createGetCountryListRequestWith(), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
+    static func getStateListAPICallWith(countryID: Int,block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().getStateListWith(request: UserRequest().createGetStateListRequestWith(countryID: countryID), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
 }

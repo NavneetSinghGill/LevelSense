@@ -23,7 +23,6 @@ class User : NSObject {
     var lastName: String!
     var userStatus: String!
     
-    
     override init() {
         super.init()
         

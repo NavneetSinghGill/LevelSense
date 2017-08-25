@@ -51,6 +51,32 @@ class UserInterface: Interface {
         })
     }
     
+    func getCountryListWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performGetAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Get CountryList response: \(String(describing: response))")
+            if success {
+                self.parseGetCountryListReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
+    func getStateListWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performGetAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Get StateList response: \(String(describing: response))")
+            if success {
+                self.parseGetCountryListReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
     //MARK: Parsing methods
     
     func parseGetUserReponse(response : Dictionary<String, Any>) {
@@ -87,6 +113,22 @@ class UserInterface: Interface {
     }
     
     func parseGetDevicesReponse(response : Dictionary<String, Any>) {
+        if response.keys.count != 0 || response["success"] != nil{
+            let success = response["success"] as! Bool
+            if success {
+                self.interfaceBlock!(success, response, nil)
+            } else {
+                let message = response["message"] ?? kErrorOccured
+                self.interfaceBlock!(success, message, nil)
+                Banner.showFailureWithTitle(title: message as! String)
+            }
+        } else {
+            self.interfaceBlock!(false, kErrorOccured, nil)
+            Banner.showFailureWithTitle(title: kErrorOccured)
+        }
+    }
+    
+    func parseGetCountryListReponse(response : Dictionary<String, Any>) {
         if response.keys.count != 0 || response["success"] != nil{
             let success = response["success"] as! Bool
             if success {

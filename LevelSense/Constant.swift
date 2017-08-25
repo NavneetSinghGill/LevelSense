@@ -45,6 +45,8 @@ let kLogoutApiUrl = "logout"
 let kGetDevices = "getDeviceList"
 let kGetUser = "getUser"
 let kEditUser = "editUser"
+let kGetCountryListApiUrlSuffix = "getCountryList"
+let kGetStateListApiUrlSuffix = "getStateList"
 
 
 //MARK: Segue identifiers

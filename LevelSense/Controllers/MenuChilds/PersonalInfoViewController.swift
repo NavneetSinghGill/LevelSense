@@ -33,9 +33,13 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     @IBOutlet var submitButton: UIButton!
     
     var countries : NSArray = []
-    var states : NSArray = []
+    var fullStates : NSArray = []
+    var countryStates : NSArray = []
     
     var optionSelectionInProgress: OptionSelectionInProgress!
+    
+    var countryID: Int! = -1
+    var stateID: Int! = -1
     
     
 
@@ -60,8 +64,7 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     @IBAction func countryButtonTapped(button: UIButton) {
         let optionVC : OptionSelectionViewController = getOptionVC()
         
-        optionVC.options = ["c1","c2","c3","c4","c5"]
-        countries = optionVC.options
+        optionVC.options = self.countries.value(forKey: "name") as! NSArray
         optionSelectionInProgress = .country
         
         self.present(optionVC, animated: true, completion: nil)
@@ -69,8 +72,7 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     
     @IBAction func stateButtonTapped(button: UIButton) {
         let optionVC : OptionSelectionViewController = getOptionVC()
-        optionVC.options = ["s1","s2","s3","s4","s5"]
-        states = optionVC.options
+        optionVC.options = self.countryStates.value(forKey: "name") as! NSArray
         optionSelectionInProgress = .state
         
         self.present(optionVC, animated: true, completion: nil)
@@ -80,13 +82,113 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     
     func selectedOption(index: NSInteger) {
         if optionSelectionInProgress == .country {
-            countryTextField.text = countries[index] as? String
+            countryTextField.text = (self.countries.value(forKey: "name") as! NSArray)[index] as? String
+            
+            let selectedCountryID = ((self.countries.value(forKey: "id") as! NSArray)[index] as! Int)
+            if countryID != selectedCountryID {
+                countryID = selectedCountryID
+                stateID = -1
+                stateTextField.text = ""
+            }
+            countryStates = ((fullStates.filter { (($0 as! Dictionary<String, Any>)["countryId"] as! Int) == countryID } as NSArray).sortedArray(using: [NSSortDescriptor.init(key: "name", ascending: true)])) as NSArray
         } else {
-            stateTextField.text = states[index] as? String
+            stateTextField.text = (self.countryStates.value(forKey: "name") as! NSArray)[index] as? String
+            stateID = ((self.countryStates.value(forKey: "id") as! NSArray)[index] as! Int)
         }
     }
     
     //MARK:- Private methods
+    
+    private func getUserDetails() {
+        
+        startAnimating()
+        UserRequestManager.getUserAPICallWith { (success, response, error) in
+            if success {
+                let user = User.user
+                self.setDetailsOf(user: user!)
+                
+                self.postUserRefreshNotification()
+                self.getCountryList()
+            }
+        }
+    }
+    
+    private func postUserDetailsOf(newUser: User) {
+        
+        startAnimating()
+        UserRequestManager.postEditUserAPICallWith(user: newUser) { (success, response, error) in
+            if success {
+                self.setDetailsOf(user: newUser)
+                newUser.saveUser()
+                
+                Banner.showSuccessWithTitle(title: "User details updated successfully")
+                
+                self.postUserRefreshNotification()
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    private func getCountryList() {
+        UserRequestManager.getCountryListAPICallWith { (success, response, error) in
+            let countryList: NSArray = (response as! Dictionary<String, AnyObject>)["countryList"] as! NSArray
+            if countryList.count != 0 {
+                self.countries = countryList
+                
+                
+                let countryNames: NSArray = (countryList.value(forKey: "name") as! NSArray)
+                
+                for countryName in countryNames  {
+                    
+                    if (countryName as! String) == self.countryTextField.text?.trim() {
+                        let indexOfCountryName : Int! = countryNames.index(of: countryName) 
+                        self.countryID = (countryList.value(forKey: "id") as! NSArray).object(at: indexOfCountryName) as! Int
+                        self.countryTextField.text = countryName as? String
+                        break
+                    }
+                }
+                
+                if self.countryID == -1 {
+                    self.stopAnimating()
+                } else {
+                    self.getStateListWithCountryID(countryID: self.countryID)
+                }
+            } else {
+                Banner.showFailureWithTitle(title: "An error occured while fetching countries")
+                self.stopAnimating()
+            }
+        }
+    }
+    
+    private func getStateListWithCountryID(countryID: Int) {
+        if countryID != -1 {
+            UserRequestManager.getStateListAPICallWith(countryID: countryID) { (success, response, error) in
+                let stateList: NSArray = (response as! Dictionary<String, AnyObject>)["stateList"] as! NSArray
+                if stateList.count != 0 {
+                    self.fullStates = stateList
+                    
+                    
+                    let stateNames: NSArray = (stateList.value(forKey: "name") as! NSArray)
+                    
+                    for stateName in stateNames  {
+                        
+                        if (stateName as! String) == self.stateTextField.text?.trim() {
+                            let indexOfStateName : Int! = stateNames.index(of: stateName)
+                            self.stateID = (stateList.value(forKey: "id") as! NSArray).object(at: indexOfStateName) as! Int
+                            self.stateTextField.text = stateName as? String
+                            break
+                        }
+                    }
+                    
+                } else {
+                    Banner.showFailureWithTitle(title: "An error occured while fetching states")
+                }
+                self.stopAnimating()
+            }
+        } else {
+            Banner.showFailureWithTitle(title: "Please select country first")
+        }
+    }
     
     private func setDetailsOf(user: User) {
         firstNameTextField.text = user.firstName
@@ -97,20 +199,6 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         postalCodeTextField.text = user.zipcode
         countryTextField.text = user.country
         stateTextField.text = user.state
-    }
-    
-    func getUserDetails() {
-        
-        startAnimating()
-        UserRequestManager.getUserAPICallWith { (success, response, error) in
-            if success {
-                let user = User.user
-                self.setDetailsOf(user: user!)
-                
-                self.postUserRefresh()
-            }
-            self.stopAnimating()
-        }
     }
     
     private func areEntriesValid() -> Bool {
@@ -140,43 +228,33 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         return message.characters.count == 0
     }
     
-    func postUserDetails() {
+    private func postUserDetails() {
         if areEntriesValid() {
-            let user = User()
-            user.firstName = firstNameTextField.text?.trim()
-            user.lastName = lastNameTextField.text?.trim()
-            user.email = emailTextField.text?.trim()
-            user.address = addressTextField.text?.trim()
-            user.city = cityTextField.text?.trim()
-            user.zipcode = postalCodeTextField.text?.trim()
-            user.country = countryTextField.text?.trim()
-            user.state = stateTextField.text?.trim()
+            let user = getUpdatedPersonalDetails()
             
             postUserDetailsOf(newUser: user)
         }
     }
     
-    func postUserDetailsOf(newUser: User) {
+    private func getUpdatedPersonalDetails() -> User {
+        let user = User()
+        user.firstName = firstNameTextField.text?.trim()
+        user.lastName = lastNameTextField.text?.trim()
+        user.email = emailTextField.text?.trim()
+        user.address = addressTextField.text?.trim()
+        user.city = cityTextField.text?.trim()
+        user.zipcode = postalCodeTextField.text?.trim()
+        user.country = countryTextField.text?.trim()
+        user.state = stateTextField.text?.trim()
         
-        startAnimating()
-        UserRequestManager.postEditUserAPICallWith(user: newUser) { (success, response, error) in
-            if success {
-                self.setDetailsOf(user: newUser)
-                newUser.saveUser()
-                
-                Banner.showSuccessWithTitle(title: "User details updated successfully")
-                
-                self.postUserRefresh()
-            }
-            self.stopAnimating()
-        }
+        return user
     }
     
-    func postUserRefresh() {
+    private func postUserRefreshNotification() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: LNRefreshUser), object: nil)
     }
     
-    func getOptionVC() -> OptionSelectionViewController {
+    private func getOptionVC() -> OptionSelectionViewController {
         let optionVC : OptionSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "OptionSelectionViewController") as! OptionSelectionViewController
         optionVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         optionVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

@@ -15,7 +15,7 @@ protocol SelectedOption {
 class OptionSelectionViewController: LSViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var pickerView: UIPickerView!
-    var options: NSMutableArray = [String]() as! NSMutableArray
+    var options: NSArray = [String]() as NSArray
     
     var delegate: SelectedOption!
     var currentIndex: NSInteger = 0

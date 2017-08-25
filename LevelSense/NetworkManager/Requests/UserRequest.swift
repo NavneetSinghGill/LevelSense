@@ -30,4 +30,17 @@ class UserRequest: Request {
         return self
     }
     
+    func createGetCountryListRequestWith() -> UserRequest {
+        
+        self.urlPath = kGetCountryListApiUrlSuffix
+        return self
+    }
+    
+    func createGetStateListRequestWith(countryID: Int) -> UserRequest {
+        parameters["countryId"] = countryID
+        
+        self.urlPath = kGetStateListApiUrlSuffix
+        return self
+    }
+    
 }
