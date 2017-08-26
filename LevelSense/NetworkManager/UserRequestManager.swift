@@ -10,6 +10,8 @@ import UIKit
 
 class UserRequestManager: NSObject {
     
+    //MARK: User
+    
     static func getUserAPICallWith(block:@escaping requestCompletionBlock)
     {
         if appDelegate.isNetworkAvailable {
@@ -25,18 +27,6 @@ class UserRequestManager: NSObject {
     {
         if appDelegate.isNetworkAvailable {
             UserInterface().postEditUserWith(request: UserRequest().createEditUserRequestWith(user: user), withCompletionBlock: block)
-            
-        } else{
-            Banner.showSuccessWithTitle(title: kNoNetwork)
-            block(false, kNoNetwork, nil)
-        }
-        
-    }
-    
-    static func getDevicesAPICallWith(block:@escaping requestCompletionBlock)
-    {
-        if appDelegate.isNetworkAvailable {
-            UserInterface().getDevicesWith(request: UserRequest().createGetDevicesRequestWith(), withCompletionBlock: block)
             
         } else{
             Banner.showSuccessWithTitle(title: kNoNetwork)
@@ -61,6 +51,32 @@ class UserRequestManager: NSObject {
     {
         if appDelegate.isNetworkAvailable {
             UserInterface().getStateListWith(request: UserRequest().createGetStateListRequestWith(countryID: countryID), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
+    //MARK: Device
+    
+    static func getDevicesAPICallWith(block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().getDevicesWith(request: UserRequest().createGetDevicesRequestWith(), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
+    static func postClaimDeviceAPICallWith(codes: NSArray,block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().postClaimDeviceWith(request: UserRequest().createPostClaimDeviceRequestWith(codes: codes), withCompletionBlock: block)
             
         } else{
             Banner.showSuccessWithTitle(title: kNoNetwork)

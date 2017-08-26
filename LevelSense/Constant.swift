@@ -47,6 +47,7 @@ let kGetUser = "getUser"
 let kEditUser = "editUser"
 let kGetCountryListApiUrlSuffix = "getCountryList"
 let kGetStateListApiUrlSuffix = "getStateList"
+let kClaimDeviceApiUrlSuffix = "claimDevice"
 
 
 //MARK: Segue identifiers
