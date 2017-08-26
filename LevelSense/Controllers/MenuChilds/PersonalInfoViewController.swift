@@ -32,9 +32,9 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     @IBOutlet var stateButton: UIButton!
     @IBOutlet var submitButton: UIButton!
     
-    var countries : NSArray = []
-    var fullStates : NSArray = []
-    var countryStates : NSArray = []
+    var countries : NSArray = []        // all countries
+    var fullStates : NSArray = []       // all states
+    var countryStates : NSArray = []    // states with specific countryID
     
     var optionSelectionInProgress: OptionSelectionInProgress!
     
@@ -76,6 +76,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     @IBAction func stateButtonTapped(button: UIButton) {
         let optionVC : OptionSelectionViewController = getOptionVC()
         
+        refreshCountryStatesWithCountryID()
+        
         optionVC.options = self.countryStates.value(forKey: "name") as! NSArray
         optionSelectionInProgress = .state
         
@@ -97,7 +99,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                 stateID = -1
                 stateTextField.text = ""
             }
-            countryStates = ((fullStates.filter { (($0 as! Dictionary<String, Any>)["countryId"] as! Int) == countryID } as NSArray).sortedArray(using: [NSSortDescriptor.init(key: "name", ascending: true)])) as NSArray
+            NSLog("Selected countryID \(countryID) and name: \(countryTextField.text!)")
+            refreshCountryStatesWithCountryID()
         } else {
             stateTextField.text = (self.countryStates.value(forKey: "name") as! NSArray)[index] as? String
             stateID = ((self.countryStates.value(forKey: "id") as! NSArray)[index] as! Int)
@@ -144,9 +147,9 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                 
                 
                 let countryNames: NSArray = (countryList.value(forKey: "name") as! NSArray)
-                
-                if countryNames.index(of: self.countryTextField.text!) != Int.max {
-                    self.countryID = countryNames.index(of: self.countryTextField.text!)
+                let countryIndex = countryNames.index(of: self.countryTextField.text!)
+                if countryIndex != Int.max {
+                    self.countryID = (self.countries.object(at: countryIndex) as! NSDictionary)["id"] as! Int
                 }
                 
                 if self.countryID == -1 {
@@ -256,6 +259,10 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         optionVC.delegate = self;
         
         return optionVC
+    }
+    
+    private func refreshCountryStatesWithCountryID() {
+        countryStates = ((fullStates.filter { (($0 as! Dictionary<String, Any>)["countryId"] as! Int) == countryID } as NSArray).sortedArray(using: [NSSortDescriptor.init(key: "name", ascending: true)])) as NSArray
     }
 
     //MARK:- Textfield delegate methods
