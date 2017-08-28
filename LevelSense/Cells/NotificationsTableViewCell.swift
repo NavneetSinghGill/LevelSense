@@ -10,6 +10,13 @@ import UIKit
 
 class NotificationsTableViewCell: UITableViewCell {
     
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var enableButton: UIButton!
+    
     @IBOutlet weak var extensionOuterViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var extensionInnerView: UIView!
     @IBOutlet weak var arrowButton: UIButton!
@@ -41,6 +48,13 @@ class NotificationsTableViewCell: UITableViewCell {
     }
     
     //MARK: Public methods
+    
+    func setDetailsOf(contact: Contact) {
+        nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
+        nameTextField.text = "\(contact.firstName!) \(contact.lastName!)"
+        emailTextField.text = "\(contact.email!)"
+        
+    }
     
     func openOrCollapse() {
         if extensionOuterViewHeightConstraint.constant == 0 {

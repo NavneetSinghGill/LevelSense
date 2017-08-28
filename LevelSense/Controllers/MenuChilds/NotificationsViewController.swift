@@ -14,6 +14,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
+    var contacts: [Contact] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,18 +32,37 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
 //        addContactSuperView.layer.shadowOffset = CGSize.init(width: -5, height: 2)
 //        addContactSuperView.layer.shadowRadius = 5
 //        addContactSuperView.layer.shadowOpacity = 0.5
+        
+        getContactsList()
+    }
+    
+    //MARK: Private methods
+    
+    private func getContactsList() {
+        
+        startAnimating()
+        ContactRequestManager.getContactListAPICallWith { (success, response, error) in
+            if success {
+                let contactDicts = (response as! Dictionary<String, Any>)["contactList"] as? NSArray
+                if contactDicts?.count != 0 {
+                    self.contacts = Contact.getContactFromDictionaryArray(contactDictionaries: contactDicts!)
+                    self.tableView.reloadData()
+                }
+            }
+            self.stopAnimating()
+        }
     }
     
     //MARK: Tableview datasource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return contacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: notificationsTableViewCellIdentifier, for: indexPath)
+        let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: notificationsTableViewCellIdentifier, for: indexPath) as! NotificationsTableViewCell
 
-        
+        cell.setDetailsOf(contact: contacts[indexPath.row])
         
         return cell
         

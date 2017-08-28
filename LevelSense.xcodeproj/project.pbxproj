@@ -33,6 +33,10 @@
 		5397E76E1F4D8EC90060F3C7 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */; };
 		539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */; };
 		539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */; };
+		539DEDD81F542A5F00662521 /* ContactRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDD71F542A5F00662521 /* ContactRequestManager.swift */; };
+		539DEDDA1F542AD700662521 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDD91F542AD700662521 /* Contact.swift */; };
+		539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDB1F542D5000662521 /* ContactInterface.swift */; };
+		539DEDDE1F542D7F00662521 /* ContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDD1F542D7F00662521 /* ContactRequest.swift */; };
 		53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */; };
 		7D5CD34E198412BBCCA56C63 /* Pods_LevelSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E033AA869FE6722239659C82 /* Pods_LevelSense.framework */; };
 		F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */; };
@@ -79,6 +83,10 @@
 		5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsTableViewCell.xib; sourceTree = "<group>"; };
+		539DEDD71F542A5F00662521 /* ContactRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestManager.swift; sourceTree = "<group>"; };
+		539DEDD91F542AD700662521 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		539DEDDB1F542D5000662521 /* ContactInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInterface.swift; sourceTree = "<group>"; };
+		539DEDDD1F542D7F00662521 /* ContactRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequest.swift; sourceTree = "<group>"; };
 		53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/NVActivityIndicatorView/NVActivityIndicatorView.framework"; sourceTree = "<group>"; };
 		BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.release.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.release.xcconfig"; sourceTree = "<group>"; };
 		D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.debug.xcconfig"; sourceTree = "<group>"; };
@@ -244,6 +252,7 @@
 			children = (
 				F19DAE781F3DD14A007F14FF /* LoginRequestManager.swift */,
 				53590D4F1F4C3EC5001F414A /* UserRequestManager.swift */,
+				539DEDD71F542A5F00662521 /* ContactRequestManager.swift */,
 				F19DAE861F3DD846007F14FF /* RealAPI.swift */,
 				F19DAE881F3DD8D0007F14FF /* NetworkHttpClient.swift */,
 				F19DAE7B1F3DD17E007F14FF /* Interfaces */,
@@ -258,6 +267,7 @@
 				F19DAE7C1F3DD1C3007F14FF /* Request.swift */,
 				F19DAE821F3DD3BC007F14FF /* LoginRequest.swift */,
 				53590D511F4C3F30001F414A /* UserRequest.swift */,
+				539DEDDD1F542D7F00662521 /* ContactRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -268,6 +278,7 @@
 				F19DAE841F3DD46C007F14FF /* Interface.swift */,
 				F19DAE7E1F3DD1F4007F14FF /* LoginInterface.swift */,
 				53590D531F4C4164001F414A /* UserInterface.swift */,
+				539DEDDB1F542D5000662521 /* ContactInterface.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -277,6 +288,7 @@
 			children = (
 				F19DAE8B1F3ECC1E007F14FF /* User.swift */,
 				530D61741F4C6DB300AB583F /* Device.swift */,
+				539DEDD91F542AD700662521 /* Contact.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -422,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A6D2AE71F46FDDD00C98631 /* LoginViewController.swift in Sources */,
+				539DEDD81F542A5F00662521 /* ContactRequestManager.swift in Sources */,
 				2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */,
 				F19DAE8C1F3ECC1E007F14FF /* User.swift in Sources */,
 				53590D521F4C3F30001F414A /* UserRequest.swift in Sources */,
@@ -431,6 +444,7 @@
 				53590D501F4C3EC5001F414A /* UserRequestManager.swift in Sources */,
 				F19DAE851F3DD46C007F14FF /* Interface.swift in Sources */,
 				5366569E1F4AD381003A5E71 /* extensions.swift in Sources */,
+				539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */,
 				F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */,
 				F19DAE891F3DD8D0007F14FF /* NetworkHttpClient.swift in Sources */,
 				539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */,
@@ -439,7 +453,9 @@
 				F19DAE811F3DD316007F14FF /* Constant.swift in Sources */,
 				2A6D2AF71F47080500C98631 /* SWRevealViewController.m in Sources */,
 				F19DAE871F3DD846007F14FF /* RealAPI.swift in Sources */,
+				539DEDDE1F542D7F00662521 /* ContactRequest.swift in Sources */,
 				5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */,
+				539DEDDA1F542AD700662521 /* Contact.swift in Sources */,
 				F19DAE761F3DCCBB007F14FF /* Reachability.swift in Sources */,
 				5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */,
 				2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */,

@@ -50,6 +50,11 @@ let kGetCountryListApiUrlSuffix = "getCountryList"
 let kGetStateListApiUrlSuffix = "getStateList"
 let kClaimDeviceApiUrlSuffix = "claimDevice"
 
+let kGetContactListApiUrlSuffix = "getContactList"
+let kAddContactApiUrlSuffix = "addContact"
+let kEditContactApiUrlSuffix = "editContact"
+let kDeleteContactApiUrlSuffix = "deleteContact"
+
 
 //MARK: Segue identifiers
 

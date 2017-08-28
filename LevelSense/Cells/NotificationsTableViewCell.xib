@@ -198,8 +198,13 @@
             <connections>
                 <outlet property="arrowButton" destination="No1-kM-sIS" id="nC8-GN-QJM"/>
                 <outlet property="arrowButtonHeightConstraint" destination="6uE-ps-ZvX" id="kZa-49-OG8"/>
+                <outlet property="emailTextField" destination="joE-qi-3Up" id="fOf-Bc-WgP"/>
+                <outlet property="enableButton" destination="hjA-QK-xOy" id="QUr-bF-bkV"/>
                 <outlet property="extensionInnerView" destination="V9h-Td-aGg" id="T8J-pf-pL1"/>
                 <outlet property="extensionOuterViewHeightConstraint" destination="KsC-Zj-yv4" id="d1B-oS-woN"/>
+                <outlet property="nameLabel" destination="cut-y5-e50" id="KiY-0s-9KA"/>
+                <outlet property="nameTextField" destination="1in-aK-OOR" id="Bfx-KP-Yyj"/>
+                <outlet property="typeLabel" destination="O0y-aY-AKv" id="A5y-vA-CHx"/>
             </connections>
             <point key="canvasLocation" x="33" y="224.5"/>
         </tableViewCell>
