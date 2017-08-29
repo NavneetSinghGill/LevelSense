@@ -25,6 +25,31 @@ class Contact: NSObject {
         
     }
     
+    init(firstName: String, contactID: String, email: String, emailActive: Bool, mobile: String, cellProvider: String, smsActive: Bool, defaultStatus: Bool, lastName: String) {
+        self.firstName = firstName
+        self.contactID = contactID
+        self.email = email
+        self.emailActive = emailActive
+        self.mobile = mobile
+        self.cellProvider = cellProvider
+        self.smsActive = smsActive
+        self.defaultStatus = defaultStatus
+        self.lastName = lastName
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Contact {
+        let copy: Contact = Contact.init(firstName: firstName,
+                                contactID: contactID,
+                                email: email,
+                                emailActive: emailActive,
+                                mobile: mobile,
+                                cellProvider: cellProvider,
+                                smsActive: smsActive,
+                                defaultStatus: defaultStatus,
+                                lastName: lastName)
+        return copy
+    }
+    
     init(contactJson: Dictionary<String, Any>) {
         let contact = Contact()
         contact.initWithDictionary(dictionary: contactJson)

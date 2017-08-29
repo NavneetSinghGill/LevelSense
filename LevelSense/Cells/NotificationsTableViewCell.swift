@@ -11,12 +11,15 @@ import UIKit
 @objc protocol NotificationCellProtocol {
     @objc optional func deleteCellAt(indexPath: IndexPath)
     @objc optional func cellExpandedWith(indexPath: IndexPath)
+    
+    func postEditOf(contact: Contact, ofIndexPath: IndexPath)
 }
 
 class NotificationsTableViewCell: UITableViewCell {
     
     
-    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -34,6 +37,8 @@ class NotificationsTableViewCell: UITableViewCell {
     var indexPathOfCell: IndexPath!
     var isExpanded: Bool! = false
     
+    var contact: Contact!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -45,7 +50,7 @@ class NotificationsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    //MARK: IBAction methods
+    //MARK:- IBAction methods
     
     @IBAction private func openOrCollapse(sender: UIButton) {
         openOrCollapseWith(shouldExpand: !isExpanded, andShouldAnimateArrow: true)
@@ -55,6 +60,15 @@ class NotificationsTableViewCell: UITableViewCell {
     
     @IBAction private func saveButtonTapped(sender: UIButton) {
         
+        let newContact: Contact = contact.copy()
+        
+        if areEntriesValid() {
+            newContact.firstName = firstNameTextField.text
+            newContact.lastName = lastNameTextField.text
+            newContact.email = emailTextField.text
+        
+            delegate?.postEditOf(contact: newContact, ofIndexPath: indexPathOfCell)
+        }
     }
     
     @IBAction private func deleteButtonTapped(sender: UIButton) {
@@ -65,9 +79,30 @@ class NotificationsTableViewCell: UITableViewCell {
     
     func setDetailsOf(contact: Contact) {
         nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
-        nameTextField.text = "\(contact.firstName!) \(contact.lastName!)"
+        firstNameTextField.text = "\(contact.firstName!)"
+        lastNameTextField.text = "\(contact.lastName!)"
         emailTextField.text = "\(contact.email!)"
         
+        self.contact = contact.copy()
+    }
+    
+    func areEntriesValid() -> Bool {
+        var message: String = ""
+        if firstNameTextField.text?.characters.count == 0 {
+            message = "Pleaes enter first name"
+        } else if lastNameTextField.text?.characters.count == 0 {
+            message = "Pleaes enter last name"
+        } else if emailTextField?.text?.trim().characters.count == 0 {
+            message = "Please enter email"
+        } else if !(emailTextField?.text?.trim().isValidEmail())! {
+            message = "Please enter a valid email"
+        }
+        
+        if message.characters.count != 0 {
+            Banner.showFailureWithTitle(title: message)
+            return false
+        }
+        return true
     }
     
     func openOrCollapseWith(shouldExpand: Bool, andShouldAnimateArrow: Bool) {

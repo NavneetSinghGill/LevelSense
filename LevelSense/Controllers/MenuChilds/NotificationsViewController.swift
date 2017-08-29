@@ -87,6 +87,27 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         }
     }
     
+    func postEditOf(contact: Contact, ofIndexPath: IndexPath) {
+        startAnimating()
+        ContactRequestManager.postEditContactAPICallWith(contact: contact, block: { (success, response, error) in
+            if success {
+                Banner.showSuccessWithTitle(title: "Contact updated")
+                self.contacts[ofIndexPath.row] = contact
+                self.indexOfExpandedCell = -1
+                
+                //Update cell data and its UI
+                DispatchQueue.main.async {
+                    let cell: NotificationsTableViewCell = self.tableView.cellForRow(at: ofIndexPath) as! NotificationsTableViewCell
+                    cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                    cell.setDetailsOf(contact: contact)
+                }
+            }
+            self.stopAnimating()
+        })
+    }
+    
     //MARK: Tableview datasource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
