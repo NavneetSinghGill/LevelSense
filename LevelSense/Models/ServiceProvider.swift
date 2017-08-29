@@ -11,7 +11,7 @@ import UIKit
 class ServiceProvider: NSObject {
     
     var name: String!
-    var id: String!
+    var id: Int!
     var code: String!
     var status: Bool!
     
@@ -20,7 +20,7 @@ class ServiceProvider: NSObject {
         
     }
     
-    init(name: String, id: String, code: String, status: Bool) {
+    init(name: String, id: Int, code: String, status: Bool) {
         self.name = name
         self.id = id
         self.code = code
@@ -45,20 +45,20 @@ class ServiceProvider: NSObject {
 //    private func initWithDictionary(dictionary : Dictionary<String, Any>) {
 //        let serviceProvider = dictionary as? Dictionary<String, Any>
 //        
-//        name = serviceProvider?["name"] as? String
+//        name = serviceProvider?["provider"] as? String
 //        id = serviceProvider?["id"] as? String
-//        code = serviceProvider?["code"] as? String
-//        status = serviceProvider?["status"] as? Bool
+//        code = serviceProvider?["providerCode"] as? String
+//        status = serviceProvider?["providerStatus"] as? Bool
 //        
 //    }
     
     func toDictionary() -> Dictionary<String, Any> {
         var dict = [String: Any]()
         
-        dict["name"] = name
+        dict["provider"] = name
         dict["id"] = id
-        dict["code"] = code
-        dict["status"] = status
+        dict["providerCode"] = code
+        dict["providerStatus"] = status
         
         return dict
     }
@@ -77,25 +77,25 @@ class ServiceProvider: NSObject {
         let serviceProvider = ServiceProvider()
         
         if dictionary!["id"] != nil {
-            serviceProvider.id = dictionary!["id"] as! String
+            serviceProvider.id = dictionary!["id"] as! Int
         } else {
-            serviceProvider.id = ""
+            serviceProvider.id = -1
         }
         
-        if dictionary!["name"] != nil {
-            serviceProvider.name = dictionary!["name"]! as! String
+        if dictionary!["provider"] != nil {
+            serviceProvider.name = dictionary!["provider"]! as! String
         } else {
             serviceProvider.name = ""
         }
         
-        if dictionary!["code"] != nil {
-            serviceProvider.code = dictionary!["code"]! as! String
+        if dictionary!["providerCode"] != nil {
+            serviceProvider.code = dictionary!["providerCode"]! as! String
         } else {
             serviceProvider.code = ""
         }
         
-        if dictionary!["status"] != nil {
-            serviceProvider.status = dictionary!["status"] as? Bool
+        if dictionary!["providerStatus"] != nil {
+            serviceProvider.status = dictionary!["providerStatus"] as? Bool
         } else {
             serviceProvider.status = false
         }
