@@ -27,6 +27,7 @@
 		536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A51F4AE39F003A5E71 /* SnapKit.framework */; };
 		536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */; };
 		536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536656A91F4AE3B8003A5E71 /* Banner.swift */; };
+		538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AA73D1F55A9C6004559EC /* ServiceProvider.swift */; };
 		5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */; };
 		5397E76A1F4D82710060F3C7 /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */; };
 		5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */; };
@@ -77,6 +78,7 @@
 		536656A51F4AE39F003A5E71 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/MarqueeLabel/MarqueeLabel.framework"; sourceTree = "<group>"; };
 		536656A91F4AE3B8003A5E71 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		538AA73D1F55A9C6004559EC /* ServiceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimDeviceViewController.swift; sourceTree = "<group>"; };
 		5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesViewController.swift; sourceTree = "<group>"; };
 		5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				F19DAE8B1F3ECC1E007F14FF /* User.swift */,
 				530D61741F4C6DB300AB583F /* Device.swift */,
 				539DEDD91F542AD700662521 /* Contact.swift */,
+				538AA73D1F55A9C6004559EC /* ServiceProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				F19DAE891F3DD8D0007F14FF /* NetworkHttpClient.swift in Sources */,
 				539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */,
 				F19DAE7F1F3DD1F4007F14FF /* LoginInterface.swift in Sources */,
+				538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */,
 				F19DAE7D1F3DD1C3007F14FF /* Request.swift in Sources */,
 				F19DAE811F3DD316007F14FF /* Constant.swift in Sources */,
 				2A6D2AF71F47080500C98631 /* SWRevealViewController.m in Sources */,

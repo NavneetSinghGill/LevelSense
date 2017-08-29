@@ -37,4 +37,10 @@ class ContactRequest: Request {
         return self
     }
     
+    func createGetCellProviderListRequestWith() -> ContactRequest {
+        
+        self.urlPath = kCellProviderListApiUrlSuffix
+        return self
+    }
+    
 }

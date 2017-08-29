@@ -53,28 +53,28 @@ class Contact: NSObject {
         return copy
     }
     
-    init(contactJson: Dictionary<String, Any>) {
-        let contact = Contact()
-        contact.initWithDictionary(dictionary: contactJson)
-    }
+//    init(contactJson: Dictionary<String, Any>) {
+//        let contact = Contact()
+//        contact.initWithDictionary(dictionary: contactJson)
+//    }
     
     //MARK: Private methods
     
-    private func initWithDictionary(dictionary : Dictionary<String, Any>) {
-        let contact = dictionary as? Dictionary<String, Any>
-        
-        contactID = contact?["id"] as? String
-        firstName = contact?["firstName"] as? String
-        lastName = contact?["lastName"] as? String
-        email = contact?["email"] as? String
-        emailActive = contact?["emailActive"] as? Bool
-        mobile = contact?["mobile"] as? String
-        cellProvider = contact?["cellProvider"] as? String
-        smsActive = contact?["smsActive"] as? Bool
-        defaultStatus = contact?["defaultStatus"] as? Bool
-        enableStatus = contact?["enableStatus"] as? Bool
-        
-    }
+//    private func initWithDictionary(dictionary : Dictionary<String, Any>) {
+//        let contact = dictionary as? Dictionary<String, Any>
+//        
+//        contactID = contact?["id"] as? String
+//        firstName = contact?["firstName"] as? String
+//        lastName = contact?["lastName"] as? String
+//        email = contact?["email"] as? String
+//        emailActive = contact?["emailActive"] as? Bool
+//        mobile = contact?["mobile"] as? String
+//        cellProvider = contact?["cellProvider"] as? String
+//        smsActive = contact?["smsActive"] as? Bool
+//        defaultStatus = contact?["defaultStatus"] as? Bool
+//        enableStatus = contact?["enableStatus"] as? Bool
+//        
+//    }
     
     func toDictionary() -> Dictionary<String, Any> {
         var dict = [String: Any]()

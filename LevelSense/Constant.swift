@@ -54,6 +54,7 @@ let kGetContactListApiUrlSuffix = "getContactList"
 let kAddContactApiUrlSuffix = "addContact"
 let kEditContactApiUrlSuffix = "editContact"
 let kDeleteContactApiUrlSuffix = "deleteContact"
+let kCellProviderListApiUrlSuffix = "getCellProviderList"
 
 
 //MARK: Segue identifiers

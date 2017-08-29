@@ -55,5 +55,16 @@ class ContactRequestManager: NSObject {
         }
         
     }
+    static func getCellProviderListAPICallWith(block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            ContactInterface().getCellProviderListWith(request: ContactRequest().createGetCellProviderListRequestWith(), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
     
 }

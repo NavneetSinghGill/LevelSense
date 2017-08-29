@@ -63,6 +63,19 @@ class ContactInterface: Interface {
         })
     }
     
+    func getCellProviderListWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performGetAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Get Cell providers response: \(String(describing: response))")
+            if success {
+                self.parseGeneralReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
     //MARK:- Parsing methods
     
     func parseGeneralReponse(response : Dictionary<String, Any>) {

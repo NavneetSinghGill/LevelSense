@@ -15,6 +15,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
     var contacts: [Contact] = []
+    var serviceProviders: [ServiceProvider] = []
     var indexOfExpandedCell: Int! = -1
     
     override func viewDidLoad() {
@@ -44,10 +45,27 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         startAnimating()
         ContactRequestManager.getContactListAPICallWith { (success, response, error) in
             if success {
+                
+                self.getCellProviderList()
+                
                 let contactDicts = (response as! Dictionary<String, Any>)["contactList"] as? NSArray
                 if contactDicts?.count != 0 {
                     self.contacts = Contact.getContactFromDictionaryArray(contactDictionaries: contactDicts!)
                     self.tableView.reloadData()
+                }
+            } else {
+                self.stopAnimating()
+            }
+        }
+    }
+    
+    private func getCellProviderList() {
+        ContactRequestManager.getCellProviderListAPICallWith { (success, response, error) in
+            if success {
+                
+                let serviceProviderDicts = (response as! Dictionary<String, Any>)["cellProviderList"] as? NSArray
+                if serviceProviderDicts?.count != 0 {
+                    self.serviceProviders = ServiceProvider.getServiceProviderFromDictionaryArray(serviceProviderDictionaries: serviceProviderDicts!)
                 }
             }
             self.stopAnimating()
