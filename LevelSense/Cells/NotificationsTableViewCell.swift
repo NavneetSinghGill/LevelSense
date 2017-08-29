@@ -21,16 +21,23 @@ class NotificationsTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var cellPhoneNumberTextField: UITextField!
+    
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var serviceProviderLabel: UILabel!
+    
+    @IBOutlet weak var arrowButton: UIButton!
     @IBOutlet weak var enableButton: UIButton!
     
     @IBOutlet weak var superContentView: UIView!
+    @IBOutlet weak var extensionInnerView: UIView!
     
     @IBOutlet weak var extensionOuterViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var extensionInnerView: UIView!
-    @IBOutlet weak var arrowButton: UIButton!
+    @IBOutlet weak var cellPhoneSuperViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var emailSuperViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var arrowButtonHeightConstraint: NSLayoutConstraint!
+    
     
     var delegate: NotificationCellProtocol!
     
@@ -39,9 +46,14 @@ class NotificationsTableViewCell: UITableViewCell {
     
     var contact: Contact!
     
+    var heightOfEmailSuperView: CGFloat!
+    var heightOfCellPhoneSuperView: CGFloat!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        heightOfEmailSuperView = emailSuperViewHeightConstraint.constant
+        heightOfCellPhoneSuperView = cellPhoneSuperViewHeightConstraint.constant
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -66,6 +78,9 @@ class NotificationsTableViewCell: UITableViewCell {
             newContact.firstName = firstNameTextField.text
             newContact.lastName = lastNameTextField.text
             newContact.email = emailTextField.text
+            newContact.mobile = cellPhoneNumberTextField.text
+            newContact.enableStatus = enableButton.isSelected
+            newContact.cellProvider = serviceProviderLabel.text == "----" ? "" : serviceProviderLabel.text
         
             delegate?.postEditOf(contact: newContact, ofIndexPath: indexPathOfCell)
         }
@@ -75,6 +90,14 @@ class NotificationsTableViewCell: UITableViewCell {
         delegate?.delete?(contact: contact, atIndexPath: indexPathOfCell)
     }
     
+    @IBAction private func serviceProviderButtonTapped(sender: UIButton) {
+        
+    }
+    
+    @IBAction private func enableButtonTapped(sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+    }
+    
     //MARK: Public methods
     
     func setDetailsOf(contact: Contact) {
@@ -82,8 +105,20 @@ class NotificationsTableViewCell: UITableViewCell {
         firstNameTextField.text = "\(contact.firstName!)"
         lastNameTextField.text = "\(contact.lastName!)"
         emailTextField.text = "\(contact.email!)"
+        cellPhoneNumberTextField.text = "\(contact.mobile!)"
         
-        self.contact = contact.copy()
+        if contact.smsActive {
+            typeLabel.text = "Text message"
+            setUIForCellPhone()
+        } else {
+            typeLabel.text = "Email"
+            setUIForEmail()
+        }
+        
+        enableButton.isSelected = contact.enableStatus == true
+        serviceProviderLabel.text = (contact.cellProvider! == "" ? "----" : contact.cellProvider!)
+        
+        self.contact = contact
     }
     
     func areEntriesValid() -> Bool {
@@ -123,6 +158,16 @@ class NotificationsTableViewCell: UITableViewCell {
             tableView.beginUpdates()
             tableView.endUpdates()
         }
+    }
+    
+    func setUIForEmail() {
+        cellPhoneSuperViewHeightConstraint.constant = 0
+        emailSuperViewHeightConstraint.constant = heightOfEmailSuperView
+    }
+    
+    func setUIForCellPhone() {
+        emailSuperViewHeightConstraint.constant = 0
+        cellPhoneSuperViewHeightConstraint.constant = heightOfCellPhoneSuperView
     }
     
     //MARK: Private methods
