@@ -63,8 +63,9 @@ class OptionSelectionViewController: LSViewController, UIPickerViewDelegate, UIP
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         
-        if delegate?.attributedString?(index: row, sender: sender) != nil {
-            let attString = delegate?.attributedString!(index: row, sender: sender)
+        let attString = delegate?.attributedString?(index: row, sender: sender)
+        
+        if attString != nil {
             return attString
         } else {
             

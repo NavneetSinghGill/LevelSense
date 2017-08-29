@@ -8,6 +8,11 @@
 
 import UIKit
 
+@objc protocol NotificationCellProtocol {
+    @objc optional func deleteCellAt(indexPath: IndexPath)
+    @objc optional func cellExpandedWith(indexPath: IndexPath)
+}
+
 class NotificationsTableViewCell: UITableViewCell {
     
     
@@ -17,11 +22,18 @@ class NotificationsTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var enableButton: UIButton!
     
+    @IBOutlet weak var superContentView: UIView!
+    
     @IBOutlet weak var extensionOuterViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var extensionInnerView: UIView!
     @IBOutlet weak var arrowButton: UIButton!
     @IBOutlet weak var arrowButtonHeightConstraint: NSLayoutConstraint!
-
+    
+    var delegate: NotificationCellProtocol!
+    
+    var indexPathOfCell: IndexPath!
+    var isExpanded: Bool! = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -35,16 +47,18 @@ class NotificationsTableViewCell: UITableViewCell {
     
     //MARK: IBAction methods
     
-    @IBAction func openOrCollapse(sender: UIButton) {
-        openOrCollapse()
+    @IBAction private func openOrCollapse(sender: UIButton) {
+        openOrCollapseWith(shouldExpand: !isExpanded, andShouldAnimateArrow: true)
+        updateTableView()
+        delegate?.cellExpandedWith?(indexPath: indexPathOfCell)
     }
     
-    @IBAction func saveButtonTapped(sender: UIButton) {
+    @IBAction private func saveButtonTapped(sender: UIButton) {
         
     }
     
-    @IBAction func deleteButtonTapped(sender: UIButton) {
-        
+    @IBAction private func deleteButtonTapped(sender: UIButton) {
+        delegate?.deleteCellAt?(indexPath: IndexPath.init(row: indexPathOfCell.row, section: 0))
     }
     
     //MARK: Public methods
@@ -56,45 +70,58 @@ class NotificationsTableViewCell: UITableViewCell {
         
     }
     
-    func openOrCollapse() {
-        if extensionOuterViewHeightConstraint.constant == 0 {
+    func openOrCollapseWith(shouldExpand: Bool, andShouldAnimateArrow: Bool) {
+        if shouldExpand {
             extensionOuterViewHeightConstraint.constant = extensionInnerView.frame.size.height
-            updateArrowButton(forOpen: true)
+            updateArrowButton(forOpen: true, withAnimation: andShouldAnimateArrow)
             showHighlightEffect()
         } else {
             extensionOuterViewHeightConstraint.constant = 0
-            updateArrowButton(forOpen: false)
+            updateArrowButton(forOpen: false, withAnimation: andShouldAnimateArrow)
         }
-        
-        let tableView: UITableView = (self.superview?.superview) as! UITableView
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        isExpanded = shouldExpand
+    }
+    
+    func updateTableView() {
+        if self.superview?.superview != nil {
+            let tableView: UITableView = (self.superview?.superview) as! UITableView
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
     }
     
     //MARK: Private methods
     
-    private func updateArrowButton(forOpen: Bool) {
-        if forOpen {
-            UIView.animate(withDuration: 0.3, animations: { 
+    private func updateArrowButton(forOpen: Bool, withAnimation: Bool) {
+        let arrowAnimationBlock = {
+            
+            if forOpen {
                 self.arrowButton.transform = CGAffineTransform.init(rotationAngle: 3.14)
                 self.arrowButton.transform = CGAffineTransform.init(rotationAngle: 3.15)
                 //Here two angle are set to control the rotation direction for open and close
-            })
-            
-        } else {
-            UIView.animate(withDuration: 0.3, animations: {
+                
+            } else {
                 self.arrowButton.transform = CGAffineTransform.init(rotationAngle: 0)
+            }
+            
+        }
+        
+        if withAnimation {
+            UIView.animate(withDuration: 0.3, animations: {
+                arrowAnimationBlock()
             })
+        } else {
+            arrowAnimationBlock()
         }
     }
     
     func showHighlightEffect() {
-        self.contentView.backgroundColor = UIColor.clear
-        self.contentView.layer.backgroundColor = veryLightblueColor.cgColor
+        self.superContentView.backgroundColor = UIColor.clear
+        self.superContentView.layer.backgroundColor = veryLightblueColor.cgColor
         UIView.animate(withDuration: 0.3, animations: { 
-            self.contentView.layer.backgroundColor = UIColor.white.cgColor
+            self.superContentView.layer.backgroundColor = UIColor.white.cgColor
         }) { (isCompleted) in
-            self.contentView.backgroundColor = UIColor.white
+            self.superContentView.backgroundColor = UIColor.white
         }
     }
     

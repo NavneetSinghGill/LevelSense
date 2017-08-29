@@ -8,13 +8,14 @@
 
 import UIKit
 
-class NotificationsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
+class NotificationsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate, NotificationCellProtocol {
 
     let notificationsTableViewCellIdentifier = "NotificationsTableViewCell"
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
     var contacts: [Contact] = []
+    var indexOfExpandedCell: Int! = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,39 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         }
     }
     
+    //MARK: Notification cell delegate methods
+    
+    func deleteCellAt(indexPath: IndexPath) {
+        indexOfExpandedCell = -1
+        let cell: NotificationsTableViewCell! = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
+        cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
+        cell.updateTableView()
+        
+        contacts.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
+        tableView.reloadData()
+    }
+    
+    func cellExpandedWith(indexPath: IndexPath) {
+        if indexOfExpandedCell != -1 && indexOfExpandedCell != indexPath.row {
+            //Close previous expanded cell and ignore if same cell is called
+            let previousExpandedCell = self.tableView.cellForRow(at: IndexPath.init(row: indexOfExpandedCell, section: 0))
+            if previousExpandedCell != nil {
+                let cell: NotificationsTableViewCell! = previousExpandedCell as! NotificationsTableViewCell
+                cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
+                cell.updateTableView()
+            }
+            print("Cell close with index: \(indexOfExpandedCell)")
+        }
+        if indexOfExpandedCell != indexPath.row {
+            indexOfExpandedCell = indexPath.row
+            print("New index: \(indexOfExpandedCell)")
+        } else {
+            indexOfExpandedCell = -1
+            print("New index -1")
+        }
+    }
+    
     //MARK: Tableview datasource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,19 +95,19 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: notificationsTableViewCellIdentifier, for: indexPath) as! NotificationsTableViewCell
-
+        
+        cell.delegate = self
+        cell.indexPathOfCell = indexPath
         cell.setDetailsOf(contact: contacts[indexPath.row])
+        print("\(indexPath.row)")
+        
+        if indexOfExpandedCell == indexPath.row {
+            cell.openOrCollapseWith(shouldExpand: true, andShouldAnimateArrow: false)
+        } else {
+            cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: false)
+        }
         
         return cell
         
-    }
-
-    //MARK: Tableview delegate methods
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let cell: NotificationsTableViewCell = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
-
     }
 }
