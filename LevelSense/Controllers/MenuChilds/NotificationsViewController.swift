@@ -56,15 +56,24 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     
     //MARK: Notification cell delegate methods
     
-    func deleteCellAt(indexPath: IndexPath) {
-        indexOfExpandedCell = -1
-        let cell: NotificationsTableViewCell! = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
-        cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
-        cell.updateTableView()
+    func delete(contact:Contact, atIndexPath: IndexPath) {
         
-        contacts.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
-        tableView.reloadData()
+        startAnimating()
+        ContactRequestManager.postDeleteContactAPICallWith(contact: contact) { (success, response, error) in
+            if success {
+                Banner.showSuccessWithTitle(title: "Contact deleted successfully")
+                self.indexOfExpandedCell = -1
+                let cell: NotificationsTableViewCell! = self.tableView.cellForRow(at: atIndexPath) as! NotificationsTableViewCell
+                cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
+                cell.updateTableView()
+                
+                self.contacts.remove(at: atIndexPath.row)
+                self.tableView.deleteRows(at: [atIndexPath], with: UITableViewRowAnimation.top)
+                self.tableView.reloadData()
+            }
+            self.stopAnimating()
+        }
+        
     }
     
     func cellExpandedWith(indexPath: IndexPath) {
@@ -91,7 +100,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         startAnimating()
         ContactRequestManager.postEditContactAPICallWith(contact: contact, block: { (success, response, error) in
             if success {
-                Banner.showSuccessWithTitle(title: "Contact updated")
+                Banner.showSuccessWithTitle(title: "Contact updated successfully")
                 self.contacts[ofIndexPath.row] = contact
                 self.indexOfExpandedCell = -1
                 

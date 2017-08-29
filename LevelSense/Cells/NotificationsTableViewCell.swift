@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol NotificationCellProtocol {
-    @objc optional func deleteCellAt(indexPath: IndexPath)
+    @objc optional func delete(contact:Contact, atIndexPath: IndexPath)
     @objc optional func cellExpandedWith(indexPath: IndexPath)
     
     func postEditOf(contact: Contact, ofIndexPath: IndexPath)
@@ -72,7 +72,7 @@ class NotificationsTableViewCell: UITableViewCell {
     }
     
     @IBAction private func deleteButtonTapped(sender: UIButton) {
-        delegate?.deleteCellAt?(indexPath: IndexPath.init(row: indexPathOfCell.row, section: 0))
+        delegate?.delete?(contact: contact, atIndexPath: indexPathOfCell)
     }
     
     //MARK: Public methods
