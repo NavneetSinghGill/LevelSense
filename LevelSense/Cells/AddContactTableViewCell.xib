@@ -19,13 +19,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iff-Xa-PjF" userLabel="SuperView">
-                        <rect key="frame" x="5" y="5" width="310" height="500.5"/>
+                        <rect key="frame" x="5" y="50" width="310" height="455.5"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I6X-XB-uYF" userLabel="ExtendedOuterView">
-                                <rect key="frame" x="0.0" y="15" width="310" height="485.5"/>
+                                <rect key="frame" x="0.0" y="15" width="310" height="440.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfu-tu-juA">
-                                        <rect key="frame" x="0.0" y="0.0" width="1" height="485.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1" height="440.5"/>
                                         <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="7AW-qP-TsV"/>
@@ -303,13 +303,35 @@
                             <constraint firstAttribute="trailing" secondItem="I6X-XB-uYF" secondAttribute="trailing" id="zVi-Tv-42p"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="viS-Ph-0yS">
+                        <rect key="frame" x="0.0" y="5" width="320" height="40"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Contact" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqr-gH-j9V">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bqr-gH-j9V" secondAttribute="trailing" id="5G1-4G-eaf"/>
+                            <constraint firstItem="bqr-gH-j9V" firstAttribute="top" secondItem="viS-Ph-0yS" secondAttribute="top" id="FY7-BK-dOv"/>
+                            <constraint firstItem="bqr-gH-j9V" firstAttribute="leading" secondItem="viS-Ph-0yS" secondAttribute="leading" id="Ti7-E0-ds6"/>
+                            <constraint firstAttribute="bottom" secondItem="bqr-gH-j9V" secondAttribute="bottom" id="yrP-8V-9Yu"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
+                    <constraint firstItem="viS-Ph-0yS" firstAttribute="top" secondItem="M9d-6W-NNk" secondAttribute="top" constant="5" id="0bC-v9-1fo"/>
                     <constraint firstItem="Iff-Xa-PjF" firstAttribute="leading" secondItem="M9d-6W-NNk" secondAttribute="leading" constant="5" id="1lY-VU-rup"/>
-                    <constraint firstItem="Iff-Xa-PjF" firstAttribute="top" secondItem="M9d-6W-NNk" secondAttribute="top" constant="5" id="gKK-Cc-aXI"/>
+                    <constraint firstItem="Iff-Xa-PjF" firstAttribute="top" secondItem="viS-Ph-0yS" secondAttribute="bottom" constant="5" id="A9c-jg-hzH"/>
+                    <constraint firstItem="Iff-Xa-PjF" firstAttribute="top" secondItem="M9d-6W-NNk" secondAttribute="top" constant="50" id="gKK-Cc-aXI"/>
                     <constraint firstAttribute="bottom" secondItem="Iff-Xa-PjF" secondAttribute="bottom" id="gXo-g5-hN6"/>
                     <constraint firstAttribute="trailing" secondItem="Iff-Xa-PjF" secondAttribute="trailing" constant="5" id="oUJ-pD-EfX"/>
+                    <constraint firstAttribute="trailing" secondItem="viS-Ph-0yS" secondAttribute="trailing" id="tFk-b2-HcH"/>
+                    <constraint firstItem="viS-Ph-0yS" firstAttribute="leading" secondItem="M9d-6W-NNk" secondAttribute="leading" id="vsP-mJ-Ykp"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

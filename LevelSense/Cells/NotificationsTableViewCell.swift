@@ -293,7 +293,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol {
                 newContact.cellProvider = delegate?.getCodeFor(providerName: providerName!)
             }
             
-            delegate?.postEditOf(contact: newContact, ofIndexPath: indexPathOfCell)
+            delegate?.postAddOf(contact: newContact, ofIndexPath: indexPathOfCell)
         }
     }
     

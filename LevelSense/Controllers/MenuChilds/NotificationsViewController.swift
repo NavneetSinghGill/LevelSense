@@ -34,12 +34,6 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
         
-//        addContactSuperView.layer.cornerRadius = 5
-//        addContactSuperView.layer.masksToBounds = false
-//        addContactSuperView.layer.shadowOffset = CGSize.init(width: -5, height: 2)
-//        addContactSuperView.layer.shadowRadius = 5
-//        addContactSuperView.layer.shadowOpacity = 0.5
-        
         getContactsList()
     }
     
@@ -203,20 +197,9 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     func postAddOf(contact: Contact, ofIndexPath: IndexPath) {
         
         startAnimating()
-        ContactRequestManager.postEditContactAPICallWith(contact: contact, block: { (success, response, error) in
+        ContactRequestManager.postAddContactAPICallWith(contact: contact, block: { (success, response, error) in
             if success {
                 Banner.showSuccessWithTitle(title: "Contact added successfully")
-//                self.contacts[ofIndexPath.row] = contact
-//                self.indexOfExpandedCell = -1
-//                
-//                //Update cell data and its UI
-//                DispatchQueue.main.async {
-//                    let cell: NotificationsTableViewCell = self.tableView.cellForRow(at: ofIndexPath) as! NotificationsTableViewCell
-//                    cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
-//                    self.tableView.beginUpdates()
-//                    self.tableView.endUpdates()
-//                    cell.setDetailsOf(contact: contact)
-//                }
                 self.isAddContactActive = false
                 self.getContactsList()
             } else {
