@@ -16,6 +16,8 @@ public typealias requestCompletionBlock = (_ success: Bool, _ response: Any?, _ 
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
 
+let notificationOptionTypes: NSArray = ["Email", "Text message"]
+
 //MARK: Colors
 
 let blueColor = UIColor.init(colorLiteralRed: 0, green: 110/255.0, blue: 190/255, alpha: 1.0)

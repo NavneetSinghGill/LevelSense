@@ -17,6 +17,7 @@
 		2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */; };
 		530D61751F4C6DB300AB583F /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530D61741F4C6DB300AB583F /* Device.swift */; };
 		535522B91F4EEB1100D0AE05 /* OptionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535522B81F4EEB1100D0AE05 /* OptionSelectionViewController.swift */; };
+		5357933A1F56AF5100F28DC5 /* AddContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535793381F56AF5100F28DC5 /* AddContactTableViewCell.xib */; };
 		53590D4D1F4C129D001F414A /* MyDevicesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */; };
 		53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */; };
 		53590D501F4C3EC5001F414A /* UserRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53590D4F1F4C3EC5001F414A /* UserRequestManager.swift */; };
@@ -68,6 +69,7 @@
 		2A7C55E41F46D8BC00A3CD91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		530D61741F4C6DB300AB583F /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		535522B81F4EEB1100D0AE05 /* OptionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionSelectionViewController.swift; sourceTree = "<group>"; };
+		535793381F56AF5100F28DC5 /* AddContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactTableViewCell.xib; sourceTree = "<group>"; };
 		53590D4B1F4C129D001F414A /* MyDevicesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesTableViewCell.swift; sourceTree = "<group>"; };
 		53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyDevicesTableViewCell.xib; sourceTree = "<group>"; };
 		53590D4F1F4C3EC5001F414A /* UserRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequestManager.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				53590D4C1F4C129D001F414A /* MyDevicesTableViewCell.xib */,
 				539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */,
 				539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */,
+				535793381F56AF5100F28DC5 /* AddContactTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 			files = (
 				2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */,
 				F19DAE691F3DB03D007F14FF /* Assets.xcassets in Resources */,
+				5357933A1F56AF5100F28DC5 /* AddContactTableViewCell.xib in Resources */,
 				539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */,
 				2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */,
 				53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */,

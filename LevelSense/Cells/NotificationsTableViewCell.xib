@@ -126,7 +126,7 @@
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QL3-RW-zxT" userLabel="OptionsButton">
-                                                <rect key="frame" x="0.0" y="73" width="129" height="41"/>
+                                                <rect key="frame" x="0.0" y="73" width="93" height="41"/>
                                                 <connections>
                                                     <action selector="serviceProviderButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9dk-iq-omK"/>
                                                 </connections>
@@ -135,6 +135,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="gAY-Os-Vtb" firstAttribute="top" secondItem="1lE-N2-Rr3" secondAttribute="bottom" constant="5" id="6Mb-Nl-so7"/>
+                                            <constraint firstItem="QL3-RW-zxT" firstAttribute="trailing" secondItem="FFa-bh-qbu" secondAttribute="trailing" constant="10" id="6eH-e7-Om8"/>
                                             <constraint firstAttribute="bottom" secondItem="QL3-RW-zxT" secondAttribute="bottom" id="6g9-JL-zfy"/>
                                             <constraint firstItem="d7H-DL-8rw" firstAttribute="top" secondItem="QNf-N5-wT2" secondAttribute="top" constant="10" id="9hB-df-4bB"/>
                                             <constraint firstItem="QL3-RW-zxT" firstAttribute="leading" secondItem="QNf-N5-wT2" secondAttribute="leading" id="E5X-V9-z59"/>
@@ -142,7 +143,6 @@
                                             <constraint firstAttribute="trailing" secondItem="7LA-dK-2Ok" secondAttribute="trailing" constant="15" id="XS8-Lh-hmJ"/>
                                             <constraint firstItem="7LA-dK-2Ok" firstAttribute="top" secondItem="d7H-DL-8rw" secondAttribute="bottom" constant="5" id="Z28-ZC-8f4"/>
                                             <constraint firstAttribute="trailing" secondItem="d7H-DL-8rw" secondAttribute="trailing" id="aFG-JZ-Pnb"/>
-                                            <constraint firstItem="QL3-RW-zxT" firstAttribute="trailing" secondItem="1lE-N2-Rr3" secondAttribute="trailing" id="buJ-Jw-s1R"/>
                                             <constraint firstItem="7LA-dK-2Ok" firstAttribute="leading" secondItem="QNf-N5-wT2" secondAttribute="leading" constant="15" id="euO-OV-hfQ"/>
                                             <constraint firstItem="FFa-bh-qbu" firstAttribute="centerY" secondItem="gAY-Os-Vtb" secondAttribute="centerY" id="fnP-Be-zSF"/>
                                             <constraint firstItem="FFa-bh-qbu" firstAttribute="width" secondItem="FFa-bh-qbu" secondAttribute="height" id="iyB-fo-qYE"/>
@@ -303,8 +303,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="arrowButton" destination="No1-kM-sIS" id="nC8-GN-QJM"/>
-                <outlet property="arrowButtonHeightConstraint" destination="6uE-ps-ZvX" id="kZa-49-OG8"/>
+                <outlet property="arrowButton" destination="No1-kM-sIS" id="Bvz-Wf-uWr"/>
                 <outlet property="cellPhoneNumberTextField" destination="7LA-dK-2Ok" id="Qy3-KB-OWR"/>
                 <outlet property="cellPhoneSuperViewHeightConstraint" destination="waR-5o-u3n" id="Nhc-6y-blm"/>
                 <outlet property="emailSuperViewHeightConstraint" destination="sVa-Ox-nop" id="nhf-Iu-MDC"/>
@@ -315,6 +314,7 @@
                 <outlet property="firstNameTextField" destination="1in-aK-OOR" id="Vb5-Wm-B4o"/>
                 <outlet property="lastNameTextField" destination="bPl-af-76I" id="9fy-99-cxe"/>
                 <outlet property="nameLabel" destination="cut-y5-e50" id="KiY-0s-9KA"/>
+                <outlet property="providerArrowButton" destination="QL3-RW-zxT" id="9z0-Ic-A93"/>
                 <outlet property="serviceProviderLabel" destination="gAY-Os-Vtb" id="nC4-kJ-L6A"/>
                 <outlet property="superContentView" destination="8xP-rg-ali" id="3fM-bl-E1r"/>
                 <outlet property="typeLabel" destination="iyn-m3-bPH" id="0YA-bv-YCY"/>

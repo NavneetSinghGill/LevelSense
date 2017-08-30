@@ -11,12 +11,14 @@ import UIKit
 class NotificationsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate, NotificationCellProtocol {
 
     let notificationsTableViewCellIdentifier = "NotificationsTableViewCell"
+    let addContactTableViewCellCellIdentifier = "AddContactTableViewCell"
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
     var contacts: [Contact] = []
     var serviceProviders: NSMutableArray = [ServiceProvider]() as! NSMutableArray
     var indexOfExpandedCell: Int! = -1
+    var isAddContactActive: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,10 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         addMenuButton()
         setNavigationTitle(title: "NOTIFICATIONS")
         
+        //Normal notification cell
         tableView.registerNib(withIdentifierAndNibName: notificationsTableViewCellIdentifier)
+        //Add contact cell
+        tableView.registerNib(withIdentifierAndNibName: addContactTableViewCellCellIdentifier)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
@@ -75,19 +80,27 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     
     //MARK: Notification cell delegate methods
     
-    func openOptionScreenForCellAt(indexPath: IndexPath, andProviderName: String) {
+    func openOptionScreenForCellAt(indexPath: IndexPath, currentValue: String, popupOf: Int, sender: Any?) {
         
         let optionVC : OptionSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "OptionSelectionViewController") as! OptionSelectionViewController
         optionVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         optionVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        optionVC.sender = sender
         
-        let cell: NotificationsTableViewCell = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
-        optionVC.delegate = cell;
-        optionVC.sender = self
-        
-        let names = serviceProviders.value(forKey: "name") as! NSArray
-        optionVC.options = names
-        optionVC.startIndex = names.index(of: andProviderName)
+        if popupOf == 0 { //Service provider
+            let cell: NotificationsTableViewCell = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
+            optionVC.delegate = cell;
+            
+            let names = serviceProviders.value(forKey: "name") as! NSArray
+            optionVC.options = names
+            optionVC.startIndex = names.index(of: currentValue)
+        } else {
+            let cell: NotificationsTableViewCell = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
+            optionVC.delegate = cell;
+            
+            optionVC.options = notificationOptionTypes
+            optionVC.startIndex = notificationOptionTypes.index(of: currentValue)
+        }
         
         present(optionVC, animated: true, completion: nil)
 
@@ -108,7 +121,9 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         if providerNames.count != 0 {
             let index: Int = providerNames.index(of: providerName)
             let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
-            return providerCodes.object(at: index) as! String
+            if index != Int.max {
+                return providerCodes.object(at: index) as! String
+            }
         }
         return ""
     }
@@ -157,6 +172,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         if indexOfExpandedCell != indexPath.row {
             indexOfExpandedCell = indexPath.row
             print("New index: \(indexOfExpandedCell)")
+            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         } else {
             indexOfExpandedCell = -1
             print("New index -1")
@@ -184,27 +200,98 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         })
     }
     
+    func postAddOf(contact: Contact, ofIndexPath: IndexPath) {
+        
+        startAnimating()
+        ContactRequestManager.postEditContactAPICallWith(contact: contact, block: { (success, response, error) in
+            if success {
+                Banner.showSuccessWithTitle(title: "Contact added successfully")
+//                self.contacts[ofIndexPath.row] = contact
+//                self.indexOfExpandedCell = -1
+//                
+//                //Update cell data and its UI
+//                DispatchQueue.main.async {
+//                    let cell: NotificationsTableViewCell = self.tableView.cellForRow(at: ofIndexPath) as! NotificationsTableViewCell
+//                    cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
+//                    self.tableView.beginUpdates()
+//                    self.tableView.endUpdates()
+//                    cell.setDetailsOf(contact: contact)
+//                }
+                self.isAddContactActive = false
+                self.getContactsList()
+            } else {
+                self.stopAnimating()
+            }
+        })
+    }
+    
+    func refreshTableViewCellAt(indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+    }
+    
+    func closeAddContact() {
+        isAddContactActive = false
+        self.tableView.reloadData()
+    }
+    
     //MARK: Tableview datasource methods
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if isAddContactActive {
+            return 2
+        } else {
+            return 1
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
+        if section == 0 {
+            return contacts.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: notificationsTableViewCellIdentifier, for: indexPath) as! NotificationsTableViewCell
         
-        cell.delegate = self
-        cell.indexPathOfCell = indexPath
-        cell.setDetailsOf(contact: contacts[indexPath.row])
-        print("\(indexPath.row)")
-        
-        if indexOfExpandedCell == indexPath.row {
-            cell.openOrCollapseWith(shouldExpand: true, andShouldAnimateArrow: false)
+        if indexPath.section == 0 {
+            let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: notificationsTableViewCellIdentifier, for: indexPath) as! NotificationsTableViewCell
+            cell.delegate = self
+            cell.indexPathOfCell = indexPath
+            cell.setDetailsOf(contact: contacts[indexPath.row])
+            print("\(indexPath.row)")
+            
+            if indexOfExpandedCell == indexPath.row {
+                cell.openOrCollapseWith(shouldExpand: true, andShouldAnimateArrow: false)
+            } else {
+                cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: false)
+            }
+            return cell
         } else {
-            cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: false)
+            let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: addContactTableViewCellCellIdentifier, for: indexPath) as! NotificationsTableViewCell
+            cell.delegate = self
+            cell.indexPathOfCell = indexPath
+            cell.isAddContact = true
+            cell.setupForAddContact()
+            
+            cell.openOrCollapseWith(shouldExpand: true, andShouldAnimateArrow: false)
+            return cell
         }
         
-        return cell
-        
+    }
+    
+    //MARK: IBAction methods
+    
+    @IBAction func addContactButtonTapped(button: UIButton) {
+        if !isAddContactActive {
+            isAddContactActive = true
+            tableView.reloadData()
+            
+            let index0Section1 = IndexPath.init(row: 0, section: 1)
+            let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: addContactTableViewCellCellIdentifier, for: index0Section1) as! NotificationsTableViewCell
+            cell.setupForAddContact()
+            
+            tableView.scrollToRow(at: index0Section1, at: UITableViewScrollPosition.top, animated: true)
+        }
     }
 }
