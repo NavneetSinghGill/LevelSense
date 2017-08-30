@@ -15,7 +15,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
     var contacts: [Contact] = []
-    var serviceProviders: [ServiceProvider] = []
+    var serviceProviders: NSMutableArray = [ServiceProvider]() as! NSMutableArray
     var indexOfExpandedCell: Int! = -1
     
     override func viewDidLoad() {
@@ -65,7 +65,8 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                 
                 let serviceProviderDicts = (response as! Dictionary<String, Any>)["cellProviderList"] as? NSArray
                 if serviceProviderDicts?.count != 0 {
-                    self.serviceProviders = ServiceProvider.getServiceProviderFromDictionaryArray(serviceProviderDictionaries: serviceProviderDicts!)
+                    self.serviceProviders = ServiceProvider.getServiceProviderFromDictionaryArray(serviceProviderDictionaries: serviceProviderDicts!) as! NSMutableArray
+                    self.tableView.reloadData()
                 }
             }
             self.stopAnimating()
@@ -73,6 +74,54 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     }
     
     //MARK: Notification cell delegate methods
+    
+    func openOptionScreenForCellAt(indexPath: IndexPath, andProviderName: String) {
+        
+        let optionVC : OptionSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "OptionSelectionViewController") as! OptionSelectionViewController
+        optionVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        optionVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        
+        let cell: NotificationsTableViewCell = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
+        optionVC.delegate = cell;
+        optionVC.sender = self
+        
+        let names = serviceProviders.value(forKey: "name") as! NSArray
+        optionVC.options = names
+        optionVC.startIndex = names.index(of: andProviderName)
+        
+        present(optionVC, animated: true, completion: nil)
+
+    }
+    
+    func getProviderNameFor(code: String) -> String {
+        let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
+        if providerCodes.count != 0 {
+            let index: Int = providerCodes.index(of: code)
+            let providerNames: NSArray = serviceProviders.value(forKey: "name") as! NSArray
+            return providerNames.object(at: index) as! String
+        }
+        return ""
+    }
+    
+    func getCodeFor(providerName: String) -> String {
+        let providerNames: NSArray = serviceProviders.value(forKey: "name") as! NSArray
+        if providerNames.count != 0 {
+            let index: Int = providerNames.index(of: providerName)
+            let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
+            return providerCodes.object(at: index) as! String
+        }
+        return ""
+    }
+    
+    func getProviderNameFor(index: Int) -> String {
+        let providerNames: NSArray = serviceProviders.value(forKey: "name") as! NSArray
+        return providerNames.object(at: index) as! String
+    }
+    
+    func getCodeFor(index: Int) -> String {
+        let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
+        return providerCodes.object(at: index) as! String
+    }
     
     func delete(contact:Contact, atIndexPath: IndexPath) {
         

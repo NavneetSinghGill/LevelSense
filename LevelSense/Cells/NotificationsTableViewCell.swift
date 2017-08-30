@@ -13,9 +13,16 @@ import UIKit
     @objc optional func cellExpandedWith(indexPath: IndexPath)
     
     func postEditOf(contact: Contact, ofIndexPath: IndexPath)
+    
+    //The array of service providers is in notification controller only and not in the cells so to fetch the data from that array these methods are used
+    func openOptionScreenForCellAt(indexPath: IndexPath, andProviderName: String)
+    func getProviderNameFor(code: String) -> String
+    func getCodeFor(providerName: String) -> String
+    func getProviderNameFor(index: Int) -> String
+    func getCodeFor(index: Int) -> String
 }
 
-class NotificationsTableViewCell: UITableViewCell {
+class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol {
     
     
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -80,7 +87,11 @@ class NotificationsTableViewCell: UITableViewCell {
             newContact.email = emailTextField.text
             newContact.mobile = cellPhoneNumberTextField.text
             newContact.enableStatus = enableButton.isSelected
-            newContact.cellProvider = serviceProviderLabel.text == "----" ? "" : serviceProviderLabel.text
+            
+            let providerName = serviceProviderLabel.text == "----" ? "" : serviceProviderLabel.text
+            if providerName != "----" {
+                newContact.cellProvider = delegate?.getCodeFor(providerName: providerName!)
+            }
         
             delegate?.postEditOf(contact: newContact, ofIndexPath: indexPathOfCell)
         }
@@ -91,11 +102,19 @@ class NotificationsTableViewCell: UITableViewCell {
     }
     
     @IBAction private func serviceProviderButtonTapped(sender: UIButton) {
-        
+        delegate?.openOptionScreenForCellAt(indexPath: indexPathOfCell, andProviderName: serviceProviderLabel.text! == "----" ? "" : serviceProviderLabel.text!)
     }
     
     @IBAction private func enableButtonTapped(sender: UIButton) {
         sender.isSelected = !sender.isSelected
+    }
+    
+    
+    //MARK: Selected option delegate methods
+    
+    func selectedOption(index: NSInteger, sender: Any?) {
+        let providerName = delegate?.getProviderNameFor(index: index)
+        serviceProviderLabel.text = providerName
     }
     
     //MARK: Public methods
@@ -116,7 +135,11 @@ class NotificationsTableViewCell: UITableViewCell {
         }
         
         enableButton.isSelected = contact.enableStatus == true
-        serviceProviderLabel.text = (contact.cellProvider! == "" ? "----" : contact.cellProvider!)
+        
+        if contact.smsActive {
+            let providerName: String = (delegate?.getProviderNameFor(code: contact.cellProvider!))!
+            serviceProviderLabel.text = providerName.characters.count == 0 ? "----" : providerName
+        }
         
         self.contact = contact
     }
@@ -127,10 +150,13 @@ class NotificationsTableViewCell: UITableViewCell {
             message = "Pleaes enter first name"
         } else if lastNameTextField.text?.characters.count == 0 {
             message = "Pleaes enter last name"
-        } else if emailTextField?.text?.trim().characters.count == 0 {
-            message = "Please enter email"
-        } else if !(emailTextField?.text?.trim().isValidEmail())! {
-            message = "Please enter a valid email"
+        }
+        if !contact.smsActive {
+            if emailTextField?.text?.trim().characters.count == 0 {
+                message = "Please enter email"
+            } else if !(emailTextField?.text?.trim().isValidEmail())! {
+                message = "Please enter a valid email"
+            }
         }
         
         if message.characters.count != 0 {
