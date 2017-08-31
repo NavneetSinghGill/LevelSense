@@ -942,6 +942,7 @@
                     <connections>
                         <outlet property="addContactSuperView" destination="0hN-FK-xCk" id="ahG-kh-RPQ"/>
                         <outlet property="tableView" destination="2BX-3o-Ynv" id="2R5-FR-vhA"/>
+                        <outlet property="tableViewBottomConstraint" destination="D8g-FS-NoY" id="KF0-Je-Y3P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5he-ma-N0L" userLabel="First Responder" sceneMemberID="firstResponder"/>

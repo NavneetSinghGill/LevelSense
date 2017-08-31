@@ -25,7 +25,7 @@ import UIKit
     func closeAddContact()
 }
 
-class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol {
+class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITextFieldDelegate {
     
     
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -128,10 +128,10 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol {
         cellPhoneNumberTextField.text = "\(contact.mobile!)"
         
         if contact.smsActive {
-            typeLabel.text = "Text message"
+            typeLabel.text = textMessage
             setUIForCellPhone()
         } else {
-            typeLabel.text = "Email"
+            typeLabel.text = email
             setUIForEmail()
         }
         
@@ -240,6 +240,14 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol {
         }
     }
     
+    func tableView() -> UITableView? {
+        if self.superview?.superview != nil {
+            let tableView: UITableView = (self.superview?.superview) as! UITableView
+            return tableView
+        }
+        return nil
+    }
+    
     //MARK: Selected option delegate methods
     
     func selectedOption(index: NSInteger, sender: Any?) {
@@ -299,6 +307,56 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol {
     
     @IBAction private func typeButtonTapped(button: UIButton) {
         delegate?.openOptionScreenForCellAt(indexPath: indexPathOfCell, currentValue: typeLabel.text! == defaultProviderName ? "" : typeLabel.text!, popupOf: 1, sender: button)
+    }
+    
+    //MARK:- Textfield delegate methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        var nextTag: Int
+        if !isAddContact {
+            if textField == lastNameTextField {
+                if contact.smsActive {
+                    nextTag = textField.tag + 2
+                } else {
+                    nextTag = textField.tag + 1
+                }
+            } else if textField == emailTextField {
+                nextTag = -1
+            } else {
+                nextTag = textField.tag + 1
+            }
+        } else {
+            if textField == lastNameTextField {
+                if typeLabel.text == textMessage {
+                    nextTag = textField.tag + 2
+                } else {
+                    nextTag = textField.tag + 1
+                }
+            } else if textField == emailTextField {
+                nextTag = -1
+            } else {
+                nextTag = textField.tag + 1
+            }
+        }
+        
+        let nextField: UITextField? = self.viewWithTag(nextTag) as? UITextField
+        if nextField != nil {
+            nextField?.becomeFirstResponder()
+            
+            let tableViewCellX = tableView()?.rectForRow(at: indexPathOfCell).origin.y ?? 0
+            var rect = nextField?.frame
+            rect?.size.height += tableViewCellX
+            tableView()?.scrollRectToVisible(rect!, animated: true)
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        tableView()!.superview!.endEditing(true)
+        //Controllers view
     }
     
 }

@@ -15,6 +15,8 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
+    
     var contacts: [Contact] = []
     var serviceProviders: NSMutableArray = [ServiceProvider]() as! NSMutableArray
     var indexOfExpandedCell: Int! = -1
@@ -276,5 +278,27 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             
             tableView.scrollToRow(at: index0Section1, at: UITableViewScrollPosition.top, animated: true)
         }
+    }
+    
+    //MARK:- Notification methods
+    
+    override func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.tableViewBottomConstraint.constant = keyboardSize.size.height - self.addContactSuperView.frame.size.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        self.tableViewBottomConstraint.constant = 5
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
