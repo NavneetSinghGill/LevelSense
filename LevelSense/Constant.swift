@@ -53,6 +53,8 @@ let kEditUser = "editUser"
 let kGetCountryListApiUrlSuffix = "getCountryList"
 let kGetStateListApiUrlSuffix = "getStateList"
 let kClaimDeviceApiUrlSuffix = "claimDevice"
+let kRegisterDeviceApiUrlSuffix = "registerDevice"
+let kGetDeviceApiUrlSuffix = "getDevice"
 
 let kGetContactListApiUrlSuffix = "getContactList"
 let kAddContactApiUrlSuffix = "addContact"

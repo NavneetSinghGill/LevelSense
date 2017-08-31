@@ -66,6 +66,18 @@ class ClaimDeviceViewController: LSViewController, SelectedOptionProtocol {
         postClaimDevice()
     }
     
+    @IBAction func secretAction2ButtonTapped() {
+        registerDeviceIfSecretCodeIsCorrect()
+    }
+    
+    func registerDeviceIfSecretCodeIsCorrect() {
+        UserRequestManager.postRegisterDeviceAPICallWith { (success, response, error) in
+            if success {
+                
+            }
+        }
+    }
+    
     //MARK: Private methods
     
     private func getOptionVCWith(sender:Any?) -> OptionSelectionViewController {
@@ -97,13 +109,24 @@ class ClaimDeviceViewController: LSViewController, SelectedOptionProtocol {
                                   codeForText(text: cloudLabel.text!),
                                   codeForText(text: calibrateLabel.text!),
                                   codeForText(text: alarmLabel.text!)]
+            
             UserRequestManager.postClaimDeviceAPICallWith(codes: codes, block: { (success, response, error) in
                 if success {
-                    
+                    let deviceDict = (response as? Dictionary<String, Any>)?["device"]
+//                    self.getDeviceWithID(deviceID: (deviceDict as? Dictionary<String, Any>)!["id"]! as! String)
+                    Banner.showSuccessWithTitle(title: "Device Claimed successfully")
                 }
             })
         }
     }
+    
+//    func getDeviceWithID(deviceID: String) {
+//        UserRequestManager.postGetDeviceAPICallWith(deviceID: deviceID) { (success, response, error) in
+//            if success {
+//                
+//            }
+//        }
+//    }
     
     //MARK:- selectedOption protocol method
     

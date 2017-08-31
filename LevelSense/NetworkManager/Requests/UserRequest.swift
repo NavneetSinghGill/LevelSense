@@ -55,4 +55,18 @@ class UserRequest: Request {
         return self
     }
     
+    func createPostRegisterDeviceRequestWith() -> UserRequest {
+        
+        self.urlPath = kRegisterDeviceApiUrlSuffix
+        return self
+    }
+    
+    func createPostGetDeviceRequestWith(deviceID: String) -> UserRequest {
+        
+        parameters["id"] = deviceID
+        
+        self.urlPath = kGetDeviceApiUrlSuffix
+        return self
+    }
+    
 }

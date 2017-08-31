@@ -85,4 +85,28 @@ class UserRequestManager: NSObject {
         
     }
     
+    static func postRegisterDeviceAPICallWith(block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().postRegisterDeviceWith(request: UserRequest().createPostRegisterDeviceRequestWith(), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
+    static func postGetDeviceAPICallWith(deviceID: String,block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().postGetDeviceDeviceWith(request: UserRequest().createPostGetDeviceRequestWith(deviceID: deviceID), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
 }

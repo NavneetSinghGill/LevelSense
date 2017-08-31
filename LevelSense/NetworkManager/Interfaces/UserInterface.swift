@@ -92,6 +92,32 @@ class UserInterface: Interface {
         })
     }
     
+    func postRegisterDeviceWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performGetAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Register device response: \(String(describing: response))")
+            if success {
+                self.parseRegisterDeviceReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
+    func postGetDeviceDeviceWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performPostAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Get device response: \(String(describing: response))")
+            if success {
+                self.parseGeneralReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
     //MARK:- Parsing methods
     
     func parseGetUserReponse(response : Dictionary<String, Any>) {
@@ -125,6 +151,20 @@ class UserInterface: Interface {
             self.interfaceBlock!(false, kErrorOccured, nil)
             Banner.showFailureWithTitle(title: kErrorOccured)
         }
+    }
+    
+    func parseRegisterDeviceReponse(response : Dictionary<String, Any>) {
+//        if response.keys.count != 0 || response["success"] != nil{
+//            let success = response["success"] as! Bool
+//            if success {
+                self.interfaceBlock!(true, response, nil)
+//            } else {
+//                let message = response["message"] ?? kErrorOccured
+//                self.interfaceBlock!(success, message, nil)
+//            }
+//        } else {
+//            self.interfaceBlock!(false, kErrorOccured, nil)
+//        }
     }
     
 }
