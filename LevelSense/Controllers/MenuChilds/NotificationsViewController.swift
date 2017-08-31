@@ -12,6 +12,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
 
     let notificationsTableViewCellIdentifier = "NotificationsTableViewCell"
     let addContactTableViewCellCellIdentifier = "AddContactTableViewCell"
+    var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addContactSuperView: UIView!
@@ -36,12 +37,17 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
         
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Refresh contacts")
+        refreshControl.addTarget(self, action: #selector(NotificationsViewController.getContactsList), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl) // not required when using UITableViewController
+        
         getContactsList()
     }
     
     //MARK: Private methods
     
-    private func getContactsList() {
+    func getContactsList() {
         
         startAnimating()
         ContactRequestManager.getContactListAPICallWith { (success, response, error) in
@@ -57,6 +63,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             } else {
                 self.stopAnimating()
             }
+            self.refreshControl.endRefreshing()
         }
     }
     
