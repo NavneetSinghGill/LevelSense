@@ -226,6 +226,18 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         self.tableView.reloadData()
     }
     
+    func showDeletePopupFor(contact: Contact, atIndexPath: IndexPath) {
+        let alertVC = UIAlertController.init(title: "Are you sure you want to delete this contact?", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let yesAction = UIAlertAction.init(title: "Yes", style: UIAlertActionStyle.default) { (alertAction) in
+            self.delete(contact: contact, atIndexPath: atIndexPath)
+        }
+        let noAction = UIAlertAction.init(title: "No", style: UIAlertActionStyle.default)
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
     //MARK: Tableview datasource methods
     
     func numberOfSections(in tableView: UITableView) -> Int {

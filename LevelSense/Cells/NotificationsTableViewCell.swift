@@ -22,6 +22,7 @@ import UIKit
     func getProviderNameFor(index: Int) -> String
     func getCodeFor(index: Int) -> String
     
+    func showDeletePopupFor(contact: Contact, atIndexPath: IndexPath)
     func closeAddContact()
 }
 
@@ -107,7 +108,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     }
     
     @IBAction private func deleteButtonTapped(sender: UIButton) {
-        delegate?.delete?(contact: contact, atIndexPath: indexPathOfCell)
+        delegate?.showDeletePopupFor(contact: contact, atIndexPath: indexPathOfCell)
     }
     
     @IBAction private func serviceProviderButtonTapped(sender: UIButton) {
