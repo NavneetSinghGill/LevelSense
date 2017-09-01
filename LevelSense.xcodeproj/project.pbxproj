@@ -28,6 +28,7 @@
 		536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A51F4AE39F003A5E71 /* SnapKit.framework */; };
 		536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */; };
 		536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536656A91F4AE3B8003A5E71 /* Banner.swift */; };
+		538650461F584473000B454E /* AlarmConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538650451F584473000B454E /* AlarmConfigViewController.swift */; };
 		538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AA73D1F55A9C6004559EC /* ServiceProvider.swift */; };
 		5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */; };
 		5397E76A1F4D82710060F3C7 /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */; };
@@ -80,6 +81,7 @@
 		536656A51F4AE39F003A5E71 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/MarqueeLabel/MarqueeLabel.framework"; sourceTree = "<group>"; };
 		536656A91F4AE3B8003A5E71 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		538650451F584473000B454E /* AlarmConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmConfigViewController.swift; sourceTree = "<group>"; };
 		538AA73D1F55A9C6004559EC /* ServiceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimDeviceViewController.swift; sourceTree = "<group>"; };
 		5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesViewController.swift; sourceTree = "<group>"; };
@@ -194,10 +196,19 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		538650441F58444C000B454E /* DeviceActions */ = {
+			isa = PBXGroup;
+			children = (
+				538650451F584473000B454E /* AlarmConfigViewController.swift */,
+			);
+			path = DeviceActions;
+			sourceTree = "<group>";
+		};
 		5397E7641F4D82710060F3C7 /* MenuChilds */ = {
 			isa = PBXGroup;
 			children = (
 				5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */,
+				538650441F58444C000B454E /* DeviceActions */,
 				5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */,
 				5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */,
 				5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */,
@@ -452,6 +463,7 @@
 				F19DAE851F3DD46C007F14FF /* Interface.swift in Sources */,
 				5366569E1F4AD381003A5E71 /* extensions.swift in Sources */,
 				539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */,
+				538650461F584473000B454E /* AlarmConfigViewController.swift in Sources */,
 				F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */,
 				F19DAE891F3DD8D0007F14FF /* NetworkHttpClient.swift in Sources */,
 				539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */,

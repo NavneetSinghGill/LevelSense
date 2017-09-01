@@ -21,6 +21,7 @@ import NVActivityIndicatorView
 class LSViewController: UIViewController, NVActivityIndicatorViewable {
     
     var menuBarButton: UIBarButtonItem!
+    var backBarButton: UIBarButtonItem!
     var navigationTitleLabel: UILabel!
 
     override func viewDidLoad() {
@@ -56,6 +57,13 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
+    func addBackButton() {
+        if backBarButton == nil {
+            backBarButton = UIBarButtonItem(customView: backButton())
+            self.navigationItem.leftBarButtonItem = backBarButton!
+        }
+    }
+    
     func setNavigationTitle(title:String) {
         if (navigationTitleLabel == nil) {
             navigationTitleLabel = UILabel()
@@ -87,9 +95,24 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         return button
     }
     
+    private func backButton() -> UIButton {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "backIcon"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        return button
+    }
+    
     func revealToggle() {
         view.endEditing(true)
         self.revealViewController().performSelector(onMainThread: #selector(SWRevealViewController.revealToggle(_:)), with: nil, waitUntilDone: false)
+    }
+    
+    func backButtonTapped() {
+        if navigationController != nil {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     //MARK:- IBAction methods

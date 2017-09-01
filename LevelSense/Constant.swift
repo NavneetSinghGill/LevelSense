@@ -20,6 +20,10 @@ let textMessage = "Text message"
 let email = "Email"
 let notificationOptionTypes: NSArray = [email, textMessage]
 
+let alarmClosed = "Alarm When Closed (default)"
+let alarmOpen = "Alarm When Open"
+let alarmWhenCloseOpen: NSArray = [alarmClosed, alarmOpen]
+
 //MARK: Colors
 
 let blueColor = UIColor.init(colorLiteralRed: 0, green: 110/255.0, blue: 190/255, alpha: 1.0)
