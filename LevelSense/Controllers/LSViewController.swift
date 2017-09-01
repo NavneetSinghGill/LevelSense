@@ -73,7 +73,7 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         navigationTitleLabel.text = title
         navigationTitleLabel.sizeToFit()
         
-        self.navigationController?.navigationBar.topItem?.titleView = navigationTitleLabel
+        navigationItem.titleView = navigationTitleLabel
     }
     
     func keyboardWillShow(notification: NSNotification) {
