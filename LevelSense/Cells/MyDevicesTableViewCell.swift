@@ -15,6 +15,8 @@ class MyDevicesTableViewCell: UITableViewCell {
     @IBOutlet weak var onlineOfflineLabel: UILabel!
     
     @IBOutlet weak var selectionView: UIView!
+    
+    var device: Device!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +32,7 @@ class MyDevicesTableViewCell: UITableViewCell {
     //MARK:- Public methods
     
     func updateUIfor(device: Device) {
+        self.device = device
         self.deviceNameLabel.text = device.displayName
         
         let biggerFont: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue-Medium", size: 13.0)! ]
@@ -95,4 +98,12 @@ class MyDevicesTableViewCell: UITableViewCell {
         }
     }
     
+    
+    @IBAction private func getDeviceDetails() {
+            UserRequestManager.postGetDeviceAPICallWith(deviceID: device.id) { (success, response, error) in
+                if success {
+                    
+                }
+            }
+    }
 }
