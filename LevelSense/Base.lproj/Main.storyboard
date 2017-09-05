@@ -1903,6 +1903,39 @@
             </objects>
             <point key="canvasLocation" x="2640.8000000000002" y="-319.79010494752629"/>
         </scene>
+        <!--Graph View Controller-->
+        <scene sceneID="l5U-Q3-8ax">
+            <objects>
+                <viewController storyboardIdentifier="GraphViewController" id="Ltb-cb-vqx" customClass="GraphViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LFm-v4-qe6"/>
+                        <viewControllerLayoutGuide type="bottom" id="32N-eq-NfB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rAq-MU-NlL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EEx-DF-eN7">
+                                <rect key="frame" x="0.0" y="20" width="375" height="547"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="32N-eq-NfB" firstAttribute="top" secondItem="EEx-DF-eN7" secondAttribute="bottom" constant="100" id="EyQ-Tp-CQn"/>
+                            <constraint firstAttribute="trailing" secondItem="EEx-DF-eN7" secondAttribute="trailing" id="ZXO-lh-oaT"/>
+                            <constraint firstItem="EEx-DF-eN7" firstAttribute="leading" secondItem="rAq-MU-NlL" secondAttribute="leading" id="fES-Od-xTG"/>
+                            <constraint firstItem="EEx-DF-eN7" firstAttribute="top" secondItem="LFm-v4-qe6" secondAttribute="bottom" id="ojy-Nz-rOI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="lineChart" destination="EEx-DF-eN7" id="TqN-Mb-xTc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cV6-wD-IRn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3412" y="-354"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="oCw-Gt-SUu">
             <objects>
