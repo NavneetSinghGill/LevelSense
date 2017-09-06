@@ -40,6 +40,7 @@
 		539DEDDA1F542AD700662521 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDD91F542AD700662521 /* Contact.swift */; };
 		539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDB1F542D5000662521 /* ContactInterface.swift */; };
 		539DEDDE1F542D7F00662521 /* ContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDD1F542D7F00662521 /* ContactRequest.swift */; };
+		53A0AA1E1F5FDA7E00570A6A /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */; };
 		53BC17CE1F5D484A00E78F7D /* UIBezierPath+Interpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */; };
 		53BC17D11F5D48B900E78F7D /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D01F5D48B900E78F7D /* CGPointExtension.m */; };
 		53BC17D31F5D555700E78F7D /* LineGraphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D21F5D555700E78F7D /* LineGraphLayer.swift */; };
@@ -96,6 +97,7 @@
 		539DEDD91F542AD700662521 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		539DEDDB1F542D5000662521 /* ContactInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInterface.swift; sourceTree = "<group>"; };
 		539DEDDD1F542D7F00662521 /* ContactRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequest.swift; sourceTree = "<group>"; };
+		53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		53BC17CC1F5D484A00E78F7D /* UIBezierPath+Interpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Interpolation.h"; sourceTree = "<group>"; };
 		53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Interpolation.m"; sourceTree = "<group>"; };
 		53BC17CF1F5D48B900E78F7D /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				538650451F584473000B454E /* AlarmConfigViewController.swift */,
+				53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */,
 			);
 			path = DeviceActions;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				F19DAE7F1F3DD1F4007F14FF /* LoginInterface.swift in Sources */,
 				538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */,
 				F19DAE7D1F3DD1C3007F14FF /* Request.swift in Sources */,
+				53A0AA1E1F5FDA7E00570A6A /* GraphViewController.swift in Sources */,
 				F19DAE811F3DD316007F14FF /* Constant.swift in Sources */,
 				2A6D2AF71F47080500C98631 /* SWRevealViewController.m in Sources */,
 				F19DAE871F3DD846007F14FF /* RealAPI.swift in Sources */,
@@ -499,7 +503,6 @@
 				F19DAE791F3DD14A007F14FF /* LoginRequestManager.swift in Sources */,
 				5397E76A1F4D82710060F3C7 /* MyDevicesViewController.swift in Sources */,
 				53590D541F4C4164001F414A /* UserInterface.swift in Sources */,
-				53950D991F597B8D00789FE2 /* GraphViewController.swift in Sources */,
 				53BC17D31F5D555700E78F7D /* LineGraphLayer.swift in Sources */,
 				2A6D2AEC1F47014700C98631 /* LSViewController.swift in Sources */,
 				530D61751F4C6DB300AB583F /* Device.swift in Sources */,

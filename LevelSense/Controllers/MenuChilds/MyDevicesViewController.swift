@@ -20,7 +20,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     let myDevicesTableViewCellIdentifier = "MyDevicesTableViewCell"
 
-    
+    var deviceData: NSArray!
     
     
     
@@ -68,6 +68,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             let cell = tableView.cellForRow(at: currentSelectedIndex) as! MyDevicesTableViewCell
             cell.changeViewIf(isSelected: true, withAnimation: true)
             openBottomView()
+            getDeviceDetails()
             
         } else if currentSelectedIndex.row == indexPath.row {
             
@@ -87,14 +88,34 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             currentSelectedIndex = indexPath
             cell = tableView.cellForRow(at: currentSelectedIndex) as? MyDevicesTableViewCell
             cell?.changeViewIf(isSelected: true, withAnimation: true)
+            getDeviceDetails()
         }
         
     }
     
     //MARK:- Private methods
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "graph" {
+            let graphVC: GraphViewController = segue.destination as! GraphViewController
+            graphVC.deviceData = self.deviceData
+        }
+    }
+    
+    func getDeviceDetails() {
+        let id: String = (devices[currentSelectedIndex.row]).id
+        UserRequestManager.postGetDeviceAPICallWith(deviceID: id) { (success, response, error) in
+            if success {
+                self.deviceData = (((response as? Dictionary<String, Any>)!["device"]!) as? Dictionary<String,Any>)!["deviceData"] as! NSArray
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "graph", sender: self)
+                }
+            }
+        }
+    }
+    
     func openBottomView() {
-        UIView.animate(withDuration: kMyDevicesAnimationDuration) { 
+        UIView.animate(withDuration: kMyDevicesAnimationDuration) {
             self.bottomConstaintOfActionView.constant = 0
             self.view.layoutIfNeeded()
         }
