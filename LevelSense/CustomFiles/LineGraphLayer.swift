@@ -38,19 +38,19 @@ class LineGraphLayer: CAShapeLayer {
         
         
         let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.addSublayer(verticalLine)
+        self.superlayer?.insertSublayer(verticalLine, at: 0)
         
         let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.addSublayer(horizontalLine)
+        self.superlayer?.insertSublayer(horizontalLine, at: 0)
     }
     
     func drawPathWith(values: [CGPoint], xValues: [CGFloat], yValues: [CGFloat]) {
         
         let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.addSublayer(verticalLine)
+        self.superlayer?.insertSublayer(verticalLine, at: 0)
         
         let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.addSublayer(horizontalLine)
+        self.superlayer?.insertSublayer(horizontalLine, at: 0)
         
         var newPoints = getPointsForData(values: values, xValues: xValues, yValues: yValues, verticalLine: verticalLine, horizontalLine: horizontalLine)
         newPoints = getUpdatedPoints(points: newPoints)

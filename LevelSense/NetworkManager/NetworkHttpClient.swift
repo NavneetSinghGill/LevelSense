@@ -27,6 +27,8 @@ class NetworkHttpClient: NSObject {
                 block (false, "error", nil)
                 return
             }
+            
+            performActionsFor(response: responseValue)
             block(true, responseValue, nil)
         }
     }
@@ -48,6 +50,7 @@ class NetworkHttpClient: NSObject {
                 return
             }
             
+            performActionsFor(response: responseValue)
             block(true, responseValue, nil)
         }
     }
@@ -64,6 +67,15 @@ class NetworkHttpClient: NSObject {
         }
         NSLog("Header: \(header)")
         return header
+    }
+    
+    class func performActionsFor(response: Any) {
+        if (response as? Dictionary<String,Any>) != nil && (response as? Dictionary<String,Any>)?["message"] != nil {
+            let message = (response as? Dictionary<String,Any>)?["message"] as! String
+            if message == "Please provide session key" {
+                appDelegate.logout()
+            }
+        }
     }
     
 }
