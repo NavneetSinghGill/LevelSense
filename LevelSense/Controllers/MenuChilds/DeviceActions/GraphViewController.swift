@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GraphViewController: LSViewController {
+class GraphViewController: LSViewController, LineGraphProtocol {
     
     @IBOutlet weak var lineChart: UIView!
     var deviceData: NSArray!
@@ -36,12 +36,26 @@ class GraphViewController: LSViewController {
 //        }
         
         
-        let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: nil, parentLayer: lineChart.layer)
+        let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: UIColor.blue.cgColor, parentView: lineChart)
         lineGraphLayer.borderWidth = 1
 //        lineGraphLayer.drawPathWith(points: points, xValues: ["0","1","2","3","4","5","6"], yValues: ["0","1","2","3","4","5"])
-        lineGraphLayer.drawPathWith(values: [CGPoint.init(x: 1, y: 0),CGPoint.init(x: 1, y: 1),CGPoint.init(x: 5, y: 2),CGPoint.init(x: 8, y: 5),CGPoint.init(x: 9, y: 9),CGPoint.init(x: 9, y: 0)], xValues: [0,1,2,3,4,5,6,7,8,9], yValues: [0,1,2,3,4,5,6,7,8,9])
+        
+        let values: [CGPoint] = [CGPoint.init(x: 1, y: 1),CGPoint.init(x: 5, y: 2),CGPoint.init(x: 8, y: 5),CGPoint.init(x: 9, y: 5)]
+        
+        
+        
+        lineGraphLayer.drawPathWith(values: values, xValues: [0,1,2,3,4,5,6,7,8,9], yValues: [0,1,2,3,4,5,6,7,8,9])
+        lineGraphLayer.fillColor = UIColor.blue.cgColor
+        
+        lineGraphLayer.lineGraphDelegate = self
+        
         
     }
     
+    //MARK: Line graph layer delegate
+    
+    func lineGraphTapped(at point: CGPoint,withIndex index: Int) {
+        
+    }
     
 }

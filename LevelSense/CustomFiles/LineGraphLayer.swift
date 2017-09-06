@@ -13,47 +13,42 @@ let horizontalPadding: CGFloat = 30.0
 let origin: CGPoint = CGPoint.init(x: 40, y: 40)
 let percentOfLineWhichShowsData: CGFloat = 0.9
 
+protocol LineGraphProtocol {
+    func lineGraphTapped(at point: CGPoint,withIndex index: Int)
+}
+
 class LineGraphLayer: CAShapeLayer {
     
-    var points: NSArray = [CGPoint]() as NSArray
+    var points : [CGPoint] = [CGPoint]()
     var xValues: NSArray = [Int]() as NSArray
     var yValues: NSArray = [Int]() as NSArray
     
     var bezierPath: UIBezierPath!
-
-    func getUpdatedPoints(points: [CGPoint]) -> [CGPoint] {
-        var newPoints = [CGPoint]()
-        for i in 0..<points.count {
-            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y))
-        }
-        return newPoints
+    var lineGraphDelegate: LineGraphProtocol?
+    var isFilled: Bool = false
+    
+    
+    class func `init`(stroke:CGColor?, fillColor:CGColor?, parentView: UIView) -> LineGraphLayer {
+        let lineGraphLayer = LineGraphLayer()
+        
+        lineGraphLayer.strokeColor = stroke != nil ? stroke : UIColor.clear.cgColor
+        lineGraphLayer.fillColor = fillColor != nil ? fillColor : UIColor.clear.cgColor
+        lineGraphLayer.frame.size = parentView.layer.frame.size
+        lineGraphLayer.isFilled = fillColor != nil
+        
+        //        lineGraphLayer.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
+        
+        parentView.layer.addSublayer(lineGraphLayer)
+        
+        let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
+        parentView.addGestureRecognizer(tapGesture)
+        
+        return lineGraphLayer
     }
     
     func drawPathWith(points: [CGPoint], xValues: [String], yValues: [String]) {
         
         let newPoints = getUpdatedPoints(points: points)
-        
-        bezierPath = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
-        self.path = bezierPath.cgPath
-        
-        
-        let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(verticalLine, at: 0)
-        
-        let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(horizontalLine, at: 0)
-    }
-    
-    func drawPathWith(values: [CGPoint], xValues: [CGFloat], yValues: [CGFloat]) {
-        
-        let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(verticalLine, at: 0)
-        
-        let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(horizontalLine, at: 0)
-        
-        var newPoints = getPointsForData(values: values, xValues: xValues, yValues: yValues, verticalLine: verticalLine, horizontalLine: horizontalLine)
-        newPoints = getUpdatedPoints(points: newPoints)
         
         if newPoints.count >= 2 {
             bezierPath = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
@@ -66,6 +61,66 @@ class LineGraphLayer: CAShapeLayer {
             
         }
         
+        self.points = newPoints
+        
+        let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
+        self.superlayer?.insertSublayer(verticalLine, at: 0)
+        
+        let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
+        self.superlayer?.insertSublayer(horizontalLine, at: 0)
+    }
+    
+    func drawPathWith(values: [CGPoint], xValues: [CGFloat], yValues: [CGFloat]) {
+        
+        //These two values are added just to make the fillcolor actually color properly
+        var newValues: [CGPoint] = [CGPoint]()
+        
+        if isFilled {
+            newValues.append(CGPoint(x: (values.first?.x)!, y: 0))
+            for i in 0..<values.count {
+                newValues.append(values[i])
+            }
+            newValues.append(CGPoint(x: (values.last?.x)!, y: 0))
+        }
+        
+        
+        
+        
+        //Add vertical line
+        let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
+        self.superlayer?.insertSublayer(verticalLine, at: 0)
+        
+        //Add horizontal line
+        let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
+        self.superlayer?.insertSublayer(horizontalLine, at: 0)
+        
+        //Make graph with dots on it
+        var newPoints = getPointsForData(values: newValues, xValues: xValues, yValues: yValues, verticalLine: verticalLine, horizontalLine: horizontalLine)
+        newPoints = getUpdatedPoints(points: newPoints)
+        
+        self.points = newPoints
+        
+        if newPoints.count >= 2 {
+            bezierPath = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
+            
+            let dotsPath = getPathForDotsWith(points: newPoints)
+            bezierPath.append(dotsPath)
+            
+            self.path = bezierPath.cgPath
+        } else if (newPoints.count == 1) {
+            
+        }
+        
+    }
+    
+    func getUpdatedPoints(points: [CGPoint]) -> [CGPoint] {
+        var newPoints = [CGPoint]()
+        for i in 0..<points.count {
+            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y))
+            
+            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y)))
+        }
+        return newPoints
     }
     
     func getPathForDotsWith(points: [CGPoint]) -> UIBezierPath {
@@ -91,25 +146,44 @@ class LineGraphLayer: CAShapeLayer {
             let yPoint = (yMultiple * verticalLine.oneValueDistance)
             
             points.append(CGPoint.init(x: xPoint, y: yPoint))
-            
-            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: xPoint, y: yPoint)))
         }
         
         return points
     }
     
-    class func `init`(stroke:CGColor?, fillColor:CGColor?, parentLayer: CALayer) -> LineGraphLayer {
-        let lineGraphLayer = LineGraphLayer()
+    //MARK: Gestures
+    
+    func layerTapped(tapGesture: UITapGestureRecognizer) {
+        let location: CGPoint = tapGesture.location(in: tapGesture.view)
+//        let layer: CALayer? = (tapGesture.view?.layer.hitTest(location))
         
-        lineGraphLayer.strokeColor = stroke != nil ? stroke : UIColor.clear.cgColor
-        lineGraphLayer.fillColor = fillColor != nil ? fillColor : UIColor.clear.cgColor
-        lineGraphLayer.frame.size = parentLayer.frame.size
+        let point: CGPoint? = checkIf(point: location, isInRange: 30)
         
-        lineGraphLayer.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
+        let indexOfValue = (self.points as NSArray).index(of: point!)
         
-        parentLayer.addSublayer(lineGraphLayer)
+        self.lineGraphDelegate?.lineGraphTappedAt(index: indexOfValue)
         
-        return lineGraphLayer
+        print("\(indexOfValue)")
+    }
+    
+    func checkIf(point: CGPoint!,isInRange range: CGFloat) -> CGPoint? {
+        
+        var closestRange: CGFloat = CGFloat(Int.max)
+        var resultantPoint: CGPoint?
+        
+        for i in 0..<self.points.count {
+            let distanceBetweenBothPoints = sqrt(pow((self.points[i]).x - (point?.x)!, 2) + pow(self.points[i].y - (point?.y)!, 2))
+            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
+            if range > distanceBetweenBothPoints && distanceBetweenBothPoints < closestRange {
+                closestRange = distanceBetweenBothPoints
+                resultantPoint = self.points[i]
+            }
+        }
+        if closestRange != CGFloat(Int.max) {
+            return resultantPoint
+        } else {
+            return nil
+        }
     }
     
 }
