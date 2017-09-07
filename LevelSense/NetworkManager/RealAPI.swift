@@ -12,7 +12,7 @@ class RealAPI: NSObject {
 
     public func performGetAPICallWith(request:Request, completionBlock:@escaping requestCompletionBlock) {
         
-        let requestUrl = request.urlPath!
+        let requestUrl = request.urlPathWithVersion()
         let params = request.getParams()
         printAPIDetails(url: requestUrl, params: params)
         
@@ -22,7 +22,7 @@ class RealAPI: NSObject {
     
     public func performPostAPICallWith(request:Request, completionBlock:@escaping requestCompletionBlock) {
         
-        let requestUrl = request.urlPath!
+        let requestUrl = request.urlPathWithVersion()
         let params = request.getParams()
         printAPIDetails(url: requestUrl, params: params)
         

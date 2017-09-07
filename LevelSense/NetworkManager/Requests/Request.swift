@@ -16,4 +16,12 @@ class Request: NSObject {
         return self.parameters
     }
     
+    func urlPathWithVersion() -> String {
+        if v2APIUrls.index(of: urlPath) == Int.max {
+            return v1+urlPath
+        } else {
+            return v2+urlPath
+        }
+    }
+    
 }

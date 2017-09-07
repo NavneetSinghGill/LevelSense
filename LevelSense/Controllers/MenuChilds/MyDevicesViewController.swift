@@ -20,7 +20,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     let myDevicesTableViewCellIdentifier = "MyDevicesTableViewCell"
 
-    var deviceData: NSArray!
+    var deviceData: Dictionary<String, Any>!
     
     
     
@@ -98,7 +98,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "graph" {
             let graphVC: GraphViewController = segue.destination as! GraphViewController
-            graphVC.deviceData = self.deviceData
+            graphVC.allDeviceData = self.deviceData
         }
     }
     
@@ -114,9 +114,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
 //            }
 //        }
         
-        UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: id, limit: 1000) { (success, response, error) in
+        UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: id, limit: 100) { (success, response, error) in
             if success {
-                self.deviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)!["LIST"] as! NSArray
+                self.deviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "graph", sender: self)
                 }

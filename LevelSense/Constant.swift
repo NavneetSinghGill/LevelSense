@@ -47,7 +47,11 @@ let kSessionKey = "sessionKey"
 
 //MARK: Api URLs
 let kSuperBaseUrl = "http://104.192.5.181"
-let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/v1/"
+let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/"
+let v1 = "v1/"
+let v2 = "v2/"
+
+let v2APIUrls: NSArray = [kGetDeviceDataListApiUrlSuffix]
 
 let kLoginApiUrl = "login"
 let kLogoutApiUrl = "logout"

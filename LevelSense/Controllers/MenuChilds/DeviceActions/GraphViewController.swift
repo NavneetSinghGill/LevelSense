@@ -11,7 +11,7 @@ import UIKit
 class GraphViewController: LSViewController, LineGraphProtocol {
     
     @IBOutlet weak var lineChart: UIView!
-    var deviceData: NSArray!
+    var allDeviceData: Dictionary<String, Any>!
     var path: UIBezierPath!
     
     var months: [String]!
@@ -22,32 +22,56 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         addBackButton()
         setNavigationTitle(title: "Graph")
         
+        var values: [CGPoint] = [CGPoint]()
         
-        var points: [CGPoint] = [CGPoint]()
-//        points.append(CGPoint.init(x: 50, y: 50))
-//        points.append(CGPoint.init(x: 60, y: 80))
-        points.append(CGPoint.init(x: 80, y: 80))
-        points.append(CGPoint.init(x: 100, y: 100))
-//        points.append(CGPoint.init(x: 100, y: 0))
+        var xMin : CGFloat!
+        var xMax : CGFloat!
+        var yMin : CGFloat!
+        var yMax : CGFloat!
         
-//        points.append(CGPoint.init(x: 0, y: 0))
-//        for i in 0..<10 {
-//            points.append(CGPoint.init(x: i*10+20, y: Int(arc4random_uniform(100))+50))
-//        }
-        
+        for key in self.allDeviceData.keys {
+            if key == "sensor_2" {
+                let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
+                print("\(deviceData?["sensorDisplayName"] ?? "")")
+                
+                let data = (deviceData?["data"] as? NSArray)
+                print("\(data?.count)")
+                
+                for entry in (data as! Array<Dictionary<String, Any>>) {
+                    values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
+                }
+                xMin = (deviceData?["minTimestamp"]!) as! CGFloat
+                xMax = (deviceData?["maxTimestamp"]!) as! CGFloat
+                yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+                yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+            }
+        }
         
         let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: onlineGreen.cgColor, parentView: lineChart)
-        lineGraphLayer.borderWidth = 1
-//        lineGraphLayer.drawPathWith(points: points, xValues: ["0","1","2","3","4","5","6"], yValues: ["0","1","2","3","4","5"])
-        
-        let values: [CGPoint] = [CGPoint.init(x: 1, y: 1),CGPoint.init(x: 5, y: 2),CGPoint.init(x: 8, y: 5),CGPoint.init(x: 9, y: 5)]
-        
-        
-        
-        lineGraphLayer.drawPathWith(values: values, xValues: [0,1,2,3,4,5,6,7,8,9], yValues: [0,1,2,3,4,5,6,7,8,9])
-//        lineGraphLayer.fillColor = UIColor.blue.cgColor
         
         lineGraphLayer.lineGraphDelegate = self
+        lineGraphLayer.xMin = xMin
+        lineGraphLayer.xMax = xMax
+        lineGraphLayer.yMin = yMin
+        lineGraphLayer.yMax = yMax
+        
+        //Number of points to be shown on the graph on axis
+        let pointsCountToPlot: Int = 5
+        
+        var xValues : [CGFloat] = [CGFloat]()
+        
+        let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot)
+        for i in 0..<pointsCountToPlot {
+            xValues.append(xMin + xMaxMinDiff * CGFloat(i))
+        }
+        
+        var yValues : [CGFloat] = [CGFloat]()
+        let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot)
+        for i in 0..<pointsCountToPlot {
+            yValues.append(yMin + yMaxMinDiff * CGFloat(i))
+        }
+        
+        lineGraphLayer.drawPathWith(values: values, xValues: xValues, yValues: yValues)
         
         
     }
@@ -56,6 +80,23 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func lineGraphTapped(at point: CGPoint,withIndex index: Int) {
         
+    }
+    
+    func getValueToShowOnXaxisFor(value: Any!) -> Any! {
+        return getDateFor(timeStamp: value as! CGFloat)
+    }
+    
+    func getValueToShowOnYaxisFor(value: Any!) -> Any! {
+        return value!
+    }
+    
+    func getDateFor(timeStamp: CGFloat) -> String {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM dd"
+        let date: Date = Date.init(timeIntervalSince1970: TimeInterval(timeStamp*1000))
+        let dateString: String = dateFormatter.string(from: date)
+        
+        return dateString
     }
     
 }

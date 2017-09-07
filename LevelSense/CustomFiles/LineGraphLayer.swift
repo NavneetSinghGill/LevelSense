@@ -15,6 +15,8 @@ let percentOfLineWhichShowsData: CGFloat = 0.9
 
 protocol LineGraphProtocol {
     func lineGraphTapped(at point: CGPoint,withIndex index: Int)
+    func getValueToShowOnXaxisFor(value: Any!) -> Any!
+    func getValueToShowOnYaxisFor(value: Any!) -> Any!
 }
 
 class LineGraphLayer: CAShapeLayer {
@@ -27,6 +29,10 @@ class LineGraphLayer: CAShapeLayer {
     var lineGraphDelegate: LineGraphProtocol?
     var isFilled: Bool = false
     
+    var xMin : CGFloat! = -1
+    var xMax : CGFloat! = -1
+    var yMin : CGFloat! = -1
+    var yMax : CGFloat! = -1
     
     class func `init`(stroke:CGColor?, fillColor:CGColor?, parentView: UIView) -> LineGraphLayer {
         let lineGraphLayer = LineGraphLayer()
@@ -76,26 +82,28 @@ class LineGraphLayer: CAShapeLayer {
         var newValues: [CGPoint] = [CGPoint]()
         
         if isFilled {
-            newValues.append(CGPoint(x: (values.first?.x)!, y: 0))
+            newValues.append(CGPoint(x: (values.first?.x)!, y: yValues[0]))
             for i in 0..<values.count {
                 newValues.append(values[i])
             }
-            newValues.append(CGPoint(x: (values.last?.x)!, y: 0))
+            newValues.append(CGPoint(x: (values.last?.x)!, y: yValues[0]))
         }
         
         
         
         
-        //Add vertical line
+        //Add vertical line and horizontal line
         let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        
-        //Add horizontal line
         let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
+        
         if verticalLine.oneValueDistance > horizontalLine.oneValueDistance {
             verticalLine.oneValueDistance = horizontalLine.oneValueDistance
         } else {
             horizontalLine.oneValueDistance = verticalLine.oneValueDistance
         }
+        
+        verticalLine.lineGraphDelegate = lineGraphDelegate
+        horizontalLine.lineGraphDelegate = lineGraphDelegate
         
         verticalLine.doLayer()
         horizontalLine.doLayer()
@@ -145,13 +153,20 @@ class LineGraphLayer: CAShapeLayer {
     }
     
     func getPointsForData(values: [CGPoint], xValues: [CGFloat], yValues: [CGFloat], verticalLine: VertialLine, horizontalLine: HorizontalLine) -> [CGPoint] {
+        
+        //Actual variables just check if xMin is set or not. If its set then use it else set the first and last element of xValues and yValues as min and max
+        let actualXmin: CGFloat! = self.xMin == -1 ? xValues[0] : self.xMin
+        let actualXmax: CGFloat! = self.xMax == -1 ? xValues[0] : self.xMax
+        let actualYmin: CGFloat! = self.yMin == -1 ? yValues[0] : self.yMin
+        let actualYmax: CGFloat! = self.yMax == -1 ? yValues[0] : self.yMax
+        
         var points = [CGPoint]()
         
         for i in 0..<values.count {
-            let xMultiple = ((values[i].x - xValues[0]) / ((xValues[xValues.count - 1] - xValues[0]) / CGFloat(xValues.count-1)))
+            let xMultiple = ((values[i].x - actualXmin) / ((actualXmax - xValues[0]) / CGFloat(xValues.count-1)))
             let xPoint = (xMultiple * horizontalLine.oneValueDistance)
             
-            let yMultiple = ((values[i].y - yValues[0]) / ((yValues[yValues.count - 1] - yValues[0]) / CGFloat(yValues.count-1)))
+            let yMultiple = ((values[i].y - actualYmin) / ((actualYmax - yValues[0]) / CGFloat(yValues.count-1)))
             let yPoint = (yMultiple * verticalLine.oneValueDistance)
             
             points.append(CGPoint.init(x: xPoint, y: yPoint))
@@ -183,7 +198,7 @@ class LineGraphLayer: CAShapeLayer {
         
         for i in 0..<self.points.count {
             let distanceBetweenBothPoints = sqrt(pow((self.points[i]).x - (point?.x)!, 2) + pow(self.points[i].y - (point?.y)!, 2))
-            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
+//            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
             if range > distanceBetweenBothPoints && distanceBetweenBothPoints < closestRange {
                 closestRange = distanceBetweenBothPoints
                 resultantPoint = self.points[i]
@@ -225,7 +240,7 @@ class VertialLine: CustomShapeLayer {
     var lineEndY: CGFloat!
     
     var values : NSArray?
-    
+    var lineGraphDelegate: LineGraphProtocol?
     
     class func `init`(values: NSArray?, size: CGSize, origin: CGPoint) -> VertialLine {
         let layer = VertialLine()
@@ -271,8 +286,9 @@ class VertialLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            let textLayer = getTextLayerWith(text: "\(values![i])")
-            textLayer.frame = CGRect(x: lineStartX-20, y: yValue-8, width: 30, height: 30)
+            let textLayer = getTextLayerWith(text: "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])")
+            textLayer.frame = CGRect(x: lineStartX-40, y: yValue-8, width: 30, height: 30)
+            textLayer.alignmentMode = "right"
             addSublayer(textLayer)
         }
         
@@ -299,6 +315,7 @@ class HorizontalLine: CustomShapeLayer {
     var lineEndY: CGFloat!
     
     var values : NSArray?
+    var lineGraphDelegate: LineGraphProtocol?
     
     class func `init`(values: NSArray?, size: CGSize, origin: CGPoint) -> HorizontalLine {
         let layer = HorizontalLine()
@@ -346,8 +363,10 @@ class HorizontalLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            let textLayer = getTextLayerWith(text: "\(values![i])")
-            textLayer.frame = CGRect(x: xValue-3, y: lineStartY+10, width: 30, height: 30)
+            let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i]) as! String ?? values![i] as! String
+            let textLayer = getTextLayerWith(text: "\(text)")
+            textLayer.frame = CGRect(x: xValue - self.oneValueDistance/2, y: lineStartY+10, width: self.oneValueDistance, height: 30)
+            textLayer.alignmentMode = "center"
             addSublayer(textLayer)
         }
         
