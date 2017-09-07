@@ -88,10 +88,19 @@ class LineGraphLayer: CAShapeLayer {
         
         //Add vertical line
         let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(verticalLine, at: 0)
         
         //Add horizontal line
         let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
+        if verticalLine.oneValueDistance > horizontalLine.oneValueDistance {
+            verticalLine.oneValueDistance = horizontalLine.oneValueDistance
+        } else {
+            horizontalLine.oneValueDistance = verticalLine.oneValueDistance
+        }
+        
+        verticalLine.doLayer()
+        horizontalLine.doLayer()
+        
+        self.superlayer?.insertSublayer(verticalLine, at: 0)
         self.superlayer?.insertSublayer(horizontalLine, at: 0)
         
         //Make graph with dots on it
@@ -116,7 +125,7 @@ class LineGraphLayer: CAShapeLayer {
     func getUpdatedPoints(points: [CGPoint]) -> [CGPoint] {
         var newPoints = [CGPoint]()
         for i in 0..<points.count {
-            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y))
+            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: self.frame.size.height - (points[i].y + origin.y)))
             
             NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y)))
         }
@@ -161,7 +170,8 @@ class LineGraphLayer: CAShapeLayer {
         
         let indexOfValue = (self.points as NSArray).index(of: point!)
         
-        self.lineGraphDelegate?.lineGraphTappedAt(index: indexOfValue)
+        let isFilledValue: Int = isFilled == true ? 1 : 0
+        self.lineGraphDelegate?.lineGraphTapped(at: location, withIndex: indexOfValue - isFilledValue)
         
         print("\(indexOfValue)")
     }
@@ -209,59 +219,70 @@ class VertialLine: CustomShapeLayer {
     var startPoint: CGPoint!
     var endPoint: CGPoint!
     
+    var lineStartX: CGFloat!
+    var lineStartY: CGFloat!
+    var lineEndX: CGFloat!
+    var lineEndY: CGFloat!
+    
+    var values : NSArray?
+    
+    
     class func `init`(values: NSArray?, size: CGSize, origin: CGPoint) -> VertialLine {
         let layer = VertialLine()
         
         if values?.count != 0 {
-            let bezierPathAxis = UIBezierPath()
+            layer.lineStartX = origin.x
+            layer.lineStartY = size.height - origin.y
+            layer.lineEndX = origin.x
+            layer.lineEndY = verticalPadding
             
-            let startPointX = origin.x
-            let startPointY = size.height - origin.y
-            let endPointX = origin.x
-            let endPointY = verticalPadding
-            
-            let lineDistance = (startPointY - endPointY) * percentOfLineWhichShowsData
+            let lineDistance = (layer.lineStartY - layer.lineEndY) * percentOfLineWhichShowsData
             let oneValueDistance = lineDistance/CGFloat((values?.count)!-1 >= 1 ? (values?.count)!-1: 1)
             layer.oneValueDistance = oneValueDistance
-            
-            //Create line
-            UIColor.black.setStroke()
-            bezierPathAxis.stroke()
-            bezierPathAxis.move(to: CGPoint.init(x: startPointX, y: startPointY))
-            bezierPathAxis.addLine(to: CGPoint.init(x: endPointX, y: endPointY))
-            bezierPathAxis.lineWidth = 2.0
-            
-            //Create dots
-            let bezierPathDots = UIBezierPath()
-            UIColor.blue.setStroke()
-            bezierPathDots.stroke()
-            
-            for i in 0..<(values?.count)! {
-                let yValue = startPointY - oneValueDistance * CGFloat(i)
-                let dotPoint = CGPoint.init(x: startPointX, y: yValue)
-                bezierPathDots.move(to: dotPoint)
-                bezierPathDots.addArc(withCenter: dotPoint, radius: 2, startAngle: 0, endAngle: 6, clockwise: true)
-                if i == 0 {
-                    layer.startPoint = dotPoint
-                }
-                if i == (values?.count)! - 1 {
-                    layer.endPoint = dotPoint
-                }
-                
-                let textLayer = layer.getTextLayerWith(text: "\(values![i])")
-                textLayer.frame = CGRect(x: startPointX-20, y: yValue-8, width: 30, height: 30)
-                layer.addSublayer(textLayer)
-            }
-            
-            bezierPathAxis.append(bezierPathDots)
-            
-            
-            
-            
-            layer.strokeColor = UIColor.black.cgColor
-            layer.path = bezierPathAxis.cgPath
+            layer.values = values
         }
         return layer
+    }
+    
+    func doLayer() {
+        let bezierPathAxis = UIBezierPath()
+        
+        //Create line
+        UIColor.black.setStroke()
+        bezierPathAxis.stroke()
+        bezierPathAxis.move(to: CGPoint.init(x: lineStartX, y: lineStartY))
+        bezierPathAxis.addLine(to: CGPoint.init(x: lineEndX, y: lineEndY))
+        bezierPathAxis.lineWidth = 2.0
+        
+        //Create dots
+        let bezierPathDots = UIBezierPath()
+//        UIColor.blue.setStroke()
+//        bezierPathDots.stroke()
+        
+        for i in 0..<(values?.count)! {
+            let yValue = lineStartY - oneValueDistance * CGFloat(i)
+            let dotPoint = CGPoint.init(x: lineStartX, y: yValue)
+            bezierPathDots.move(to: dotPoint)
+            bezierPathDots.addArc(withCenter: dotPoint, radius: 2, startAngle: 0, endAngle: 6, clockwise: true)
+            if i == 0 {
+                startPoint = dotPoint
+            }
+            if i == (values?.count)! - 1 {
+                endPoint = dotPoint
+            }
+            
+            let textLayer = getTextLayerWith(text: "\(values![i])")
+            textLayer.frame = CGRect(x: lineStartX-20, y: yValue-8, width: 30, height: 30)
+            addSublayer(textLayer)
+        }
+        
+        bezierPathAxis.append(bezierPathDots)
+        
+        
+        
+        
+        strokeColor = UIColor.black.cgColor
+        path = bezierPathAxis.cgPath
     }
     
 }
@@ -272,58 +293,68 @@ class HorizontalLine: CustomShapeLayer {
     var startPoint: CGPoint!
     var endPoint: CGPoint!
     
+    var lineStartX: CGFloat!
+    var lineStartY: CGFloat!
+    var lineEndX: CGFloat!
+    var lineEndY: CGFloat!
+    
+    var values : NSArray?
+    
     class func `init`(values: NSArray?, size: CGSize, origin: CGPoint) -> HorizontalLine {
         let layer = HorizontalLine()
         
         if values?.count != 0 {
             
-            let bezierPathAxis = UIBezierPath()
+            layer.lineStartX = origin.x
+            layer.lineStartY = size.height - origin.y
+            layer.lineEndX = size.width - horizontalPadding
+            layer.lineEndY = size.height - origin.y
             
-            let startPointX = origin.x
-            let startPointY = size.height - origin.y
-            let endPointX = size.width - horizontalPadding
-            let endPointY = size.height - origin.y
-            
-            let lineDistance = (endPointX - startPointX) * percentOfLineWhichShowsData
+            let lineDistance = (layer.lineEndX - layer.lineStartX) * percentOfLineWhichShowsData
             let oneValueDistance = lineDistance/CGFloat((values?.count)! - 1 >= 1 ? (values?.count)! - 1: 1)
             layer.oneValueDistance = oneValueDistance
-            
-            //Create line
-            UIColor.black.setStroke()
-            bezierPathAxis.stroke()
-            bezierPathAxis.move(to: CGPoint.init(x: startPointX, y: startPointY))
-            bezierPathAxis.addLine(to: CGPoint.init(x: endPointX, y: endPointY))
-            bezierPathAxis.lineWidth = 2.0
-            
-            //Create dots
-            let bezierPathDots = UIBezierPath()
-            UIColor.blue.setStroke()
-            bezierPathDots.stroke()
-            
-            for i in 0..<(values?.count)! {
-                let xValue = startPointX + oneValueDistance * CGFloat(i)
-                let dotPoint = CGPoint.init(x: xValue, y: startPointY)
-                bezierPathDots.move(to: dotPoint)
-                bezierPathDots.addArc(withCenter: dotPoint, radius: 2, startAngle: 0, endAngle: 6, clockwise: true)
-                
-                if i == 0 {
-                    layer.startPoint = dotPoint
-                }
-                if i == (values?.count)! - 1 {
-                    layer.endPoint = dotPoint
-                }
-                
-                let textLayer = layer.getTextLayerWith(text: "\(values![i])")
-                textLayer.frame = CGRect(x: xValue-3, y: startPointY+10, width: 30, height: 30)
-                layer.addSublayer(textLayer)
-            }
-            
-            bezierPathAxis.append(bezierPathDots)
-            
-            layer.strokeColor = UIColor.black.cgColor
-            layer.path = bezierPathAxis.cgPath
+            layer.values = values
         }
         return layer
+    }
+    
+    func doLayer() {
+        let bezierPathAxis = UIBezierPath()
+        
+        //Create line
+        UIColor.black.setStroke()
+        bezierPathAxis.stroke()
+        bezierPathAxis.move(to: CGPoint.init(x: lineStartX, y: lineStartY))
+        bezierPathAxis.addLine(to: CGPoint.init(x: lineEndX, y: lineEndY))
+        bezierPathAxis.lineWidth = 2.0
+        
+        //Create dots
+        let bezierPathDots = UIBezierPath()
+//        UIColor.blue.setStroke()
+//        bezierPathDots.stroke()
+        
+        for i in 0..<(values?.count)! {
+            let xValue = lineStartX + oneValueDistance * CGFloat(i)
+            let dotPoint = CGPoint.init(x: xValue, y: lineStartY)
+            bezierPathDots.move(to: dotPoint)
+            bezierPathDots.addArc(withCenter: dotPoint, radius: 2, startAngle: 0, endAngle: 6, clockwise: true)
+            
+            if i == 0 {
+                startPoint = dotPoint
+            }
+            if i == (values?.count)! - 1 {
+                endPoint = dotPoint
+            }
+            
+            let textLayer = getTextLayerWith(text: "\(values![i])")
+            textLayer.frame = CGRect(x: xValue-3, y: lineStartY+10, width: 30, height: 30)
+            addSublayer(textLayer)
+        }
+        
+        bezierPathAxis.append(bezierPathDots)
+        
+        strokeColor = UIColor.black.cgColor
+        path = bezierPathAxis.cgPath
     }
     
 }

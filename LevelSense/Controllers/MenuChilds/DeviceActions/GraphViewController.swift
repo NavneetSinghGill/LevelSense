@@ -36,7 +36,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
 //        }
         
         
-        let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: UIColor.blue.cgColor, parentView: lineChart)
+        let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: onlineGreen.cgColor, parentView: lineChart)
         lineGraphLayer.borderWidth = 1
 //        lineGraphLayer.drawPathWith(points: points, xValues: ["0","1","2","3","4","5","6"], yValues: ["0","1","2","3","4","5"])
         
@@ -45,7 +45,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         
         
         lineGraphLayer.drawPathWith(values: values, xValues: [0,1,2,3,4,5,6,7,8,9], yValues: [0,1,2,3,4,5,6,7,8,9])
-        lineGraphLayer.fillColor = UIColor.blue.cgColor
+//        lineGraphLayer.fillColor = UIColor.blue.cgColor
         
         lineGraphLayer.lineGraphDelegate = self
         
