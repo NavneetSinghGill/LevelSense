@@ -59,6 +59,7 @@ let kGetStateListApiUrlSuffix = "getStateList"
 let kClaimDeviceApiUrlSuffix = "claimDevice"
 let kRegisterDeviceApiUrlSuffix = "registerDevice"
 let kGetDeviceApiUrlSuffix = "getDevice"
+let kGetDeviceDataListApiUrlSuffix = "getDeviceDataList"
 
 let kGetContactListApiUrlSuffix = "getContactList"
 let kAddContactApiUrlSuffix = "addContact"

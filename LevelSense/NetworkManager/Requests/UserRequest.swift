@@ -69,4 +69,15 @@ class UserRequest: Request {
         return self
     }
     
+    //MARK: Graph
+    
+    func createPostGetDeviceDataListRequestWith(deviceID: String, limit: Int) -> UserRequest {
+        
+        parameters["deviceId"] = deviceID
+        parameters["limit"] = limit
+        
+        self.urlPath = kGetDeviceDataListApiUrlSuffix
+        return self
+    }
+    
 }

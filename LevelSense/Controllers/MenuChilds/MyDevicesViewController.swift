@@ -104,9 +104,19 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     func getDeviceDetails() {
         let id: String = (devices[currentSelectedIndex.row]).id
-        UserRequestManager.postGetDeviceAPICallWith(deviceID: id) { (success, response, error) in
+        
+//        UserRequestManager.postGetDeviceAPICallWith(deviceID: id) { (success, response, error) in
+//            if success {
+//                self.deviceData = (((response as? Dictionary<String, Any>)!["device"]!) as? Dictionary<String,Any>)!["deviceData"] as! NSArray
+//                DispatchQueue.main.async {
+//                    self.performSegue(withIdentifier: "graph", sender: self)
+//                }
+//            }
+//        }
+        
+        UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: id, limit: 1000) { (success, response, error) in
             if success {
-                self.deviceData = (((response as? Dictionary<String, Any>)!["device"]!) as? Dictionary<String,Any>)!["deviceData"] as! NSArray
+                self.deviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)!["LIST"] as! NSArray
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "graph", sender: self)
                 }

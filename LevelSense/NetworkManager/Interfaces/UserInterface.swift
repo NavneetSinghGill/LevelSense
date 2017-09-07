@@ -118,6 +118,21 @@ class UserInterface: Interface {
         })
     }
     
+    //MARK: Graph
+    
+    func postGetDeviceDataListWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performPostAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Get device data response: \(String(describing: response))")
+            if success {
+                self.parseGeneralReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
     //MARK:- Parsing methods
     
     func parseGetUserReponse(response : Dictionary<String, Any>) {
