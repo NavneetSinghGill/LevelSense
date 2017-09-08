@@ -183,12 +183,15 @@ class LineGraphLayer: CAShapeLayer {
         
         let point: CGPoint? = checkIf(point: location, isInRange: 30)
         
-        let indexOfValue = (self.points as NSArray).index(of: point!)
+        var indexOfValue : Int!
+        if point != nil {
+            indexOfValue = (self.points as NSArray).index(of: point!)
+            
+            let isFilledValue: Int = isFilled == true ? 1 : 0
+            self.lineGraphDelegate?.lineGraphTapped(at: location, withIndex: indexOfValue - isFilledValue)
+            print("\(indexOfValue - isFilledValue)")
+        }
         
-        let isFilledValue: Int = isFilled == true ? 1 : 0
-        self.lineGraphDelegate?.lineGraphTapped(at: location, withIndex: indexOfValue - isFilledValue)
-        
-        print("\(indexOfValue)")
     }
     
     func checkIf(point: CGPoint!,isInRange range: CGFloat) -> CGPoint? {
@@ -224,6 +227,14 @@ class CustomShapeLayer: CAShapeLayer {
         label.string = text
         
         return label
+    }
+    
+    func getWidthOf(text: String) -> CGFloat {
+        let label: UILabel! = UILabel()
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: 5)
+        
+        return label.intrinsicContentSize.width
     }
     
 }
@@ -286,8 +297,10 @@ class VertialLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            let textLayer = getTextLayerWith(text: "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])")
-            textLayer.frame = CGRect(x: lineStartX-40, y: yValue-8, width: 30, height: 30)
+            let text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])"
+            let decimalPlaces2 : String = CGFloat(Double(text)!).rounded(toPlaces: 2)
+            let textLayer = getTextLayerWith(text: decimalPlaces2)
+            textLayer.frame = CGRect(x: lineStartX-getWidthOf(text: text)-5, y: yValue-8, width: getWidthOf(text: text), height: 30)
             textLayer.alignmentMode = "right"
             addSublayer(textLayer)
         }
@@ -363,7 +376,7 @@ class HorizontalLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i]) as! String ?? values![i] as! String
+            let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i]) as! String 
             let textLayer = getTextLayerWith(text: "\(text)")
             textLayer.frame = CGRect(x: xValue - self.oneValueDistance/2, y: lineStartY+10, width: self.oneValueDistance, height: 30)
             textLayer.alignmentMode = "center"

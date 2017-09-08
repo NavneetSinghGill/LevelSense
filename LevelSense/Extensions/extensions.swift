@@ -20,7 +20,14 @@ extension String {
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+}
+
+extension CGFloat {
     
+    func rounded(toPlaces places:Int) -> String {
+        let divisor: CGFloat = pow(10.0, CGFloat(places))
+        return "\((self * divisor).rounded() / divisor)"
+    }
 }
 
 extension UIView {

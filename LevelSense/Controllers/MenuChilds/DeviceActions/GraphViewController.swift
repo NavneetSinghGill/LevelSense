@@ -40,40 +40,48 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 for entry in (data as! Array<Dictionary<String, Any>>) {
                     values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
                 }
-                xMin = (deviceData?["minTimestamp"]!) as! CGFloat
-                xMax = (deviceData?["maxTimestamp"]!) as! CGFloat
-                yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
-                yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+                if deviceData?["minTimestamp"] != nil {
+                    xMin = (deviceData?["minTimestamp"]) as? CGFloat
+                }
+                if deviceData?["maxTimestamp"] != nil {
+                    xMax = (deviceData?["maxTimestamp"]) as? CGFloat
+                }
+                if deviceData?["minValue"] != nil {
+                    yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+                }
+                if deviceData?["maxValue"] != nil {
+                    yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+                }
             }
         }
         
-        let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: onlineGreen.cgColor, parentView: lineChart)
-        
-        lineGraphLayer.lineGraphDelegate = self
-        lineGraphLayer.xMin = xMin
-        lineGraphLayer.xMax = xMax
-        lineGraphLayer.yMin = yMin
-        lineGraphLayer.yMax = yMax
-        
-        //Number of points to be shown on the graph on axis
-        let pointsCountToPlot: Int = 5
-        
-        var xValues : [CGFloat] = [CGFloat]()
-        
-        let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot)
-        for i in 0..<pointsCountToPlot {
-            xValues.append(xMin + xMaxMinDiff * CGFloat(i))
+        if xMin != nil && xMax != nil && yMin != nil && yMax != nil {
+            let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: onlineGreen.cgColor, parentView: lineChart)
+            
+            lineGraphLayer.lineGraphDelegate = self
+            lineGraphLayer.xMin = xMin
+            lineGraphLayer.xMax = xMax
+            lineGraphLayer.yMin = yMin
+            lineGraphLayer.yMax = yMax
+            
+            //Number of points to be shown on the graph on axis
+            let pointsCountToPlot: Int = 5
+            
+            var xValues : [CGFloat] = [CGFloat]()
+            
+            let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot)
+            for i in 0..<pointsCountToPlot {
+                xValues.append(xMin + xMaxMinDiff * CGFloat(i))
+            }
+            
+            var yValues : [CGFloat] = [CGFloat]()
+            let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot)
+            for i in 0..<pointsCountToPlot {
+                yValues.append(yMin + yMaxMinDiff * CGFloat(i))
+            }
+            
+            lineGraphLayer.drawPathWith(values: values, xValues: xValues, yValues: yValues)
         }
-        
-        var yValues : [CGFloat] = [CGFloat]()
-        let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot)
-        for i in 0..<pointsCountToPlot {
-            yValues.append(yMin + yMaxMinDiff * CGFloat(i))
-        }
-        
-        lineGraphLayer.drawPathWith(values: values, xValues: xValues, yValues: yValues)
-        
-        
     }
     
     //MARK: Line graph layer delegate
@@ -92,7 +100,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func getDateFor(timeStamp: CGFloat) -> String {
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM dd"
+        dateFormatter.dateFormat = "dMMM,YY"
         let date: Date = Date.init(timeIntervalSince1970: TimeInterval(timeStamp*1000))
         let dateString: String = dateFormatter.string(from: date)
         
