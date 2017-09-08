@@ -14,111 +14,54 @@ let origin: CGPoint = CGPoint.init(x: 40, y: 40)
 let percentOfLineWhichShowsData: CGFloat = 0.9
 
 protocol LineGraphProtocol {
-    func lineGraphTapped(at point: CGPoint,withIndex index: Int)
+    func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues:[[CGPoint]])
     func getValueToShowOnXaxisFor(value: Any!) -> Any!
     func getValueToShowOnYaxisFor(value: Any!) -> Any!
 }
 
-class LineGraphLayer: CAShapeLayer {
-    
-    var points : [CGPoint] = [CGPoint]()
-    var xValues: NSArray = [Int]() as NSArray
-    var yValues: NSArray = [Int]() as NSArray
-    
-    var bezierPath: UIBezierPath!
-    var lineGraphDelegate: LineGraphProtocol?
+//MARK: -
+
+//This layer is a single graph layer
+class LineGraphChildLayer: CAShapeLayer {
+
+    var lineGraphLayer: LineGraphLayer!
+    var values: [CGPoint]!
     var isFilled: Bool = false
+    var points: [CGPoint]!
     
-    var xMin : CGFloat! = -1
-    var xMax : CGFloat! = -1
-    var yMin : CGFloat! = -1
-    var yMax : CGFloat! = -1
-    
-    class func `init`(stroke:CGColor?, fillColor:CGColor?, parentView: UIView) -> LineGraphLayer {
-        let lineGraphLayer = LineGraphLayer()
+    class func `init`(lineGraphLayer: LineGraphLayer, values: [CGPoint], stroke:CGColor?, fillColor:CGColor?) -> LineGraphChildLayer {
         
-        lineGraphLayer.strokeColor = stroke != nil ? stroke : UIColor.clear.cgColor
-        lineGraphLayer.fillColor = fillColor != nil ? fillColor : UIColor.clear.cgColor
-        lineGraphLayer.frame.size = parentView.layer.frame.size
-        lineGraphLayer.isFilled = fillColor != nil
+        let lineGraphChildLayer = LineGraphChildLayer()
+        lineGraphChildLayer.lineGraphLayer = lineGraphLayer
+        lineGraphChildLayer.values = values
+        lineGraphChildLayer.strokeColor = stroke != nil ? stroke : UIColor.clear.cgColor
+        lineGraphChildLayer.fillColor = fillColor != nil ? fillColor : UIColor.clear.cgColor
+        lineGraphChildLayer.isFilled = fillColor != nil
         
-        //        lineGraphLayer.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
-        
-        parentView.layer.addSublayer(lineGraphLayer)
-        
-        let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
-        parentView.addGestureRecognizer(tapGesture)
-        
-        return lineGraphLayer
+        return lineGraphChildLayer
     }
     
-    func drawPathWith(points: [CGPoint], xValues: [String], yValues: [String]) {
-        
-        let newPoints = getUpdatedPoints(points: points)
-        
-        if newPoints.count >= 2 {
-            bezierPath = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
-            
-            let dotsPath = getPathForDotsWith(points: newPoints)
-            bezierPath.append(dotsPath)
-            
-            self.path = bezierPath.cgPath
-        } else if (newPoints.count == 1) {
-            
-        }
-        
-        self.points = newPoints
-        
-        let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(verticalLine, at: 0)
-        
-        let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
-        self.superlayer?.insertSublayer(horizontalLine, at: 0)
-    }
-    
-    func drawPathWith(values: [CGPoint], xValues: [CGFloat], yValues: [CGFloat]) {
+    func drawGraph() {
         
         //These two values are added just to make the fillcolor actually color properly
         var newValues: [CGPoint] = [CGPoint]()
         
-        if isFilled {
-            newValues.append(CGPoint(x: (values.first?.x)!, y: yValues[0]))
+//        if isFilled {
+            newValues.append(CGPoint(x: (values.first?.x)!, y: lineGraphLayer.yValues[0]))
             for i in 0..<values.count {
                 newValues.append(values[i])
             }
-            newValues.append(CGPoint(x: (values.last?.x)!, y: yValues[0]))
-        }
-        
-        
-        
-        
-        //Add vertical line and horizontal line
-        let verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        let horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
-        
-        if verticalLine.oneValueDistance > horizontalLine.oneValueDistance {
-            verticalLine.oneValueDistance = horizontalLine.oneValueDistance
-        } else {
-            horizontalLine.oneValueDistance = verticalLine.oneValueDistance
-        }
-        
-        verticalLine.lineGraphDelegate = lineGraphDelegate
-        horizontalLine.lineGraphDelegate = lineGraphDelegate
-        
-        verticalLine.doLayer()
-        horizontalLine.doLayer()
-        
-        self.superlayer?.insertSublayer(verticalLine, at: 0)
-        self.superlayer?.insertSublayer(horizontalLine, at: 0)
+            newValues.append(CGPoint(x: (values.last?.x)!, y: lineGraphLayer.yValues[0]))
+//        }
         
         //Make graph with dots on it
-        var newPoints = getPointsForData(values: newValues, xValues: xValues, yValues: yValues, verticalLine: verticalLine, horizontalLine: horizontalLine)
+        var newPoints = getPointsForData(values: newValues, xValues: lineGraphLayer.xValues, yValues: lineGraphLayer.yValues, verticalLine: lineGraphLayer.verticalLine, horizontalLine: lineGraphLayer.horizontalLine)
         newPoints = getUpdatedPoints(points: newPoints)
         
         self.points = newPoints
         
         if newPoints.count >= 2 {
-            bezierPath = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
+            let bezierPath: UIBezierPath! = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
             
             let dotsPath = getPathForDotsWith(points: newPoints)
             bezierPath.append(dotsPath)
@@ -127,17 +70,6 @@ class LineGraphLayer: CAShapeLayer {
         } else if (newPoints.count == 1) {
             
         }
-        
-    }
-    
-    func getUpdatedPoints(points: [CGPoint]) -> [CGPoint] {
-        var newPoints = [CGPoint]()
-        for i in 0..<points.count {
-            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: self.frame.size.height - (points[i].y + origin.y)))
-            
-            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y)))
-        }
-        return newPoints
     }
     
     func getPathForDotsWith(points: [CGPoint]) -> UIBezierPath {
@@ -152,13 +84,23 @@ class LineGraphLayer: CAShapeLayer {
         return bezierPathDots
     }
     
+    func getUpdatedPoints(points: [CGPoint]) -> [CGPoint] {
+        var newPoints = [CGPoint]()
+        for i in 0..<points.count {
+            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: self.frame.size.height - (points[i].y + origin.y)))
+            
+            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y)))
+        }
+        return newPoints
+    }
+    
     func getPointsForData(values: [CGPoint], xValues: [CGFloat], yValues: [CGFloat], verticalLine: VertialLine, horizontalLine: HorizontalLine) -> [CGPoint] {
         
         //Actual variables just check if xMin is set or not. If its set then use it else set the first and last element of xValues and yValues as min and max
-        let actualXmin: CGFloat! = self.xMin == -1 ? xValues[0] : self.xMin
-        let actualXmax: CGFloat! = self.xMax == -1 ? xValues[0] : self.xMax
-        let actualYmin: CGFloat! = self.yMin == -1 ? yValues[0] : self.yMin
-        let actualYmax: CGFloat! = self.yMax == -1 ? yValues[0] : self.yMax
+        let actualXmin: CGFloat! = lineGraphLayer.xMin == -1 ? xValues[0] : lineGraphLayer.xMin
+        let actualXmax: CGFloat! = lineGraphLayer.xMax == -1 ? xValues[0] : lineGraphLayer.xMax
+        let actualYmin: CGFloat! = lineGraphLayer.yMin == -1 ? yValues[0] : lineGraphLayer.yMin
+        let actualYmax: CGFloat! = lineGraphLayer.yMax == -1 ? yValues[0] : lineGraphLayer.yMax
         
         var points = [CGPoint]()
         
@@ -175,23 +117,19 @@ class LineGraphLayer: CAShapeLayer {
         return points
     }
     
-    //MARK: Gestures
-    
-    func layerTapped(tapGesture: UITapGestureRecognizer) {
-        let location: CGPoint = tapGesture.location(in: tapGesture.view)
-//        let layer: CALayer? = (tapGesture.view?.layer.hitTest(location))
-        
-        let point: CGPoint? = checkIf(point: location, isInRange: 30)
+    func getIndexOfValueFor(locationOnLayer: CGPoint) -> Int? {
+        let point: CGPoint? = checkIf(point: locationOnLayer, isInRange: 30)
         
         var indexOfValue : Int!
         if point != nil {
             indexOfValue = (self.points as NSArray).index(of: point!)
             
             let isFilledValue: Int = isFilled == true ? 1 : 0
-            self.lineGraphDelegate?.lineGraphTapped(at: location, withIndex: indexOfValue - isFilledValue)
             print("\(indexOfValue - isFilledValue)")
+            return indexOfValue - isFilledValue
+        } else {
+            return nil
         }
-        
     }
     
     func checkIf(point: CGPoint!,isInRange range: CGFloat) -> CGPoint? {
@@ -201,7 +139,7 @@ class LineGraphLayer: CAShapeLayer {
         
         for i in 0..<self.points.count {
             let distanceBetweenBothPoints = sqrt(pow((self.points[i]).x - (point?.x)!, 2) + pow(self.points[i].y - (point?.y)!, 2))
-//            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
+            //            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
             if range > distanceBetweenBothPoints && distanceBetweenBothPoints < closestRange {
                 closestRange = distanceBetweenBothPoints
                 resultantPoint = self.points[i]
@@ -215,6 +153,96 @@ class LineGraphLayer: CAShapeLayer {
     }
     
 }
+
+//This layer contain all the graph(s)
+class LineGraphLayer: CAShapeLayer {
+    
+    var xValues: [CGFloat] = [CGFloat]()
+    var yValues: [CGFloat] = [CGFloat]()
+    
+    var bezierPath: UIBezierPath!
+    var lineGraphDelegate: LineGraphProtocol?
+    
+    var horizontalLine: HorizontalLine!
+    var verticalLine: VertialLine!
+    
+    var childLayers: [LineGraphChildLayer] = [LineGraphChildLayer]()
+    
+    var xMin : CGFloat! = -1
+    var xMax : CGFloat! = -1
+    var yMin : CGFloat! = -1
+    var yMax : CGFloat! = -1
+    
+    class func initWith(parentView: UIView) -> LineGraphLayer {
+        let lineGraphLayer = LineGraphLayer()
+        
+        lineGraphLayer.frame.size = parentView.layer.frame.size
+        
+        lineGraphLayer.strokeColor = UIColor.clear.cgColor
+        lineGraphLayer.fillColor = UIColor.clear.cgColor
+        
+        parentView.layer.addSublayer(lineGraphLayer)
+        
+        let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
+        parentView.addGestureRecognizer(tapGesture)
+        
+        return lineGraphLayer
+    }
+    
+    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat]) {
+        
+        self.xValues = xValues
+        self.yValues = yValues
+        
+        //Add vertical line and horizontal line
+        verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
+        horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
+        
+        if verticalLine.oneValueDistance > horizontalLine.oneValueDistance {
+            verticalLine.oneValueDistance = horizontalLine.oneValueDistance
+        } else {
+            horizontalLine.oneValueDistance = verticalLine.oneValueDistance
+        }
+        
+        verticalLine.lineGraphDelegate = lineGraphDelegate
+        horizontalLine.lineGraphDelegate = lineGraphDelegate
+        
+        verticalLine.doLayer()
+        horizontalLine.doLayer()
+        
+        self.superlayer?.insertSublayer(verticalLine, at: 0)
+        self.superlayer?.insertSublayer(horizontalLine, at: 0)
+    }
+    
+    func addLayerWith(stroke:CGColor?, fillColor:CGColor?, values: [CGPoint]) {
+        let lineGraphChildLayer: LineGraphChildLayer! = LineGraphChildLayer.init(lineGraphLayer: self, values: values, stroke: stroke, fillColor: fillColor)
+        lineGraphChildLayer.frame.size = self.frame.size
+        lineGraphChildLayer.drawGraph()
+        
+        self.childLayers.append(lineGraphChildLayer)
+        self.addSublayer(lineGraphChildLayer)
+    }
+    
+    //MARK: Gestures
+    
+    func layerTapped(tapGesture: UITapGestureRecognizer) {
+        let location: CGPoint = tapGesture.location(in: tapGesture.view)
+//        let layer: CALayer? = (tapGesture.view?.layer.hitTest(location))
+        
+        var indexesSelected: [Int?] = [Int?]()
+        var values: [[CGPoint]] = []
+        for i in 0..<self.childLayers.count {
+            let childLayer: LineGraphChildLayer! = self.childLayers[i]
+            indexesSelected.append(childLayer.getIndexOfValueFor(locationOnLayer: location))
+            values.append(childLayer.values)
+        }
+        self.lineGraphDelegate?.lineGraphTapped(atLocation: location, withIndexs: indexesSelected as! [Int], inValues: values)
+        
+    }
+    
+}
+
+//MARK: -
 
 class CustomShapeLayer: CAShapeLayer {
     
@@ -282,8 +310,6 @@ class VertialLine: CustomShapeLayer {
         
         //Create dots
         let bezierPathDots = UIBezierPath()
-//        UIColor.blue.setStroke()
-//        bezierPathDots.stroke()
         
         for i in 0..<(values?.count)! {
             let yValue = lineStartY - oneValueDistance * CGFloat(i)
@@ -360,8 +386,6 @@ class HorizontalLine: CustomShapeLayer {
         
         //Create dots
         let bezierPathDots = UIBezierPath()
-//        UIColor.blue.setStroke()
-//        bezierPathDots.stroke()
         
         for i in 0..<(values?.count)! {
             let xValue = lineStartX + oneValueDistance * CGFloat(i)

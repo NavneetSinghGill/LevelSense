@@ -56,7 +56,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }
         
         if xMin != nil && xMax != nil && yMin != nil && yMax != nil {
-            let lineGraphLayer = LineGraphLayer.init(stroke: blueColor.cgColor, fillColor: onlineGreen.cgColor, parentView: lineChart)
+            let lineGraphLayer = LineGraphLayer.initWith(parentView: lineChart)
             
             lineGraphLayer.lineGraphDelegate = self
             lineGraphLayer.xMin = xMin
@@ -79,14 +79,14 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             for i in 0..<pointsCountToPlot {
                 yValues.append(yMin + yMaxMinDiff * CGFloat(i))
             }
-            
-            lineGraphLayer.drawPathWith(values: values, xValues: xValues, yValues: yValues)
+            lineGraphLayer.drawAxisWith(xValues: xValues, yValues: yValues)
+            lineGraphLayer.addLayerWith(stroke: UIColor.green.cgColor, fillColor: nil, values: values)
         }
     }
     
     //MARK: Line graph layer delegate
     
-    func lineGraphTapped(at point: CGPoint,withIndex index: Int) {
+    func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues: [[CGPoint]]) {
         
     }
     
