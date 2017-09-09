@@ -111,10 +111,10 @@ class UserRequestManager: NSObject {
     
     //MARK: Graph
     
-    static func postGetDeviceDataListAPICallWith(deviceID: String, limit: Int,block:@escaping requestCompletionBlock)
+    static func postGetDeviceDataListAPICallWith(deviceID: String, limit: Int, fromTimestamp: Int, toTimestamp: Int,block:@escaping requestCompletionBlock)
     {
         if appDelegate.isNetworkAvailable {
-            UserInterface().postGetDeviceDataListWith(request: UserRequest().createPostGetDeviceDataListRequestWith(deviceID: deviceID, limit: limit), withCompletionBlock: block)
+            UserInterface().postGetDeviceDataListWith(request: UserRequest().createPostGetDeviceDataListRequestWith(deviceID: deviceID, limit: limit, fromTimestamp: fromTimestamp, toTimestamp: toTimestamp), withCompletionBlock: block)
             
         } else{
             Banner.showSuccessWithTitle(title: kNoNetwork)

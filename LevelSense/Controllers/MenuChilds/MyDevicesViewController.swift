@@ -114,7 +114,11 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
 //            }
 //        }
         
-        UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: id, limit: 100) { (success, response, error) in
+        let toTimestamp: Int! = Int(Date().timeIntervalSince1970)
+        let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: -1, to: Date())
+        let fromTimestamp: Int! = Int(lastMonth.timeIntervalSince1970)
+        
+        UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: id, limit: 100000, fromTimestamp: fromTimestamp, toTimestamp: toTimestamp) { (success, response, error) in
             if success {
                 self.deviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)
                 DispatchQueue.main.async {

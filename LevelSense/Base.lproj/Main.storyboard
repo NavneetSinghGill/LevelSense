@@ -1916,23 +1916,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EEx-DF-eN7">
-                                <rect key="frame" x="0.0" y="64" width="375" height="375"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5f-d7-gQc">
+                                <rect key="frame" x="0.0" y="64" width="375" height="400"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EEx-DF-eN7">
+                                        <rect key="frame" x="0.0" y="25.5" width="375" height="374.5"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature &amp; Humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnH-n3-C7O">
+                                        <rect key="frame" x="15" y="0.0" width="345" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="EEx-DF-eN7" secondAttribute="height" id="Jfd-xj-Z75"/>
+                                    <constraint firstItem="cnH-n3-C7O" firstAttribute="leading" secondItem="w5f-d7-gQc" secondAttribute="leading" constant="15" id="2EL-Ug-emj"/>
+                                    <constraint firstAttribute="bottom" secondItem="EEx-DF-eN7" secondAttribute="bottom" id="9Ek-Ee-N5K"/>
+                                    <constraint firstItem="EEx-DF-eN7" firstAttribute="top" secondItem="cnH-n3-C7O" secondAttribute="bottom" constant="5" id="AfY-6n-Ola"/>
+                                    <constraint firstItem="EEx-DF-eN7" firstAttribute="leading" secondItem="w5f-d7-gQc" secondAttribute="leading" id="EtD-FB-uVT"/>
+                                    <constraint firstAttribute="trailing" secondItem="EEx-DF-eN7" secondAttribute="trailing" id="HaI-HG-57R"/>
+                                    <constraint firstAttribute="trailing" secondItem="cnH-n3-C7O" secondAttribute="trailing" constant="15" id="YXo-EJ-jPO"/>
+                                    <constraint firstAttribute="height" constant="400" id="gSI-Fk-TXz"/>
+                                    <constraint firstItem="cnH-n3-C7O" firstAttribute="top" secondItem="w5f-d7-gQc" secondAttribute="top" id="nzh-If-QrZ"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="EEx-DF-eN7" firstAttribute="top" secondItem="LFm-v4-qe6" secondAttribute="bottom" id="XbD-3Q-SGn"/>
-                            <constraint firstAttribute="trailing" secondItem="EEx-DF-eN7" secondAttribute="trailing" id="ZXO-lh-oaT"/>
-                            <constraint firstItem="EEx-DF-eN7" firstAttribute="leading" secondItem="rAq-MU-NlL" secondAttribute="leading" id="fES-Od-xTG"/>
+                            <constraint firstItem="w5f-d7-gQc" firstAttribute="top" secondItem="LFm-v4-qe6" secondAttribute="bottom" id="4cM-gA-HcC"/>
+                            <constraint firstItem="w5f-d7-gQc" firstAttribute="leading" secondItem="rAq-MU-NlL" secondAttribute="leading" id="PfA-Yt-Bet"/>
+                            <constraint firstAttribute="trailing" secondItem="w5f-d7-gQc" secondAttribute="trailing" id="b5F-0V-zT9"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lineChart" destination="EEx-DF-eN7" id="TqN-Mb-xTc"/>
+                        <outlet property="lineChart3" destination="EEx-DF-eN7" id="EBo-Og-ZtX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV6-wD-IRn" userLabel="First Responder" sceneMemberID="firstResponder"/>

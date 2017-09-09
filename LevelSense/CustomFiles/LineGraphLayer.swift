@@ -29,6 +29,8 @@ class LineGraphChildLayer: CAShapeLayer {
     var isFilled: Bool = false
     var points: [CGPoint]!
     
+    var curvedGraph: Bool = true
+    
     class func `init`(lineGraphLayer: LineGraphLayer, values: [CGPoint], stroke:CGColor?, fillColor:CGColor?) -> LineGraphChildLayer {
         
         let lineGraphChildLayer = LineGraphChildLayer()
@@ -61,8 +63,22 @@ class LineGraphChildLayer: CAShapeLayer {
         self.points = newPoints
         
         if newPoints.count >= 2 {
-            let bezierPath: UIBezierPath! = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
+            var bezierPath: UIBezierPath!
             
+            if curvedGraph {
+                bezierPath = UIBezierPath.interpolateCGPoints(withHermite: newPoints, closed: false)
+            } else {
+                bezierPath = UIBezierPath()
+                for i in 0..<newPoints.count {
+                    if i == 0 {
+                        bezierPath.move(to: newPoints[i])
+                    } else {
+                        bezierPath.addLine(to: newPoints[i])
+                    }
+                }
+                bezierPath.lineWidth = 1
+            }
+                        
             let dotsPath = getPathForDotsWith(points: newPoints)
             bezierPath.append(dotsPath)
             
@@ -173,6 +189,8 @@ class LineGraphLayer: CAShapeLayer {
     var yMin : CGFloat! = -1
     var yMax : CGFloat! = -1
     
+    var isAxisDrawn: Bool = false
+    
     class func initWith(parentView: UIView) -> LineGraphLayer {
         let lineGraphLayer = LineGraphLayer()
         
@@ -212,6 +230,8 @@ class LineGraphLayer: CAShapeLayer {
         
         self.superlayer?.insertSublayer(verticalLine, at: 0)
         self.superlayer?.insertSublayer(horizontalLine, at: 0)
+        
+        isAxisDrawn = true
     }
     
     func addLayerWith(stroke:CGColor?, fillColor:CGColor?, values: [CGPoint]) {

@@ -10,77 +10,97 @@ import UIKit
 
 class GraphViewController: LSViewController, LineGraphProtocol {
     
-    @IBOutlet weak var lineChart: UIView!
+    @IBOutlet weak var lineChart1: UIView!
+    @IBOutlet weak var lineChart2: UIView!
+    @IBOutlet weak var lineChart3: UIView!
+    
+    var lineGraphLayer1: LineGraphLayer?
+    var lineGraphLayer2: LineGraphLayer?
+    var lineGraphLayer3: LineGraphLayer?
+    
     var allDeviceData: Dictionary<String, Any>!
     var path: UIBezierPath!
     
     var months: [String]!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         addBackButton()
         setNavigationTitle(title: "Graph")
         
-        var values: [CGPoint] = [CGPoint]()
+        
+        for key in self.allDeviceData.keys {
+            
+            let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
+            print("\(deviceData?["sensorDisplayName"] ?? "")")
+            
+            if key == "sensor_2" {
+                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.green.cgColor, fillColor: nil)
+            } else if key == "sensor_3" {
+                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.blue.cgColor, fillColor: nil)
+            }
+        }
+    }
+    
+    func read(deviceData: Dictionary<String, Any>?, andShowInView parentView: UIView, strokeColor:CGColor?, fillColor:CGColor?) {
+        let data = (deviceData?["data"] as? NSArray)
+        print("\(String(describing: data?.count))")
         
         var xMin : CGFloat!
         var xMax : CGFloat!
         var yMin : CGFloat!
         var yMax : CGFloat!
+        var values: [CGPoint] = [CGPoint]()
         
-        for key in self.allDeviceData.keys {
-            if key == "sensor_2" {
-                let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
-                print("\(deviceData?["sensorDisplayName"] ?? "")")
-                
-                let data = (deviceData?["data"] as? NSArray)
-                print("\(data?.count)")
-                
-                for entry in (data as! Array<Dictionary<String, Any>>) {
-                    values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
-                }
-                if deviceData?["minTimestamp"] != nil {
-                    xMin = (deviceData?["minTimestamp"]) as? CGFloat
-                }
-                if deviceData?["maxTimestamp"] != nil {
-                    xMax = (deviceData?["maxTimestamp"]) as? CGFloat
-                }
-                if deviceData?["minValue"] != nil {
-                    yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
-                }
-                if deviceData?["maxValue"] != nil {
-                    yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
-                }
-            }
+        for entry in (data as! Array<Dictionary<String, Any>>) {
+            values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
+        }
+        if deviceData?["minTimestamp"] != nil {
+            xMin = (deviceData?["minTimestamp"]) as? CGFloat
+        }
+        if deviceData?["maxTimestamp"] != nil {
+            xMax = (deviceData?["maxTimestamp"]) as? CGFloat
+        }
+        if deviceData?["minValue"] != nil {
+            yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+        }
+        if deviceData?["maxValue"] != nil {
+            yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
         }
         
+        
+        //----------------
         if xMin != nil && xMax != nil && yMin != nil && yMax != nil {
-            let lineGraphLayer = LineGraphLayer.initWith(parentView: lineChart)
             
-            lineGraphLayer.lineGraphDelegate = self
-            lineGraphLayer.xMin = xMin
-            lineGraphLayer.xMax = xMax
-            lineGraphLayer.yMin = yMin
-            lineGraphLayer.yMax = yMax
-            
-            //Number of points to be shown on the graph on axis
-            let pointsCountToPlot: Int = 5
-            
-            var xValues : [CGFloat] = [CGFloat]()
-            
-            let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot)
-            for i in 0..<pointsCountToPlot {
-                xValues.append(xMin + xMaxMinDiff * CGFloat(i))
+            if lineGraphLayer3 == nil {
+                lineGraphLayer3 = LineGraphLayer.initWith(parentView: lineChart3)
+                
+                lineGraphLayer3?.lineGraphDelegate = self
+                lineGraphLayer3?.xMin = xMin
+                lineGraphLayer3?.xMax = xMax
+                lineGraphLayer3?.yMin = yMin
+                lineGraphLayer3?.yMax = yMax
+                
+                //Number of points to be shown on the graph on axis
+                let pointsCountToPlot: Int = 5
+                
+                var xValues : [CGFloat] = [CGFloat]()
+                
+                let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot)
+                for i in 0..<pointsCountToPlot {
+                    xValues.append(xMin + xMaxMinDiff * CGFloat(i))
+                }
+                
+                var yValues : [CGFloat] = [CGFloat]()
+                let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot)
+                for i in 0..<pointsCountToPlot {
+                    yValues.append(yMin + yMaxMinDiff * CGFloat(i))
+                }
+                lineGraphLayer3?.drawAxisWith(xValues: xValues, yValues: yValues)
             }
             
-            var yValues : [CGFloat] = [CGFloat]()
-            let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot)
-            for i in 0..<pointsCountToPlot {
-                yValues.append(yMin + yMaxMinDiff * CGFloat(i))
-            }
-            lineGraphLayer.drawAxisWith(xValues: xValues, yValues: yValues)
-            lineGraphLayer.addLayerWith(stroke: UIColor.green.cgColor, fillColor: nil, values: values)
+            lineGraphLayer3?.addLayerWith(stroke: strokeColor, fillColor: fillColor, values: values)
         }
     }
     
