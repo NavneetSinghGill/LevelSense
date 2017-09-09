@@ -109,7 +109,12 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     //MARK: Line graph layer delegate
     
     func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues: [[CGPoint]]) {
-        
+        for i in 0..<inValues.count {
+            let values = inValues[i]
+            if indexes[i] != Int.max {
+                print("\(values[indexes[i]])")
+            }
+        }
     }
     
     func getValueToShowOnXaxisFor(value: Any!) -> Any! {

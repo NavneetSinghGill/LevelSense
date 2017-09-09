@@ -80,13 +80,11 @@ class LineGraphChildLayer: CAShapeLayer {
         //These two values are added just to make the fillcolor actually color properly
         var newValues: [CGPoint] = [CGPoint]()
         
-//        if isFilled {
-            newValues.append(CGPoint(x: (values.first?.x)!, y: lineGraphLayer.yValues[0]))
-            for i in 0..<values.count {
-                newValues.append(values[i])
-            }
-            newValues.append(CGPoint(x: (values.last?.x)!, y: lineGraphLayer.yValues[0]))
-//        }
+        newValues.append(CGPoint(x: (values.first?.x)!, y: lineGraphLayer.yValues[0]))
+        for i in 0..<values.count {
+            newValues.append(values[i])
+        }
+        newValues.append(CGPoint(x: (values.last?.x)!, y: lineGraphLayer.yValues[0]))
         
         //Make graph with dots on it
         var newPoints = getPointsForData(values: newValues, xValues: lineGraphLayer.xValues, yValues: lineGraphLayer.yValues, verticalLine: lineGraphLayer.verticalLine, horizontalLine: lineGraphLayer.horizontalLine)
@@ -307,14 +305,21 @@ class LineGraphLayer: CAShapeLayer {
         let location: CGPoint = tapGesture.location(in: tapGesture.view)
 //        let layer: CALayer? = (tapGesture.view?.layer.hitTest(location))
         
+        //Mirror location is passed in becuase the layer is actually transformed (fliped vertically) so, what appears on screen is not the reality
+        let mirrorLocation = mirrorXOf(point: location, inFrameSize: self.frame.size)
         var indexesSelected: [Int] = [Int]()
         var values: [[CGPoint]] = []
         for i in 0..<self.childLayers.count {
             let childLayer: LineGraphChildLayer! = self.childLayers[i]
-            indexesSelected.append(childLayer.getIndexOfValueFor(locationOnLayer: location))
+            indexesSelected.append(childLayer.getIndexOfValueFor(locationOnLayer: mirrorLocation))
             values.append(childLayer.values)
         }
-        self.lineGraphDelegate?.lineGraphTapped(atLocation: location, withIndexs: indexesSelected, inValues: values)
+        print("location: \(location)... mirror: \(mirrorLocation)..... size: \(self.frame.size)")
+        self.lineGraphDelegate?.lineGraphTapped(atLocation: mirrorLocation, withIndexs: indexesSelected, inValues: values)
+    }
+    
+    func mirrorXOf(point: CGPoint, inFrameSize size: CGSize) -> CGPoint {
+        return CGPoint(x: point.x, y: size.height - point.y)
     }
     
 }
