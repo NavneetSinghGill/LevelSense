@@ -6,17 +6,49 @@
 //  Copyright © 2017 Zoeb Sheikh. All rights reserved.
 //
 
+/*
+ 
+ 
+ 
+ 
+ 
+'LineGraphLayer' is a main layer which contains every other layer (line graph)
+ It is responsible for managing 'LineGraphChildLayer', 'VerticalLine', and 'HorizontalLine'
+ It works on only the width and calculate its own height to consume least space. There is a delegate method where the views height should be updated as 'LineGraphLayer' will only update its own height.
+ 
+ The 'values' are of type CGPoint, where x contains the values to be shown on x-axis and same for y
+ 
+'LineGraphChildLayer' is a single graph.
+ 'LineGraphLayer' helps to add a layer with new values by calling :
+    addLayerWith(stroke:CGColor?, fillColor:CGColor?, values: [CGPoint])
+ 
+ 
+ 
+ 
+ 
+ */
+
 import UIKit
 
-let verticalPadding: CGFloat = 30.0
-let horizontalPadding: CGFloat = 30.0
-let origin: CGPoint = CGPoint.init(x: 40, y: 40)
-let percentOfLineWhichShowsData: CGFloat = 0.9
-
-protocol LineGraphProtocol {
+@objc protocol LineGraphProtocol {
+    
+    /*
+     point is CGPoint where user tapped
+     indexes are the indexes of points selected in all the graphs. If the any point is in range then the index is appended in the indexes else Int.max is added to it, therefore mainting the size of indexes array equal to number of layer which eventually helps in mapping indexes to layer.
+     inValues is a 2D array containing all the values of all the child layers or say graphs
+     */
     func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues:[[CGPoint]])
+    
+    /*
+     It asks for any value which user wants to show as x and y aixs coodrinates
+     */
     func getValueToShowOnXaxisFor(value: Any!) -> Any!
     func getValueToShowOnYaxisFor(value: Any!) -> Any!
+    
+    /*
+     Whenever the height of layer is updated then this delegate can notify sender and therefore parent view height can be changed as well.
+     */
+    @objc optional func updatedHeightFor(lineGraphLayer: LineGraphLayer!)
 }
 
 //MARK: -
@@ -29,7 +61,7 @@ class LineGraphChildLayer: CAShapeLayer {
     var isFilled: Bool = false
     var points: [CGPoint]!
     
-    var curvedGraph: Bool = true
+    var curvedGraph: Bool = false
     
     class func `init`(lineGraphLayer: LineGraphLayer, values: [CGPoint], stroke:CGColor?, fillColor:CGColor?) -> LineGraphChildLayer {
         
@@ -103,9 +135,9 @@ class LineGraphChildLayer: CAShapeLayer {
     func getUpdatedPoints(points: [CGPoint]) -> [CGPoint] {
         var newPoints = [CGPoint]()
         for i in 0..<points.count {
-            newPoints.append(CGPoint.init(x: points[i].x + origin.x, y: self.frame.size.height - (points[i].y + origin.y)))
+            newPoints.append(CGPoint.init(x: points[i].x + self.lineGraphLayer.origin.x, y: points[i].y + self.lineGraphLayer.origin.y))
             
-            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + origin.x, y: points[i].y + origin.y)))
+            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + self.lineGraphLayer.origin.x, y: points[i].y + self.lineGraphLayer.origin.y)))
         }
         return newPoints
     }
@@ -133,7 +165,7 @@ class LineGraphChildLayer: CAShapeLayer {
         return points
     }
     
-    func getIndexOfValueFor(locationOnLayer: CGPoint) -> Int? {
+    func getIndexOfValueFor(locationOnLayer: CGPoint) -> Int {
         let point: CGPoint? = checkIf(point: locationOnLayer, isInRange: 30)
         
         var indexOfValue : Int!
@@ -144,7 +176,7 @@ class LineGraphChildLayer: CAShapeLayer {
             print("\(indexOfValue - isFilledValue)")
             return indexOfValue - isFilledValue
         } else {
-            return nil
+            return Int.max
         }
     }
     
@@ -155,7 +187,7 @@ class LineGraphChildLayer: CAShapeLayer {
         
         for i in 0..<self.points.count {
             let distanceBetweenBothPoints = sqrt(pow((self.points[i]).x - (point?.x)!, 2) + pow(self.points[i].y - (point?.y)!, 2))
-            //            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
+            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
             if range > distanceBetweenBothPoints && distanceBetweenBothPoints < closestRange {
                 closestRange = distanceBetweenBothPoints
                 resultantPoint = self.points[i]
@@ -173,15 +205,26 @@ class LineGraphChildLayer: CAShapeLayer {
 //This layer contain all the graph(s)
 class LineGraphLayer: CAShapeLayer {
     
+    var verticalPadding: CGFloat = 40.0
+    var horizontalPadding: CGFloat = 40.0
+    var origin: CGPoint = CGPoint.init(x: 40, y: 40)
+    var percentOfLineWhichShowsData: CGFloat = 0.9
+    
+    //The view's layer where the graphs are being made
+    var parentView: UIView!
+    
+    //Axis values .. coordinates
     var xValues: [CGFloat] = [CGFloat]()
     var yValues: [CGFloat] = [CGFloat]()
     
     var bezierPath: UIBezierPath!
+    
     var lineGraphDelegate: LineGraphProtocol?
     
     var horizontalLine: HorizontalLine!
     var verticalLine: VertialLine!
     
+    //All the LineGraphChildLayer act as a single graph
     var childLayers: [LineGraphChildLayer] = [LineGraphChildLayer]()
     
     var xMin : CGFloat! = -1
@@ -191,9 +234,13 @@ class LineGraphLayer: CAShapeLayer {
     
     var isAxisDrawn: Bool = false
     
+    //Dynamic height is the updated height the layer has and the view should have
+    var dynamicHeight: CGFloat!
+    
     class func initWith(parentView: UIView) -> LineGraphLayer {
         let lineGraphLayer = LineGraphLayer()
         
+        lineGraphLayer.parentView = parentView
         lineGraphLayer.frame.size = parentView.layer.frame.size
         
         lineGraphLayer.strokeColor = UIColor.clear.cgColor
@@ -213,8 +260,8 @@ class LineGraphLayer: CAShapeLayer {
         self.yValues = yValues
         
         //Add vertical line and horizontal line
-        verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin)
-        horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin)
+        verticalLine = VertialLine.init(values: yValues as NSArray, size: self.frame.size, origin: origin, withLineGraphLayer: self)
+        horizontalLine = HorizontalLine.init(values: xValues as NSArray, size: self.frame.size, origin: origin, withLineGraphLayer: self)
         
         if verticalLine.oneValueDistance > horizontalLine.oneValueDistance {
             verticalLine.oneValueDistance = horizontalLine.oneValueDistance
@@ -228,10 +275,14 @@ class LineGraphLayer: CAShapeLayer {
         verticalLine.doLayer()
         horizontalLine.doLayer()
         
-        self.superlayer?.insertSublayer(verticalLine, at: 0)
-        self.superlayer?.insertSublayer(horizontalLine, at: 0)
+        self.insertSublayer(verticalLine, at: 0)
+        self.insertSublayer(horizontalLine, at: 0)
         
         isAxisDrawn = true
+        
+        setDynamicHeight(height: verticalLine.lineEndY + verticalPadding)
+        
+        self.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
     }
     
     func addLayerWith(stroke:CGColor?, fillColor:CGColor?, values: [CGPoint]) {
@@ -243,21 +294,27 @@ class LineGraphLayer: CAShapeLayer {
         self.addSublayer(lineGraphChildLayer)
     }
     
+    func setDynamicHeight(height: CGFloat) {
+        self.dynamicHeight = height
+        self.frame.size.height = height
+        
+        self.lineGraphDelegate?.updatedHeightFor?(lineGraphLayer: self)
+    }
+    
     //MARK: Gestures
     
     func layerTapped(tapGesture: UITapGestureRecognizer) {
         let location: CGPoint = tapGesture.location(in: tapGesture.view)
 //        let layer: CALayer? = (tapGesture.view?.layer.hitTest(location))
         
-        var indexesSelected: [Int?] = [Int?]()
+        var indexesSelected: [Int] = [Int]()
         var values: [[CGPoint]] = []
         for i in 0..<self.childLayers.count {
             let childLayer: LineGraphChildLayer! = self.childLayers[i]
             indexesSelected.append(childLayer.getIndexOfValueFor(locationOnLayer: location))
             values.append(childLayer.values)
         }
-        self.lineGraphDelegate?.lineGraphTapped(atLocation: location, withIndexs: indexesSelected as! [Int], inValues: values)
-        
+        self.lineGraphDelegate?.lineGraphTapped(atLocation: location, withIndexs: indexesSelected, inValues: values)
     }
     
 }
@@ -273,6 +330,8 @@ class CustomShapeLayer: CAShapeLayer {
         label.font = 5 as CFTypeRef
         label.foregroundColor = UIColor.black.cgColor
         label.string = text
+        
+        label.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
         
         return label
     }
@@ -301,16 +360,16 @@ class VertialLine: CustomShapeLayer {
     var values : NSArray?
     var lineGraphDelegate: LineGraphProtocol?
     
-    class func `init`(values: NSArray?, size: CGSize, origin: CGPoint) -> VertialLine {
+    class func `init`(values: NSArray?, size: CGSize, origin: CGPoint, withLineGraphLayer lineGraphLayer: LineGraphLayer) -> VertialLine {
         let layer = VertialLine()
         
         if values?.count != 0 {
             layer.lineStartX = origin.x
-            layer.lineStartY = size.height - origin.y
             layer.lineEndX = origin.x
-            layer.lineEndY = verticalPadding
+            layer.lineStartY = origin.y
+            layer.lineEndY = origin.y + (size.width - origin.x - lineGraphLayer.horizontalPadding) // |----layer----|
             
-            let lineDistance = (layer.lineStartY - layer.lineEndY) * percentOfLineWhichShowsData
+            let lineDistance = (layer.lineEndY - layer.lineStartY) * lineGraphLayer.percentOfLineWhichShowsData
             let oneValueDistance = lineDistance/CGFloat((values?.count)!-1 >= 1 ? (values?.count)!-1: 1)
             layer.oneValueDistance = oneValueDistance
             layer.values = values
@@ -332,7 +391,7 @@ class VertialLine: CustomShapeLayer {
         let bezierPathDots = UIBezierPath()
         
         for i in 0..<(values?.count)! {
-            let yValue = lineStartY - oneValueDistance * CGFloat(i)
+            let yValue = lineStartY + oneValueDistance * CGFloat(i)
             let dotPoint = CGPoint.init(x: lineStartX, y: yValue)
             bezierPathDots.move(to: dotPoint)
             bezierPathDots.addArc(withCenter: dotPoint, radius: 2, startAngle: 0, endAngle: 6, clockwise: true)
@@ -346,7 +405,7 @@ class VertialLine: CustomShapeLayer {
             let text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])"
             let decimalPlaces2 : String = CGFloat(Double(text)!).rounded(toPlaces: 2)
             let textLayer = getTextLayerWith(text: decimalPlaces2)
-            textLayer.frame = CGRect(x: lineStartX-getWidthOf(text: text)-5, y: yValue-8, width: getWidthOf(text: text), height: 30)
+            textLayer.frame = CGRect(x: lineStartX-getWidthOf(text: text)-5, y: yValue-10, width: getWidthOf(text: text), height: 30)
             textLayer.alignmentMode = "right"
             addSublayer(textLayer)
         }
@@ -376,17 +435,17 @@ class HorizontalLine: CustomShapeLayer {
     var values : NSArray?
     var lineGraphDelegate: LineGraphProtocol?
     
-    class func `init`(values: NSArray?, size: CGSize, origin: CGPoint) -> HorizontalLine {
+    class func `init`(values: NSArray?, size: CGSize, origin: CGPoint, withLineGraphLayer lineGraphLayer: LineGraphLayer) -> HorizontalLine {
         let layer = HorizontalLine()
         
         if values?.count != 0 {
             
             layer.lineStartX = origin.x
-            layer.lineStartY = size.height - origin.y
-            layer.lineEndX = size.width - horizontalPadding
-            layer.lineEndY = size.height - origin.y
+            layer.lineEndX = size.width - lineGraphLayer.horizontalPadding
+            layer.lineStartY = origin.y
+            layer.lineEndY = origin.y
             
-            let lineDistance = (layer.lineEndX - layer.lineStartX) * percentOfLineWhichShowsData
+            let lineDistance = (layer.lineEndX - layer.lineStartX) * lineGraphLayer.percentOfLineWhichShowsData
             let oneValueDistance = lineDistance/CGFloat((values?.count)! - 1 >= 1 ? (values?.count)! - 1: 1)
             layer.oneValueDistance = oneValueDistance
             layer.values = values
@@ -422,7 +481,8 @@ class HorizontalLine: CustomShapeLayer {
             
             let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i]) as! String 
             let textLayer = getTextLayerWith(text: "\(text)")
-            textLayer.frame = CGRect(x: xValue - self.oneValueDistance/2, y: lineStartY+10, width: self.oneValueDistance, height: 30)
+            let height: CGFloat = 30.0
+            textLayer.frame = CGRect(x: xValue - self.oneValueDistance/2, y: lineStartY-height-2, width: self.oneValueDistance, height: height)
             textLayer.alignmentMode = "center"
             addSublayer(textLayer)
         }

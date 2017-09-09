@@ -23,6 +23,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     var months: [String]!
     
+    @IBOutlet var lineChart1HeightConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -116,6 +118,16 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func getValueToShowOnYaxisFor(value: Any!) -> Any! {
         return value!
+    }
+    
+    func updatedHeightFor(lineGraphLayer: LineGraphLayer!) {
+//        if lineGraphLayer.parentView == lineChart1 {
+//            
+//        } else if lineGraphLayer.parentView == lineChart2 {
+//            
+//        } else if lineGraphLayer.parentView == lineChart3 {
+            lineChart1HeightConstraint.constant = lineGraphLayer.dynamicHeight
+//        }
     }
     
     func getDateFor(timeStamp: CGFloat) -> String {
