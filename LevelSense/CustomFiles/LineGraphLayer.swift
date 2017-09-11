@@ -200,6 +200,8 @@ class LineGraphChildLayer: CAShapeLayer {
     
 }
 
+//MARK: -
+
 //This layer contain all the graph(s)
 class LineGraphLayer: CAShapeLayer {
     
@@ -232,6 +234,9 @@ class LineGraphLayer: CAShapeLayer {
     
     var isAxisDrawn: Bool = false
     
+    var graphLayer: CAShapeLayer!
+    var superTagLayer: CAShapeLayer!
+    
     //Dynamic height is the updated height the layer has and the view should have
     var dynamicHeight: CGFloat!
     
@@ -240,11 +245,24 @@ class LineGraphLayer: CAShapeLayer {
         
         lineGraphLayer.parentView = parentView
         lineGraphLayer.frame.size = parentView.layer.frame.size
-        
         lineGraphLayer.strokeColor = UIColor.clear.cgColor
         lineGraphLayer.fillColor = UIColor.clear.cgColor
-        
+        lineGraphLayer.masksToBounds = true
         parentView.layer.addSublayer(lineGraphLayer)
+        
+        //This will contain all graphs
+        lineGraphLayer.graphLayer = CAShapeLayer()
+        lineGraphLayer.graphLayer.masksToBounds = true
+        lineGraphLayer.graphLayer.frame.origin = CGPoint(x: 0, y: 0)
+//        lineGraphLayer.graphLayer.position = lineGraphLayer.graphLayer.frame.origin
+        lineGraphLayer.graphLayer.frame.size = parentView.layer.frame.size
+        lineGraphLayer.addSublayer(lineGraphLayer.graphLayer)
+        
+        //This will contains all the tags
+        lineGraphLayer.superTagLayer = CAShapeLayer()
+//        lineGraphLayer.superTagLayer.masksToBounds = true
+//        lineGraphLayer.frame = CGRect(x: 0, y: 0, width: lineGraphLayer.frame.size.width, height: 0)
+        lineGraphLayer.addSublayer(lineGraphLayer.superTagLayer)
         
         let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
         parentView.addGestureRecognizer(tapGesture)
@@ -273,23 +291,35 @@ class LineGraphLayer: CAShapeLayer {
         verticalLine.doLayer()
         horizontalLine.doLayer()
         
-        self.insertSublayer(verticalLine, at: 0)
-        self.insertSublayer(horizontalLine, at: 0)
+        self.graphLayer.insertSublayer(verticalLine, at: 0)
+        self.graphLayer.insertSublayer(horizontalLine, at: 0)
         
         isAxisDrawn = true
         
+        self.graphLayer.frame.size.height = verticalLine.lineEndY + verticalPadding
         setDynamicHeight(height: verticalLine.lineEndY + verticalPadding)
         
         self.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
     }
     
-    func addLayerWith(stroke:CGColor?, fillColor:CGColor?, values: [CGPoint]) {
+    func addLayerWith(stroke:CGColor?, fillColor:CGColor?, values: [CGPoint], graphOf: String) {
         let lineGraphChildLayer: LineGraphChildLayer! = LineGraphChildLayer.init(lineGraphLayer: self, values: values, stroke: stroke, fillColor: fillColor)
-        lineGraphChildLayer.frame.size = self.frame.size
+        lineGraphChildLayer.frame.size = self.graphLayer.frame.size
         lineGraphChildLayer.drawGraph()
+        
+        let tagLayer = TagLayer.init(withName: graphOf, lineColor: stroke)
+        tagLayer.frame.origin.y = CGFloat(self.childLayers.count) * tagLayer.frame.size.height
+        
+        let superTagLayerHeight = CGFloat(self.childLayers.count + 1) * tagLayer.frame.size.height
+        let superTagLayerY = self.graphLayer.frame.size.height
+        superTagLayer.frame = CGRect(x: 0, y: superTagLayerY, width: self.frame.size.width, height: superTagLayerHeight)
+//        superTagLayer.position = superTagLayer.frame.origin
+        superTagLayer.addSublayer(tagLayer)
         
         self.childLayers.append(lineGraphChildLayer)
         self.addSublayer(lineGraphChildLayer)
+        
+        setDynamicHeight(height: superTagLayer.frame.size.height + graphLayer.frame.size.height)
     }
     
     func setDynamicHeight(height: CGFloat) {
@@ -330,8 +360,8 @@ class CustomShapeLayer: CAShapeLayer {
     
     func getTextLayerWith(text: String) -> CATextLayer {
         let label = CATextLayer()
-//        label.font = UIFont(name: "Helvetica", size: 5)
-//        label.contentsScale =  UIScreen.main.scale
+        //        label.font = UIFont(name: "Helvetica", size: 5)
+        //        label.contentsScale =  UIScreen.main.scale
         label.font = 5 as CFTypeRef
         label.foregroundColor = UIColor.black.cgColor
         label.string = text
@@ -350,6 +380,41 @@ class CustomShapeLayer: CAShapeLayer {
     }
     
 }
+
+//MARK: -
+
+class TagLayer: CustomShapeLayer {
+    
+    class func `init`(withName name: String,lineColor: CGColor?) -> TagLayer {
+        let tagLayer = TagLayer()
+        tagLayer.frame = CGRect(x: 0, y: 0, width: 500, height: 20)
+        
+        let colorLayer = CAShapeLayer()
+        colorLayer.fillColor = lineColor
+        colorLayer.strokeColor = lineColor
+        colorLayer.backgroundColor = lineColor
+        colorLayer.frame = CGRect(x: 20, y: tagLayer.frame.height/2, width: 20, height: 2)
+        colorLayer.cornerRadius = 1
+        tagLayer.addSublayer(colorLayer)
+        
+        let textLayer = tagLayer.getTextLayerWith(text: name)
+        let textX = colorLayer.frame.size.width + colorLayer.frame.origin.x + 5
+        let textY = CGFloat(0)
+        let textWidth = tagLayer.frame.size.width - textX - colorLayer.frame.size.width
+        let textHeight = tagLayer.frame.size.height
+        
+        textLayer.frame = CGRect(x: textX, y: textY, width: textWidth, height: textHeight)
+        tagLayer.addSublayer(textLayer)
+        
+        tagLayer.backgroundColor = UIColor.clear.cgColor
+        textLayer.backgroundColor = UIColor.clear.cgColor
+        
+        return tagLayer
+    }
+    
+}
+
+//MARK: -
 
 class VertialLine: CustomShapeLayer {
     
@@ -425,6 +490,8 @@ class VertialLine: CustomShapeLayer {
     }
     
 }
+
+//MARK: -
 
 class HorizontalLine: CustomShapeLayer {
     

@@ -38,14 +38,16 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             print("\(deviceData?["sensorDisplayName"] ?? "")")
             
             if key == "sensor_2" {
-                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.green.cgColor, fillColor: nil)
+                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.green.cgColor, fillColor: nil, graphHeading: "Temperature")
             } else if key == "sensor_3" {
-                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.blue.cgColor, fillColor: nil)
+                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.blue.cgColor, fillColor: nil, graphHeading:  "Humidity")
+            } else if key == "sensor_9" {
+                read(deviceData: deviceData, andShowInView: lineChart3, strokeColor: UIColor.red.cgColor, fillColor: nil, graphHeading:  "Device runtime")
             }
         }
     }
     
-    func read(deviceData: Dictionary<String, Any>?, andShowInView parentView: UIView, strokeColor:CGColor?, fillColor:CGColor?) {
+    func read(deviceData: Dictionary<String, Any>?, andShowInView parentView: UIView, strokeColor:CGColor?, fillColor:CGColor?, graphHeading: String) {
         let data = (deviceData?["data"] as? NSArray)
         print("\(String(describing: data?.count))")
         
@@ -102,7 +104,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 lineGraphLayer3?.drawAxisWith(xValues: xValues, yValues: yValues)
             }
             
-            lineGraphLayer3?.addLayerWith(stroke: strokeColor, fillColor: fillColor, values: values)
+            lineGraphLayer3?.addLayerWith(stroke: strokeColor, fillColor: fillColor, values: values, graphOf: graphHeading)
         }
     }
     
