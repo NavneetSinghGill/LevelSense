@@ -135,7 +135,7 @@ class LineGraphChildLayer: CAShapeLayer {
         for i in 0..<points.count {
             newPoints.append(CGPoint.init(x: points[i].x + self.lineGraphLayer.origin.x, y: points[i].y + self.lineGraphLayer.origin.y))
             
-            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + self.lineGraphLayer.origin.x, y: points[i].y + self.lineGraphLayer.origin.y)))
+//            NSLog("Pointtttttttttttttttt: %@", NSStringFromCGPoint(CGPoint.init(x: points[i].x + self.lineGraphLayer.origin.x, y: points[i].y + self.lineGraphLayer.origin.y)))
         }
         return newPoints
     }
@@ -254,14 +254,12 @@ class LineGraphLayer: CAShapeLayer {
         lineGraphLayer.graphLayer = CAShapeLayer()
         lineGraphLayer.graphLayer.masksToBounds = true
         lineGraphLayer.graphLayer.frame.origin = CGPoint(x: 0, y: 0)
-//        lineGraphLayer.graphLayer.position = lineGraphLayer.graphLayer.frame.origin
         lineGraphLayer.graphLayer.frame.size = parentView.layer.frame.size
+        
         lineGraphLayer.addSublayer(lineGraphLayer.graphLayer)
         
         //This will contains all the tags
         lineGraphLayer.superTagLayer = CAShapeLayer()
-//        lineGraphLayer.superTagLayer.masksToBounds = true
-//        lineGraphLayer.frame = CGRect(x: 0, y: 0, width: lineGraphLayer.frame.size.width, height: 0)
         lineGraphLayer.addSublayer(lineGraphLayer.superTagLayer)
         
         let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
@@ -379,6 +377,14 @@ class CustomShapeLayer: CAShapeLayer {
         return label.intrinsicContentSize.width
     }
     
+    func getHeightOf(text: String) -> CGFloat {
+        let label: UILabel! = UILabel()
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: 5)
+        
+        return label.intrinsicContentSize.height
+    }
+    
 }
 
 //MARK: -
@@ -451,8 +457,6 @@ class VertialLine: CustomShapeLayer {
         let bezierPathAxis = UIBezierPath()
         
         //Create line
-        UIColor.black.setStroke()
-        bezierPathAxis.stroke()
         bezierPathAxis.move(to: CGPoint.init(x: lineStartX, y: lineStartY))
         bezierPathAxis.addLine(to: CGPoint.init(x: lineEndX, y: lineEndY))
         bezierPathAxis.lineWidth = 2.0
@@ -475,7 +479,7 @@ class VertialLine: CustomShapeLayer {
             let text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])"
             let decimalPlaces2 : String = CGFloat(Double(text)!).rounded(toPlaces: 2)
             let textLayer = getTextLayerWith(text: decimalPlaces2)
-            textLayer.frame = CGRect(x: lineStartX-getWidthOf(text: text)-5, y: yValue-10, width: getWidthOf(text: text), height: 30)
+            textLayer.frame = CGRect(x: 0, y: yValue-10, width: lineStartX-3, height: 30)
             textLayer.alignmentMode = "right"
             addSublayer(textLayer)
         }
@@ -529,8 +533,6 @@ class HorizontalLine: CustomShapeLayer {
         let bezierPathAxis = UIBezierPath()
         
         //Create line
-        UIColor.black.setStroke()
-        bezierPathAxis.stroke()
         bezierPathAxis.move(to: CGPoint.init(x: lineStartX, y: lineStartY))
         bezierPathAxis.addLine(to: CGPoint.init(x: lineEndX, y: lineEndY))
         bezierPathAxis.lineWidth = 2.0
