@@ -124,7 +124,7 @@ class LineGraphChildLayer: CAShapeLayer {
         for i in 0..<points.count {
             let dotPoint = CGPoint.init(x: points[i].x, y: points[i].y)
             bezierPathDots.move(to: dotPoint)
-            bezierPathDots.addArc(withCenter: dotPoint, radius: 2, startAngle: 0, endAngle: 6, clockwise: true)
+            bezierPathDots.addArc(withCenter: dotPoint, radius: 1, startAngle: 0, endAngle: 6, clockwise: true)
         }
         
         return bezierPathDots

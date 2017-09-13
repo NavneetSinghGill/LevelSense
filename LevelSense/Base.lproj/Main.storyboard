@@ -247,6 +247,9 @@
                                                     <constraint firstAttribute="height" constant="45" id="T8v-4V-VfS"/>
                                                 </constraints>
                                                 <state key="normal" image="deviceGraph"/>
+                                                <connections>
+                                                    <action selector="graphButtonTapped" destination="L9x-1r-sOR" eventType="touchUpInside" id="FIP-Ve-NYX"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1941,12 +1944,75 @@
                                     <constraint firstItem="5Xl-ln-xnf" firstAttribute="centerX" secondItem="ot7-yu-5XQ" secondAttribute="centerX" id="zMd-hk-Zte"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NkM-Cq-l6R">
+                                <rect key="frame" x="375" y="69" width="150" height="53"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adh-xD-Sw2">
+                                        <rect key="frame" x="5" y="5" width="43" height="19"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="----" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydU-VH-uMB">
+                                        <rect key="frame" x="53" y="5" width="92" height="19"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWp-PC-DJg">
+                                        <rect key="frame" x="5" y="29" width="38" height="19"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="----" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28i-jP-nVi">
+                                        <rect key="frame" x="48" y="29" width="25" height="19"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQw-Ct-kMX">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="53"/>
+                                        <connections>
+                                            <action selector="popupTapped" destination="Ltb-cb-vqx" eventType="touchUpInside" id="3bT-AB-KQG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.94117647059999998" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ydU-VH-uMB" firstAttribute="leading" secondItem="adh-xD-Sw2" secondAttribute="trailing" constant="5" id="71l-Bb-ckv"/>
+                                    <constraint firstItem="ydU-VH-uMB" firstAttribute="top" secondItem="NkM-Cq-l6R" secondAttribute="top" constant="5" id="9WI-G5-zak"/>
+                                    <constraint firstItem="KQw-Ct-kMX" firstAttribute="leading" secondItem="NkM-Cq-l6R" secondAttribute="leading" id="JhN-Im-27f"/>
+                                    <constraint firstAttribute="bottom" secondItem="28i-jP-nVi" secondAttribute="bottom" constant="5" id="LjL-ts-XXu"/>
+                                    <constraint firstItem="28i-jP-nVi" firstAttribute="leading" secondItem="bWp-PC-DJg" secondAttribute="trailing" constant="5" id="Whp-bV-lzx"/>
+                                    <constraint firstAttribute="bottom" secondItem="KQw-Ct-kMX" secondAttribute="bottom" id="bkD-xp-IlY"/>
+                                    <constraint firstAttribute="width" constant="150" id="gOu-k4-0ca"/>
+                                    <constraint firstItem="adh-xD-Sw2" firstAttribute="leading" secondItem="NkM-Cq-l6R" secondAttribute="leading" constant="5" id="hAC-Cb-B0W"/>
+                                    <constraint firstAttribute="trailing" secondItem="ydU-VH-uMB" secondAttribute="trailing" constant="5" id="ing-bc-pnf"/>
+                                    <constraint firstAttribute="trailing" secondItem="KQw-Ct-kMX" secondAttribute="trailing" id="oHY-7n-rPw"/>
+                                    <constraint firstItem="28i-jP-nVi" firstAttribute="top" secondItem="ydU-VH-uMB" secondAttribute="bottom" constant="5" id="r1V-Y7-b6p"/>
+                                    <constraint firstItem="bWp-PC-DJg" firstAttribute="leading" secondItem="NkM-Cq-l6R" secondAttribute="leading" constant="5" id="uqe-LE-wfn"/>
+                                    <constraint firstItem="28i-jP-nVi" firstAttribute="centerY" secondItem="bWp-PC-DJg" secondAttribute="centerY" id="vYN-li-4d3"/>
+                                    <constraint firstItem="ydU-VH-uMB" firstAttribute="centerY" secondItem="adh-xD-Sw2" secondAttribute="centerY" id="yKV-Th-cmh"/>
+                                    <constraint firstItem="KQw-Ct-kMX" firstAttribute="top" secondItem="NkM-Cq-l6R" secondAttribute="top" id="ySE-Ss-SGp"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="32N-eq-NfB" firstAttribute="top" secondItem="ot7-yu-5XQ" secondAttribute="bottom" id="BZf-4X-ATt"/>
+                            <constraint firstItem="NkM-Cq-l6R" firstAttribute="top" secondItem="LFm-v4-qe6" secondAttribute="bottom" constant="5" id="Jra-6G-IHw"/>
                             <constraint firstItem="n8G-U9-del" firstAttribute="centerX" secondItem="rAq-MU-NlL" secondAttribute="centerX" id="QM0-Tr-Z0X"/>
                             <constraint firstItem="n8G-U9-del" firstAttribute="centerY" secondItem="rAq-MU-NlL" secondAttribute="centerY" id="UVb-fp-i0n"/>
+                            <constraint firstAttribute="trailing" secondItem="NkM-Cq-l6R" secondAttribute="trailing" constant="-150" id="bP6-Wa-Vks"/>
                             <constraint firstAttribute="trailing" secondItem="ot7-yu-5XQ" secondAttribute="trailing" id="mRa-oq-E4s"/>
                             <constraint firstItem="ot7-yu-5XQ" firstAttribute="top" secondItem="LFm-v4-qe6" secondAttribute="bottom" id="tJY-ms-lsl"/>
                             <constraint firstItem="ot7-yu-5XQ" firstAttribute="leading" secondItem="rAq-MU-NlL" secondAttribute="leading" id="zab-gQ-YkN"/>
@@ -1954,8 +2020,12 @@
                     </view>
                     <connections>
                         <outlet property="mainView" destination="5Xl-ln-xnf" id="KnS-zA-b88"/>
+                        <outlet property="popupTrailingConstraint" destination="bP6-Wa-Vks" id="DhU-HQ-1z8"/>
+                        <outlet property="popupView" destination="NkM-Cq-l6R" id="FaT-KE-HxM"/>
                         <outlet property="scrollInnerviewHeightConstraint" destination="cnP-9d-To3" id="DMS-7D-W5H"/>
                         <outlet property="scrollView" destination="ot7-yu-5XQ" id="nF6-2D-cP0"/>
+                        <outlet property="timeLabel" destination="28i-jP-nVi" id="42G-Io-Vyj"/>
+                        <outlet property="valueLabel" destination="ydU-VH-uMB" id="fyC-kg-BY5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV6-wD-IRn" userLabel="First Responder" sceneMemberID="firstResponder"/>

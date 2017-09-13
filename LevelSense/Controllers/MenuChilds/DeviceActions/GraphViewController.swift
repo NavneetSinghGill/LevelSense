@@ -16,10 +16,18 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var scrollInnerviewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var popupTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var popupView: UIView!
+    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     
     var allDeviceData: Dictionary<String, Any>!
     var graphViews: [UIView] = []
     var heightOfScrollInnerView: CGFloat = 0
+    
+    var areGraphsDrawn: Bool = false
+    var isPopupOpen: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,26 +37,30 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        var count: Int = 0
-        for key in self.allDeviceData.keys {
-            
-            let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
-            print("\(deviceData?["sensorDisplayName"] ?? "")")
-            
-            let graphView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
-            let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: (colors.object(at: count%colors.count) as? UIColor)?.cgColor, fillColor: nil)
-            
-            if creationOfLayerSuccessful {
-                graphView.frame.size.height = (graphView.layer.sublayers?.first?.frame.size.height)!
-                addView(layerView: graphView)
+        if !areGraphsDrawn {
+            var count: Int = 0
+            for key in self.allDeviceData.keys {
                 
-                if count != 0 {
-                    addDividerTo(parentView: graphView)
+                let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
+                print("\(deviceData?["sensorDisplayName"] ?? "")")
+                
+                let graphView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
+                let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: (colors.object(at: count%colors.count) as? UIColor)?.cgColor, fillColor: nil)
+                
+                if creationOfLayerSuccessful {
+                    graphView.frame.size.height = (graphView.layer.sublayers?.first?.frame.size.height)!
+                    addView(layerView: graphView)
+                    
+                    if count != 0 {
+                        addDividerTo(parentView: graphView)
+                    }
+                    
+                    count += 1
                 }
-                
-                count += 1
             }
+            areGraphsDrawn = true
         }
     }
     
@@ -140,14 +152,50 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         return false
     }
     
+    func showPopupWith(value: CGFloat, andTimeStamp timeStamp: CGFloat) {
+        popupTrailingConstraint.constant = 5
+        UIView.animate(withDuration: 0.5, animations: { 
+            self.view.layoutIfNeeded()
+        }) { (isComplete) in
+            
+        }
+        valueLabel.text = "\(value)"
+        timeLabel.text = getDateFor(timeStamp: timeStamp)
+        isPopupOpen = true
+    }
+    
+    func hidePopup() {
+        isPopupOpen = false
+        popupTrailingConstraint.constant = -self.popupView.frame.size.width
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        }) { (isComplete) in
+            self.valueLabel.text = "----"
+            self.timeLabel.text = "----"
+        }
+    }
+    
+    //MARK: IBAction methods
+    
+    @IBAction func popupTapped() {
+        hidePopup()
+    }
+    
     //MARK: Line graph layer delegate
     
     func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues: [[CGPoint]]) {
+        var someValueIsSelected: Bool = false
         for i in 0..<inValues.count {
             let values = inValues[i]
-            if indexes[i] != Int.max {
+            if indexes[i] != Int.max && indexes[i] < values.count {
                 print("\(values[indexes[i]])")
+                self.showPopupWith(value: values[indexes[i]].y, andTimeStamp: values[indexes[i]].x)
+                someValueIsSelected = true
             }
+        }
+        if !someValueIsSelected && isPopupOpen {
+            self.timeLabel.text = "----"
+            self.valueLabel.text = "----"
         }
     }
     

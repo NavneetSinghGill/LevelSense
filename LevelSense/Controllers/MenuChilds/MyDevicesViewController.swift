@@ -68,7 +68,6 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             let cell = tableView.cellForRow(at: currentSelectedIndex) as! MyDevicesTableViewCell
             cell.changeViewIf(isSelected: true, withAnimation: true)
             openBottomView()
-            getDeviceDetails()
             
         } else if currentSelectedIndex.row == indexPath.row {
             
@@ -88,7 +87,6 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             currentSelectedIndex = indexPath
             cell = tableView.cellForRow(at: currentSelectedIndex) as? MyDevicesTableViewCell
             cell?.changeViewIf(isSelected: true, withAnimation: true)
-            getDeviceDetails()
         }
         
     }
@@ -118,6 +116,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: -1, to: Date())
         let fromTimestamp: Int! = Int(lastMonth.timeIntervalSince1970)
         
+        startAnimating()
         UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: id, limit: 100000, fromTimestamp: fromTimestamp, toTimestamp: toTimestamp) { (success, response, error) in
             if success {
                 self.deviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)
@@ -125,6 +124,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
                     self.performSegue(withIdentifier: "graph", sender: self)
                 }
             }
+            self.stopAnimating()
         }
     }
     
@@ -154,6 +154,12 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             }
             self.stopAnimating()
         }
+    }
+    
+    //MARK: IBAction methods
+    
+    @IBAction func graphButtonTapped() {
+        getDeviceDetails()
     }
     
 }

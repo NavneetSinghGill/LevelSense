@@ -362,6 +362,7 @@
 					F19DAE5A1F3DB03D007F14FF = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0830;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -645,11 +646,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = AXC7N2L5W8;
 				INFOPLIST_FILE = LevelSense/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BestPeers.LevelSense;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LevelSense.LS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6b58ad40-b945-4a55-8384-38ec23dc13aa";
+				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDevelopment;
 				SWIFT_OBJC_BRIDGING_HEADER = "LevelSense/CustomFiles/LevelSense-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -663,11 +667,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = AXC7N2L5W8;
 				INFOPLIST_FILE = LevelSense/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BestPeers.LevelSense;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LevelSense.LS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9e5f203d-5634-4fdf-a550-b613e2a771b1";
+				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDistribution;
 				SWIFT_OBJC_BRIDGING_HEADER = "LevelSense/CustomFiles/LevelSense-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
