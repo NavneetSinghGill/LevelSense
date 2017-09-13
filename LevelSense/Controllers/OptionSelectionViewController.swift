@@ -69,7 +69,12 @@ class OptionSelectionViewController: LSViewController, UIPickerViewDelegate, UIP
             return attString
         } else {
             
-            let str = options.object(at: row) as! String
+            let str: String!
+            if options.object(at: row) as? String != nil {
+                str = options.object(at: row) as! String
+            } else {
+                str = "\(options.object(at: row))"
+            }
             let font: Dictionary = [ NSFontAttributeName: UIFont(name: "HelveticaNeue", size: 15.0)! ]
             let attString:NSMutableAttributedString = NSMutableAttributedString.init(string: str)
             

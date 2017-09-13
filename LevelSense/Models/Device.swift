@@ -56,7 +56,7 @@ class Device: NSObject {
     
     class func getDevicesFromDictionaryArray(deviceDictionaries:NSArray) -> [Device] {
         var devices = [Device]()
-        for var deviceDict in deviceDictionaries {
+        for deviceDict in deviceDictionaries {
             let device = Device.initWithDictionary(dictionary: deviceDict as! Dictionary<String, Any>)
             devices.append(device)
         }

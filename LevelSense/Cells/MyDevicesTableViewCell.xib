@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a2m-YS-6it" id="JOt-pZ-Vgd">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="104.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mm7-4T-n70" userLabel="ContentSuperView">
@@ -47,17 +47,9 @@
                                 <color key="textColor" red="0.0" green="0.7846819196" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjG-fo-l3F">
-                                <rect key="frame" x="280" y="0.0" width="30" height="30"/>
-                                <state key="normal" title="D"/>
-                                <connections>
-                                    <action selector="getDeviceDetails" destination="a2m-YS-6it" eventType="touchUpInside" id="GLg-cg-Ntr"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="tjG-fo-l3F" secondAttribute="trailing" id="6n4-Nz-2ud"/>
                             <constraint firstAttribute="trailing" secondItem="4PT-Ar-LqC" secondAttribute="trailing" constant="15" id="AzA-6W-cAT"/>
                             <constraint firstItem="wvX-Qi-oJf" firstAttribute="top" secondItem="g0n-qt-1V1" secondAttribute="bottom" constant="10" id="EBp-J7-7fu"/>
                             <constraint firstItem="g0n-qt-1V1" firstAttribute="leading" secondItem="mm7-4T-n70" secondAttribute="leading" constant="10" id="Hjr-ly-Qae"/>
@@ -67,7 +59,6 @@
                             <constraint firstAttribute="trailing" secondItem="g0n-qt-1V1" secondAttribute="trailing" constant="10" id="UZ0-qa-H3y"/>
                             <constraint firstItem="x3m-hu-BRf" firstAttribute="top" secondItem="mm7-4T-n70" secondAttribute="top" id="Uwy-YI-8p2"/>
                             <constraint firstItem="wvX-Qi-oJf" firstAttribute="leading" secondItem="mm7-4T-n70" secondAttribute="leading" constant="10" id="YAH-bV-C1l"/>
-                            <constraint firstItem="tjG-fo-l3F" firstAttribute="top" secondItem="mm7-4T-n70" secondAttribute="top" id="epL-up-2kG"/>
                             <constraint firstItem="g0n-qt-1V1" firstAttribute="top" secondItem="mm7-4T-n70" secondAttribute="top" constant="5" id="gEM-rv-gnT"/>
                             <constraint firstItem="4PT-Ar-LqC" firstAttribute="leading" secondItem="wvX-Qi-oJf" secondAttribute="trailing" constant="10" id="ue9-Ue-0vc"/>
                             <constraint firstAttribute="bottom" secondItem="x3m-hu-BRf" secondAttribute="bottom" id="yMN-Ew-j9T"/>

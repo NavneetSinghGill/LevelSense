@@ -22,7 +22,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
 
     var deviceData: Dictionary<String, Any>!
     
+    var selectedDevice: Device?
     
+    var alarmConfig: Array<Dictionary<String,Any>>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +70,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             let cell = tableView.cellForRow(at: currentSelectedIndex) as! MyDevicesTableViewCell
             cell.changeViewIf(isSelected: true, withAnimation: true)
             openBottomView()
+            selectedDevice = devices[indexPath.row]
             
         } else if currentSelectedIndex.row == indexPath.row {
             
@@ -76,6 +79,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
                 cell.changeViewIf(isSelected: false, withAnimation: true)
             currentSelectedIndex = IndexPath.init(row: -1, section: 0)
             closeBottomView()
+            selectedDevice = nil
             
         } else {
             
@@ -87,6 +91,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             currentSelectedIndex = indexPath
             cell = tableView.cellForRow(at: currentSelectedIndex) as? MyDevicesTableViewCell
             cell?.changeViewIf(isSelected: true, withAnimation: true)
+            selectedDevice = devices[indexPath.row]
         }
         
     }
@@ -97,6 +102,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         if segue.identifier == "graph" {
             let graphVC: GraphViewController = segue.destination as! GraphViewController
             graphVC.allDeviceData = self.deviceData
+        } else if segue.identifier == "alarmConfig" {
+            let alarmConfigVC: AlarmConfigViewController = segue.destination as! AlarmConfigViewController
+            alarmConfigVC.alarmConfig = alarmConfig
         }
     }
     
@@ -157,6 +165,21 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     }
     
     //MARK: IBAction methods
+    
+    @IBAction func alarmConfigButtonTapped() {
+        if selectedDevice?.id != nil {
+            startAnimating()
+            UserRequestManager.postGetDeviceAPICallWith(deviceID: selectedDevice!.id) { (success, response, error) in
+                if success {
+                    let singleDeviceData = ((response as! Dictionary<String, Any>)["device"] as? Dictionary<String,Any>)
+                    self.alarmConfig = singleDeviceData?["alarmConfiguration"] as! Array<Dictionary<String,Any>>
+                    
+                    self.performSegue(withIdentifier: "alarmConfig", sender: self)
+                }
+                self.stopAnimating()
+            }
+        }
+    }
     
     @IBAction func graphButtonTapped() {
         getDeviceDetails()

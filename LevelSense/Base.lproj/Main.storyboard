@@ -209,7 +209,7 @@
                                                 </constraints>
                                                 <state key="normal" image="deviceNotification"/>
                                                 <connections>
-                                                    <segue destination="h3j-6N-baL" kind="show" id="kYa-CW-Dy7"/>
+                                                    <action selector="alarmConfigButtonTapped" destination="L9x-1r-sOR" eventType="touchUpInside" id="CwT-a4-miA"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -324,6 +324,7 @@
                         <outlet property="heightConstaintOfActionView" destination="TRT-d7-mDk" id="uZ6-vO-8GD"/>
                         <outlet property="tableView" destination="m4H-XG-hCH" id="MSQ-7d-TBI"/>
                         <segue destination="Ltb-cb-vqx" kind="show" identifier="graph" id="fTf-ac-8bw"/>
+                        <segue destination="h3j-6N-baL" kind="show" identifier="alarmConfig" id="OsE-w5-gzI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBh-uz-jkG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -405,6 +406,12 @@
                                                             <outlet property="delegate" destination="h3j-6N-baL" id="ZCi-BO-g4c"/>
                                                         </connections>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aU3-Vr-2iI">
+                                                        <rect key="frame" x="15" y="34" width="164.5" height="30"/>
+                                                        <connections>
+                                                            <action selector="tempMinTappedWithSender:" destination="h3j-6N-baL" eventType="touchUpInside" id="mLM-XV-zNn"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" clipsSubviews="YES" tag="902" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Max" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fyD-cr-vCK">
                                                         <rect key="frame" x="194.5" y="34" width="164.5" height="30"/>
                                                         <nil key="textColor"/>
@@ -414,6 +421,12 @@
                                                             <outlet property="delegate" destination="h3j-6N-baL" id="L17-8z-tAP"/>
                                                         </connections>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4X-k0-lh6">
+                                                        <rect key="frame" x="194.5" y="34" width="164.5" height="30"/>
+                                                        <connections>
+                                                            <action selector="tempMaxTappedWithSender:" destination="h3j-6N-baL" eventType="touchUpInside" id="eNs-qL-sOt"/>
+                                                        </connections>
+                                                    </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcb-jk-pXj" userLabel="TempCheckView1">
                                                         <rect key="frame" x="15" y="69" width="90" height="30"/>
                                                         <subviews>
@@ -514,23 +527,31 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="pWu-kx-8Tr" firstAttribute="leading" secondItem="I7j-Tr-y6f" secondAttribute="trailing" constant="15" id="0IJ-ri-Vja"/>
+                                                    <constraint firstItem="aU3-Vr-2iI" firstAttribute="bottom" secondItem="A3V-l1-gZz" secondAttribute="bottom" id="2xF-IM-pQF"/>
                                                     <constraint firstAttribute="bottom" secondItem="pcb-jk-pXj" secondAttribute="bottom" constant="10" id="34L-lq-xJF"/>
                                                     <constraint firstItem="pcb-jk-pXj" firstAttribute="leading" secondItem="N0U-s2-eMY" secondAttribute="leading" constant="15" id="4np-Eb-IGd"/>
                                                     <constraint firstItem="I7j-Tr-y6f" firstAttribute="leading" secondItem="pcb-jk-pXj" secondAttribute="trailing" constant="15" id="55f-60-hxU"/>
                                                     <constraint firstAttribute="trailing" secondItem="fyD-cr-vCK" secondAttribute="trailing" constant="15" id="5xP-A3-gWY"/>
                                                     <constraint firstItem="814-YK-0Cl" firstAttribute="top" secondItem="N0U-s2-eMY" secondAttribute="top" constant="10" id="8OO-5O-LT3"/>
+                                                    <constraint firstItem="aU3-Vr-2iI" firstAttribute="top" secondItem="A3V-l1-gZz" secondAttribute="top" id="9Eh-qJ-c4K"/>
                                                     <constraint firstItem="pcb-jk-pXj" firstAttribute="top" secondItem="A3V-l1-gZz" secondAttribute="bottom" constant="5" id="C8T-4d-nuc"/>
+                                                    <constraint firstItem="aU3-Vr-2iI" firstAttribute="leading" secondItem="A3V-l1-gZz" secondAttribute="leading" id="GJW-So-7Sh"/>
+                                                    <constraint firstItem="aU3-Vr-2iI" firstAttribute="trailing" secondItem="A3V-l1-gZz" secondAttribute="trailing" id="GRL-uK-qaU"/>
                                                     <constraint firstItem="814-YK-0Cl" firstAttribute="centerX" secondItem="N0U-s2-eMY" secondAttribute="centerX" id="LTS-nN-p9L"/>
                                                     <constraint firstItem="fyD-cr-vCK" firstAttribute="centerY" secondItem="A3V-l1-gZz" secondAttribute="centerY" id="LkQ-fq-XST"/>
                                                     <constraint firstItem="pWu-kx-8Tr" firstAttribute="width" secondItem="I7j-Tr-y6f" secondAttribute="width" multiplier="1.5" id="Mw7-td-n1a"/>
+                                                    <constraint firstItem="fyD-cr-vCK" firstAttribute="leading" secondItem="z4X-k0-lh6" secondAttribute="leading" id="N0B-ZO-eYh"/>
                                                     <constraint firstItem="A3V-l1-gZz" firstAttribute="leading" secondItem="N0U-s2-eMY" secondAttribute="leading" constant="15" id="O2j-HA-eCv"/>
                                                     <constraint firstItem="fyD-cr-vCK" firstAttribute="leading" secondItem="A3V-l1-gZz" secondAttribute="trailing" constant="15" id="P9R-6l-gB6"/>
                                                     <constraint firstItem="fyD-cr-vCK" firstAttribute="width" secondItem="A3V-l1-gZz" secondAttribute="width" id="ShP-nA-hhB"/>
                                                     <constraint firstItem="pWu-kx-8Tr" firstAttribute="centerY" secondItem="I7j-Tr-y6f" secondAttribute="centerY" id="dYi-hc-Fqa"/>
                                                     <constraint firstItem="I7j-Tr-y6f" firstAttribute="centerY" secondItem="pcb-jk-pXj" secondAttribute="centerY" id="eTo-rI-XLY"/>
+                                                    <constraint firstItem="fyD-cr-vCK" firstAttribute="trailing" secondItem="z4X-k0-lh6" secondAttribute="trailing" id="fHi-qA-eww"/>
                                                     <constraint firstItem="y5z-6V-KDS" firstAttribute="leading" secondItem="N0U-s2-eMY" secondAttribute="leading" constant="30" id="fRG-JA-fc3"/>
                                                     <constraint firstItem="pcb-jk-pXj" firstAttribute="width" secondItem="I7j-Tr-y6f" secondAttribute="width" id="hLC-I1-kMS"/>
                                                     <constraint firstAttribute="trailing" secondItem="pWu-kx-8Tr" secondAttribute="trailing" constant="15" id="hLh-6C-RIW"/>
+                                                    <constraint firstItem="fyD-cr-vCK" firstAttribute="top" secondItem="z4X-k0-lh6" secondAttribute="top" id="hhy-e6-Fed"/>
+                                                    <constraint firstItem="fyD-cr-vCK" firstAttribute="bottom" secondItem="z4X-k0-lh6" secondAttribute="bottom" id="inH-fb-Zbl"/>
                                                     <constraint firstAttribute="trailing" secondItem="y5z-6V-KDS" secondAttribute="trailing" constant="30" id="ooe-Q0-gdp"/>
                                                     <constraint firstItem="y5z-6V-KDS" firstAttribute="top" secondItem="N0U-s2-eMY" secondAttribute="top" id="rAc-CD-YXL"/>
                                                     <constraint firstItem="fyD-cr-vCK" firstAttribute="top" secondItem="814-YK-0Cl" secondAttribute="bottom" constant="5" id="xjP-ug-bjF"/>
@@ -581,6 +602,12 @@
                                                             <outlet property="delegate" destination="h3j-6N-baL" id="1W0-G8-5Le"/>
                                                         </connections>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPi-Xy-afR">
+                                                        <rect key="frame" x="15" y="34" width="164.5" height="30"/>
+                                                        <connections>
+                                                            <action selector="humidityMinTappedWithSender:" destination="h3j-6N-baL" eventType="touchUpInside" id="PVn-F0-QEc"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" clipsSubviews="YES" tag="904" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Max" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vnk-De-Ha6">
                                                         <rect key="frame" x="194.5" y="34" width="164.5" height="30"/>
                                                         <nil key="textColor"/>
@@ -590,6 +617,12 @@
                                                             <outlet property="delegate" destination="h3j-6N-baL" id="2Le-rc-UI8"/>
                                                         </connections>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V9v-6F-LA3">
+                                                        <rect key="frame" x="194.5" y="34" width="164.5" height="30"/>
+                                                        <connections>
+                                                            <action selector="humidityMaxTappedWithSender:" destination="h3j-6N-baL" eventType="touchUpInside" id="QHw-Bj-clN"/>
+                                                        </connections>
+                                                    </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWy-kf-elp" userLabel="HumidityCheckView1">
                                                         <rect key="frame" x="15" y="69" width="90" height="30"/>
                                                         <subviews>
@@ -689,6 +722,9 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
+                                                    <constraint firstItem="gPi-Xy-afR" firstAttribute="trailing" secondItem="YXa-KR-HUh" secondAttribute="trailing" id="38S-rZ-P6Z"/>
+                                                    <constraint firstItem="Vnk-De-Ha6" firstAttribute="bottom" secondItem="V9v-6F-LA3" secondAttribute="bottom" id="4h4-1t-8AF"/>
+                                                    <constraint firstItem="gPi-Xy-afR" firstAttribute="leading" secondItem="YXa-KR-HUh" secondAttribute="leading" id="5X3-eY-3cm"/>
                                                     <constraint firstAttribute="trailing" secondItem="jvc-91-Ifd" secondAttribute="trailing" constant="15" id="5ir-hc-Mt0"/>
                                                     <constraint firstAttribute="trailing" secondItem="8Oq-IH-Ow2" secondAttribute="trailing" constant="30" id="9mJ-xa-aef"/>
                                                     <constraint firstItem="YXa-KR-HUh" firstAttribute="leading" secondItem="siR-7U-daK" secondAttribute="leading" constant="15" id="DW1-BR-PhZ"/>
@@ -697,17 +733,22 @@
                                                     <constraint firstItem="jvc-91-Ifd" firstAttribute="leading" secondItem="fsm-qK-zcO" secondAttribute="trailing" constant="15" id="Jdu-bZ-STH"/>
                                                     <constraint firstItem="8Oq-IH-Ow2" firstAttribute="top" secondItem="siR-7U-daK" secondAttribute="top" id="Jpg-cC-BZ4"/>
                                                     <constraint firstItem="Vnk-De-Ha6" firstAttribute="width" secondItem="YXa-KR-HUh" secondAttribute="width" id="RJK-bP-rve"/>
+                                                    <constraint firstItem="gPi-Xy-afR" firstAttribute="top" secondItem="YXa-KR-HUh" secondAttribute="top" id="Ras-vS-mCY"/>
                                                     <constraint firstAttribute="trailing" secondItem="Vnk-De-Ha6" secondAttribute="trailing" constant="15" id="TAz-dO-cBi"/>
                                                     <constraint firstItem="jvc-91-Ifd" firstAttribute="centerY" secondItem="fsm-qK-zcO" secondAttribute="centerY" id="VsF-vi-aFs"/>
                                                     <constraint firstItem="jvc-91-Ifd" firstAttribute="width" secondItem="fsm-qK-zcO" secondAttribute="width" multiplier="1.5" id="e1D-mN-oNi"/>
                                                     <constraint firstItem="8Oq-IH-Ow2" firstAttribute="leading" secondItem="siR-7U-daK" secondAttribute="leading" constant="30" id="erT-qg-V4Y"/>
+                                                    <constraint firstItem="Vnk-De-Ha6" firstAttribute="leading" secondItem="V9v-6F-LA3" secondAttribute="leading" id="gOn-Nc-oiD"/>
+                                                    <constraint firstItem="Vnk-De-Ha6" firstAttribute="trailing" secondItem="V9v-6F-LA3" secondAttribute="trailing" id="gVQ-KA-9k9"/>
                                                     <constraint firstItem="fsm-qK-zcO" firstAttribute="centerY" secondItem="LWy-kf-elp" secondAttribute="centerY" id="h6Q-6k-yWr"/>
                                                     <constraint firstItem="LWy-kf-elp" firstAttribute="width" secondItem="fsm-qK-zcO" secondAttribute="width" id="i9c-fW-Sjn"/>
                                                     <constraint firstItem="Vnk-De-Ha6" firstAttribute="top" secondItem="STs-9c-FRY" secondAttribute="bottom" constant="5" id="iUz-MX-yYD"/>
                                                     <constraint firstItem="LWy-kf-elp" firstAttribute="top" secondItem="YXa-KR-HUh" secondAttribute="bottom" constant="5" id="kd7-5V-mcJ"/>
                                                     <constraint firstItem="Vnk-De-Ha6" firstAttribute="leading" secondItem="YXa-KR-HUh" secondAttribute="trailing" constant="15" id="oE2-K2-kRH"/>
+                                                    <constraint firstItem="gPi-Xy-afR" firstAttribute="bottom" secondItem="YXa-KR-HUh" secondAttribute="bottom" id="pC7-qI-lj6"/>
                                                     <constraint firstItem="STs-9c-FRY" firstAttribute="top" secondItem="siR-7U-daK" secondAttribute="top" constant="10" id="pG6-gf-DZ6"/>
                                                     <constraint firstItem="LWy-kf-elp" firstAttribute="leading" secondItem="siR-7U-daK" secondAttribute="leading" constant="15" id="rYp-TI-pZb"/>
+                                                    <constraint firstItem="Vnk-De-Ha6" firstAttribute="top" secondItem="V9v-6F-LA3" secondAttribute="top" id="sKv-bh-N3r"/>
                                                     <constraint firstItem="STs-9c-FRY" firstAttribute="centerX" secondItem="siR-7U-daK" secondAttribute="centerX" id="wwe-6O-2A8"/>
                                                     <constraint firstItem="fsm-qK-zcO" firstAttribute="leading" secondItem="LWy-kf-elp" secondAttribute="trailing" constant="15" id="zod-tP-dCK"/>
                                                 </constraints>
@@ -1321,11 +1362,24 @@
                     <size key="freeformSize" width="375" height="800"/>
                     <connections>
                         <outlet property="floatSwitchButton" destination="eX8-da-glg" id="Re3-Pm-Ala"/>
-                        <outlet property="floatSwitchLabel" destination="JAG-7b-q6X" id="DrN-DA-uqT"/>
+                        <outlet property="floatSwitchLabel" destination="KvI-aa-typ" id="l2k-Nh-xAL"/>
+                        <outlet property="floatSwitchOptionsLabel" destination="JAG-7b-q6X" id="kFW-Cc-EBz"/>
+                        <outlet property="humidityLabel" destination="jde-ox-raT" id="dZw-ev-Y5l"/>
+                        <outlet property="humidityMaxButton" destination="V9v-6F-LA3" id="aIK-qO-Zkw"/>
+                        <outlet property="humidityMaxTextField" destination="Vnk-De-Ha6" id="7JV-25-G8t"/>
+                        <outlet property="humidityMinButton" destination="gPi-Xy-afR" id="VQo-QS-be9"/>
+                        <outlet property="humidityMinTextField" destination="YXa-KR-HUh" id="RMp-bv-gw3"/>
+                        <outlet property="incomingPowerLabel" destination="Dx0-Si-C6g" id="Dml-dm-lXI"/>
                         <outlet property="leakSensorButton" destination="zwL-3k-TiT" id="FJA-V5-JL4"/>
-                        <outlet property="leakSensorLabel" destination="CbC-T4-fwO" id="OG6-kD-LOF"/>
+                        <outlet property="leakSensorLabel" destination="I33-gF-ZhF" id="X9O-ht-lEJ"/>
+                        <outlet property="leakSensorOptionsLabel" destination="CbC-T4-fwO" id="dIU-27-ljp"/>
                         <outlet property="scrollView" destination="Kem-cR-EPO" id="eje-RA-gAY"/>
                         <outlet property="scrollViewBottomConstraint" destination="K1t-hx-Cpd" id="vs3-Ka-WPt"/>
+                        <outlet property="tempLabel" destination="2eW-LV-DcY" id="SZR-jD-IYH"/>
+                        <outlet property="temperatureMaxButton" destination="z4X-k0-lh6" id="mch-GK-qot"/>
+                        <outlet property="temperatureMaxTextField" destination="fyD-cr-vCK" id="AhJ-GD-O4P"/>
+                        <outlet property="temperatureMinButton" destination="aU3-Vr-2iI" id="svm-9l-4ZZ"/>
+                        <outlet property="temperatureMinTextField" destination="A3V-l1-gZz" id="TJP-G4-4UN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="POr-xP-jjm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1858,9 +1912,6 @@
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="secretAction1ButtonTapped" destination="Tgl-9H-acO" eventType="touchUpInside" id="DfL-0h-vdQ"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbg-0a-sW5" userLabel="Secret2">
                                 <rect key="frame" x="365" y="79" width="10" height="10"/>

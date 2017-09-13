@@ -112,7 +112,7 @@ class ClaimDeviceViewController: LSViewController, SelectedOptionProtocol {
             
             UserRequestManager.postClaimDeviceAPICallWith(codes: codes, block: { (success, response, error) in
                 if success {
-                    let deviceDict = (response as? Dictionary<String, Any>)?["device"]
+                    _ = (response as? Dictionary<String, Any>)?["device"]
 //                    self.getDeviceWithID(deviceID: (deviceDict as? Dictionary<String, Any>)!["id"]! as! String)
                     Banner.showSuccessWithTitle(title: "Device Claimed successfully")
                 }

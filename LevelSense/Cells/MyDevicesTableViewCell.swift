@@ -97,13 +97,4 @@ class MyDevicesTableViewCell: UITableViewCell {
             }
         }
     }
-    
-    
-    @IBAction private func getDeviceDetails() {
-            UserRequestManager.postGetDeviceAPICallWith(deviceID: device.id) { (success, response, error) in
-                if success {
-                    
-                }
-            }
-    }
 }

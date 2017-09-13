@@ -20,10 +20,6 @@ let textMessage = "Text message"
 let email = "Email"
 let notificationOptionTypes: NSArray = [email, textMessage]
 
-let alarmClosed = "Alarm When Closed (default)"
-let alarmOpen = "Alarm When Open"
-let alarmWhenCloseOpen: NSArray = [alarmClosed, alarmOpen]
-
 //MARK: Colors
 
 let blueColor = UIColor.init(colorLiteralRed: 0, green: 110/255.0, blue: 190/255, alpha: 1.0)
@@ -51,7 +47,7 @@ let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/"
 let v1 = "v1/"
 let v2 = "v2/"
 
-let v2APIUrls: NSArray = [kGetDeviceDataListApiUrlSuffix]
+let v2APIUrls: NSArray = [kGetDeviceDataListApiUrlSuffix, kGetDeviceApiUrlSuffix]
 
 let kLoginApiUrl = "login"
 let kLogoutApiUrl = "logout"
