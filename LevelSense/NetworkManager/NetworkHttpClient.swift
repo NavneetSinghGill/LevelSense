@@ -19,7 +19,8 @@ class NetworkHttpClient: NSObject {
         Alamofire.request(apiurl, parameters: params, encoding: URLEncoding.default, headers: header).responseJSON  { response in
             
             guard response.result.isSuccess else {
-                block(false, "error", nil )
+                block(false, response.result.error!.localizedDescription, nil)
+                Banner.showFailureWithTitle(title: response.result.error!.localizedDescription)
                 return
             }
             
@@ -41,7 +42,8 @@ class NetworkHttpClient: NSObject {
         Alamofire.request(((NSURL.init(string: apiurl))! as URL) , method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: header).responseJSON { response in
             
             guard response.result.isSuccess else {
-                block(false, "error", nil )
+                block(false, response.result.error!.localizedDescription, nil)
+                Banner.showFailureWithTitle(title: response.result.error!.localizedDescription)
                 return
             }
             
@@ -77,5 +79,5 @@ class NetworkHttpClient: NSObject {
             }
         }
     }
-    
+     
 }

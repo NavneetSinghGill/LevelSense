@@ -24,7 +24,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     var selectedDevice: Device?
     
-    var alarmConfig: Array<Dictionary<String,Any>>!
+    var alarmConfigAllData: Dictionary<String,Any>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         //API
         getDevices()
         
-        closeBottomView()
+        closeBottomViewWith(animation: false)
     }
 
     //MARK:- TableView DataSource
@@ -78,7 +78,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             let cell = tableView.cellForRow(at: currentSelectedIndex) as! MyDevicesTableViewCell
                 cell.changeViewIf(isSelected: false, withAnimation: true)
             currentSelectedIndex = IndexPath.init(row: -1, section: 0)
-            closeBottomView()
+            closeBottomViewWith(animation: true)
             selectedDevice = nil
             
         } else {
@@ -104,7 +104,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             graphVC.allDeviceData = self.deviceData
         } else if segue.identifier == "alarmConfig" {
             let alarmConfigVC: AlarmConfigViewController = segue.destination as! AlarmConfigViewController
-            alarmConfigVC.alarmConfig = alarmConfig
+            alarmConfigVC.alarmConfigAllData = alarmConfigAllData
         }
     }
     
@@ -143,8 +143,8 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func closeBottomView() {
-        UIView.animate(withDuration: kMyDevicesAnimationDuration) {
+    func closeBottomViewWith(animation: Bool) {
+        UIView.animate(withDuration: animation ? kMyDevicesAnimationDuration : 0) {
             self.bottomConstaintOfActionView.constant = -self.heightConstaintOfActionView.constant
             self.view.layoutIfNeeded()
         }
@@ -161,6 +161,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
                 }
             }
             self.stopAnimating()
+            if self.devices.count == 0 {
+                self.tableView.isHidden = true
+            }
         }
     }
     
@@ -172,7 +175,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             UserRequestManager.postGetDeviceAPICallWith(deviceID: selectedDevice!.id) { (success, response, error) in
                 if success {
                     let singleDeviceData = ((response as! Dictionary<String, Any>)["device"] as? Dictionary<String,Any>)
-                    self.alarmConfig = singleDeviceData?["alarmConfiguration"] as! Array<Dictionary<String,Any>>
+                    self.alarmConfigAllData = singleDeviceData
                     
                     self.performSegue(withIdentifier: "alarmConfig", sender: self)
                 }

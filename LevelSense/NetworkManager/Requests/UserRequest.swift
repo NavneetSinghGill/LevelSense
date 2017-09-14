@@ -69,6 +69,14 @@ class UserRequest: Request {
         return self
     }
     
+    func postEditDeviceRequestWith(deviceDict: Dictionary<String,Any>) -> UserRequest {
+        
+        parameters["device"] = deviceDict
+        
+        self.urlPath = kPostEditApiUrlSuffix
+        return self
+    }
+    
     //MARK: Graph
     
     func createPostGetDeviceDataListRequestWith(deviceID: String, limit: Int, fromTimestamp: Int, toTimestamp: Int) -> UserRequest {
