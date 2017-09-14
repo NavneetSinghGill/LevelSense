@@ -105,6 +105,7 @@ class ClaimDeviceViewController: LSViewController, SelectedOptionProtocol {
     
     private func postClaimDevice() {
         if areEntryCodesValid() {
+            startAnimating()
             let codes: NSArray = [ codeForText(text: powerLabel.text!),
                                   codeForText(text: cloudLabel.text!),
                                   codeForText(text: calibrateLabel.text!),
@@ -116,8 +117,22 @@ class ClaimDeviceViewController: LSViewController, SelectedOptionProtocol {
 //                    self.getDeviceWithID(deviceID: (deviceDict as? Dictionary<String, Any>)!["id"]! as! String)
                     Banner.showSuccessWithTitle(title: "Device Claimed successfully")
                 }
+                self.reset()
+                self.stopAnimating()
             })
         }
+    }
+    
+    private func reset() {
+        powerLabel.text = defaultCodeValue
+        cloudLabel.text = defaultCodeValue
+        calibrateLabel.text = defaultCodeValue
+        alarmLabel.text = defaultCodeValue
+        
+        powerLabel.textColor = UIColor.darkGray
+        cloudLabel.textColor = UIColor.darkGray
+        calibrateLabel.textColor = UIColor.darkGray
+        alarmLabel.textColor = UIColor.darkGray
     }
     
 //    func getDeviceWithID(deviceID: String) {
