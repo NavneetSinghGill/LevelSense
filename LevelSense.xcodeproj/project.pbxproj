@@ -30,6 +30,7 @@
 		536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536656A91F4AE3B8003A5E71 /* Banner.swift */; };
 		538650461F584473000B454E /* AlarmConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538650451F584473000B454E /* AlarmConfigViewController.swift */; };
 		538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AA73D1F55A9C6004559EC /* ServiceProvider.swift */; };
+		539671621F6BC0B500892132 /* DeviceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539671611F6BC0B500892132 /* DeviceDetailViewController.swift */; };
 		5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */; };
 		5397E76A1F4D82710060F3C7 /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */; };
 		5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */; };
@@ -87,6 +88,7 @@
 		536656A91F4AE3B8003A5E71 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		538650451F584473000B454E /* AlarmConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmConfigViewController.swift; sourceTree = "<group>"; };
 		538AA73D1F55A9C6004559EC /* ServiceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
+		539671611F6BC0B500892132 /* DeviceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetailViewController.swift; sourceTree = "<group>"; };
 		5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimDeviceViewController.swift; sourceTree = "<group>"; };
 		5397E7671F4D82710060F3C7 /* MyDevicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDevicesViewController.swift; sourceTree = "<group>"; };
 		5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 		538650441F58444C000B454E /* DeviceActions */ = {
 			isa = PBXGroup;
 			children = (
+				539671611F6BC0B500892132 /* DeviceDetailViewController.swift */,
 				538650451F584473000B454E /* AlarmConfigViewController.swift */,
 				53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */,
 			);
@@ -471,6 +474,7 @@
 				2A6D2AE71F46FDDD00C98631 /* LoginViewController.swift in Sources */,
 				539DEDD81F542A5F00662521 /* ContactRequestManager.swift in Sources */,
 				2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */,
+				539671621F6BC0B500892132 /* DeviceDetailViewController.swift in Sources */,
 				F19DAE8C1F3ECC1E007F14FF /* User.swift in Sources */,
 				53590D521F4C3F30001F414A /* UserRequest.swift in Sources */,
 				5397E76E1F4D8EC90060F3C7 /* PersonalInfoViewController.swift in Sources */,

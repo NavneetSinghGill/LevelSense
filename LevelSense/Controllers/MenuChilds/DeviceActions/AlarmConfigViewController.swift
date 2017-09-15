@@ -227,18 +227,6 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         return button
     }
     
-    private func getOptionVCWith(content: NSArray, startIndex: Int?, sender:Any?) -> OptionSelectionViewController {
-        let optionVC : OptionSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "OptionSelectionViewController") as! OptionSelectionViewController
-        optionVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        optionVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        optionVC.delegate = self
-        optionVC.options = content
-        optionVC.sender = sender
-        optionVC.startIndex = startIndex
-        
-        return optionVC
-    }
-    
     private func getDeviceIfEntriesValid() -> Dictionary<String, Any>? {
         var message: String! = ""
         var deviceDict : Dictionary<String,Any> = [:]

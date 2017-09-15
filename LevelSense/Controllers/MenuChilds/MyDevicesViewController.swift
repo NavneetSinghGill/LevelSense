@@ -25,6 +25,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     var selectedDevice: Device?
     
     var alarmConfigAllData: Dictionary<String,Any>!
+    var deviceDetail: Dictionary<String,Any>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +106,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         } else if segue.identifier == "alarmConfig" {
             let alarmConfigVC: AlarmConfigViewController = segue.destination as! AlarmConfigViewController
             alarmConfigVC.alarmConfigAllData = alarmConfigAllData
+        } else if segue.identifier == "deviceDetail" {
+            let deviceDetailVC: DeviceDetailViewController = segue.destination as! DeviceDetailViewController
+            deviceDetailVC.deviceDetail = deviceDetail
         }
     }
     
@@ -169,19 +173,23 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     //MARK: IBAction methods
     
-    @IBAction func alarmConfigButtonTapped() {
+    @IBAction func deviceDetailButtonTapped() {
         if selectedDevice?.id != nil {
             startAnimating()
             UserRequestManager.postGetDeviceAPICallWith(deviceID: selectedDevice!.id) { (success, response, error) in
                 if success {
                     let singleDeviceData = ((response as! Dictionary<String, Any>)["device"] as? Dictionary<String,Any>)
-                    self.alarmConfigAllData = singleDeviceData
+                    self.deviceDetail = singleDeviceData
                     
-                    self.performSegue(withIdentifier: "alarmConfig", sender: self)
+                    self.performSegue(withIdentifier: "deviceDetail", sender: self)
                 }
                 self.stopAnimating()
             }
         }
+    }
+    
+    @IBAction func alarmConfigButtonTapped() {
+        self.performSegue(withIdentifier: "alarmConfig", sender: self)
     }
     
     @IBAction func graphButtonTapped() {

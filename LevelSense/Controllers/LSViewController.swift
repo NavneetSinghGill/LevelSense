@@ -84,6 +84,18 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         //Overrider this method in derived controllers
     }
     
+    func getOptionVCWith(content: NSArray, startIndex: Int?, sender:Any?) -> OptionSelectionViewController {
+        let optionVC : OptionSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "OptionSelectionViewController") as! OptionSelectionViewController
+        optionVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        optionVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        optionVC.delegate = self as! SelectedOptionProtocol
+        optionVC.options = content
+        optionVC.sender = sender
+        optionVC.startIndex = startIndex
+        
+        return optionVC
+    }
+    
     //MARK: Private methods
     
     private func menuButton() -> UIButton {
