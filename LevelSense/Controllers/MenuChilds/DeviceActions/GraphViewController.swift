@@ -141,7 +141,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 for i in 0..<pointsCountToPlot {
                     yValues.append(yMin + yMaxMinDiff * CGFloat(i))
                 }
-                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues)
+                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: "Time-stamp", yAxisName: "Units")
             }
             
             let graphName = "\(deviceData?["sensorDisplayName"] ?? "")"

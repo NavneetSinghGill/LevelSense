@@ -436,7 +436,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         }
     }
     
-    override func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(notification: NSNotification) { 
         UIView.animate(withDuration: 0.3) {
             self.scrollViewBottomConstraint.constant = 0
         }

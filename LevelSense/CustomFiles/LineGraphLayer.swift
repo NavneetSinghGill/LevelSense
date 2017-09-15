@@ -260,6 +260,7 @@ class LineGraphLayer: CAShapeLayer {
         
         //This will contains all the tags
         lineGraphLayer.superTagLayer = CAShapeLayer()
+        lineGraphLayer.superTagLayer.frame.size = CGSize(width: parentView.layer.frame.size.width, height: 0)
         lineGraphLayer.addSublayer(lineGraphLayer.superTagLayer)
         
         let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
@@ -268,7 +269,7 @@ class LineGraphLayer: CAShapeLayer {
         return lineGraphLayer
     }
     
-    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat]) {
+    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat], xAxisName: String, yAxisName: String) {
         
         self.xValues = xValues
         self.yValues = yValues
@@ -297,6 +298,12 @@ class LineGraphLayer: CAShapeLayer {
         self.graphLayer.frame.size.height = verticalLine.lineEndY + verticalPadding
         setDynamicHeight(height: verticalLine.lineEndY + verticalPadding)
         
+        //Add names
+        let axisNameLayer = AxisNameLayer.init(withXName: xAxisName, withYName: yAxisName, parentSize: self.superTagLayer.frame.size)
+        axisNameLayer.frame.origin.x = self.superTagLayer.frame.size.width/2
+        superTagLayer.frame.size.height = axisNameLayer.frame.size.height
+        self.superTagLayer.insertSublayer(axisNameLayer, at: 2)
+        
         self.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
     }
     
@@ -305,13 +312,15 @@ class LineGraphLayer: CAShapeLayer {
         lineGraphChildLayer.frame.size = self.graphLayer.frame.size
         lineGraphChildLayer.drawGraph()
         
-        let tagLayer = TagLayer.init(withName: graphOf, lineColor: stroke)
+        let tagLayer = TagLayer.init(withName: graphOf, lineColor: stroke, parentSize: self.frame.size)
         tagLayer.frame.origin.y = CGFloat(self.childLayers.count) * tagLayer.frame.size.height
         
-        let superTagLayerHeight = CGFloat(self.childLayers.count + 1) * tagLayer.frame.size.height
+        var superTagLayerHeight = CGFloat(self.childLayers.count + 1) * tagLayer.frame.size.height
+        
+        superTagLayerHeight = superTagLayerHeight > self.superTagLayer.frame.size.height ? superTagLayerHeight: self.superTagLayer.frame.size.height
+        
         let superTagLayerY = self.graphLayer.frame.size.height
         superTagLayer.frame = CGRect(x: 0, y: superTagLayerY, width: self.frame.size.width, height: superTagLayerHeight)
-//        superTagLayer.position = superTagLayer.frame.origin
         superTagLayer.addSublayer(tagLayer)
         
         self.childLayers.append(lineGraphChildLayer)
@@ -391,9 +400,10 @@ class CustomShapeLayer: CAShapeLayer {
 
 class TagLayer: CustomShapeLayer {
     
-    class func `init`(withName name: String,lineColor: CGColor?) -> TagLayer {
+    class func `init`(withName name: String,lineColor: CGColor?, parentSize: CGSize) -> TagLayer {
         let tagLayer = TagLayer()
-        tagLayer.frame = CGRect(x: 0, y: 0, width: 500, height: 20)
+        tagLayer.frame = CGRect(x: 0, y: 0, width: parentSize.width/2, height: 20)
+        tagLayer.masksToBounds = true
         
         let colorLayer = CAShapeLayer()
         colorLayer.fillColor = lineColor
@@ -416,6 +426,34 @@ class TagLayer: CustomShapeLayer {
         textLayer.backgroundColor = UIColor.clear.cgColor
         
         return tagLayer
+    }
+    
+}
+
+
+class AxisNameLayer: CustomShapeLayer {
+    
+    class func `init`(withXName xName: String, withYName yName: String, parentSize: CGSize) -> AxisNameLayer {
+        let top = CGFloat(5)
+        let height = CGFloat(20)
+        let axisNameLayer = AxisNameLayer()
+        axisNameLayer.frame = CGRect(x: 0, y: 0, width: parentSize.width/2, height: 0)
+        
+        let yTextLayer = axisNameLayer.getTextLayerWith(text: "Y-axis: \(yName)")
+        yTextLayer.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: axisNameLayer.frame.size.width, height: height)
+        axisNameLayer.addSublayer(yTextLayer)
+        
+        let xTextLayer = axisNameLayer.getTextLayerWith(text: "X-axis: \(xName)")
+        xTextLayer.frame = CGRect(x: CGFloat(0), y: yTextLayer.frame.origin.y + yTextLayer.frame.size.height, width: axisNameLayer.frame.size.width, height: height)
+        axisNameLayer.addSublayer(xTextLayer)
+        
+        axisNameLayer.backgroundColor = UIColor.clear.cgColor
+        xTextLayer.backgroundColor = UIColor.clear.cgColor
+        yTextLayer.backgroundColor = UIColor.clear.cgColor
+        
+        axisNameLayer.frame.size.height = yTextLayer.frame.size.height + xTextLayer.frame.size.height + top
+        
+        return axisNameLayer
     }
     
 }
