@@ -71,7 +71,7 @@ class UserRequest: Request {
     
     func postEditDeviceRequestWith(deviceDict: Dictionary<String,Any>) -> UserRequest {
         
-        parameters["device"] = deviceDict
+        parameters = deviceDict
         
         self.urlPath = kPostEditApiUrlSuffix
         return self

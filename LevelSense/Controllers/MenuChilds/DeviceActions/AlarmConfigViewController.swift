@@ -307,13 +307,13 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     private func editDevice() {
         let finalRequestDict = getDeviceIfEntriesValid()
         if finalRequestDict != nil {
-            startAnimating()
-            UserRequestManager.postEditDeviceAPICallWith(deviceDict: finalRequestDict!) { (success, response, error) in
-                if success {
-                    
-                }
-                self.stopAnimating()
-            }
+//            startAnimating()
+//            UserRequestManager.postEditDeviceAPICallWith(deviceDict: finalRequestDict!) { (success, response, error) in
+//                if success {
+//                    
+//                }
+//                self.stopAnimating()
+//            }
         }
     }
     
