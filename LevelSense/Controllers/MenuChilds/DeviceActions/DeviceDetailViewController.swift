@@ -173,7 +173,7 @@ class DeviceDetailViewController: LSViewController, SelectedOptionProtocol {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextField = view.viewWithTag(textField.tag + 1)
-        if nextField != nil {
+        if nextField != nil && (nextField as? UITextField)?.isEnabled == true {
             nextField?.becomeFirstResponder()
             scrollView.scrollRectToVisible((nextField?.frame)!, animated: true)
         } else {

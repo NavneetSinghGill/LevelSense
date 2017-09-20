@@ -175,18 +175,20 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func deleteDeviceWithID(deviceID: String) {
-        startAnimating()
-        UserRequestManager.deleteDeviceAPICallWith(deviceID: deviceID) { (success, response, error) in
-            if success {
-                
-                self.devices.remove(at: (self.selectedIndexPath?.row)!)
-                self.tableView.deleteRows(at: [self.selectedIndexPath!], with: UITableViewRowAnimation.top)
-                self.tableView.reloadData()
-                
-                Banner.showSuccessWithTitle(title: "Device deleted successfully")
+    func deleteDeviceWithID(deviceID: String?) {
+        if deviceID != nil && (deviceID?.characters.count)! > 0 {
+            startAnimating()
+            UserRequestManager.deleteDeviceAPICallWith(deviceID: deviceID!) { (success, response, error) in
+                if success {
+                    
+                    self.devices.remove(at: (self.selectedIndexPath?.row)!)
+                    self.tableView.deleteRows(at: [self.selectedIndexPath!], with: UITableViewRowAnimation.top)
+                    self.tableView.reloadData()
+                    
+                    Banner.showSuccessWithTitle(title: "Device deleted successfully")
+                }
+                self.stopAnimating()
             }
-            self.stopAnimating()
         }
     }
     
@@ -221,7 +223,16 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func deleteDeviceButtonTapped() {
-        deleteDeviceWithID(deviceID: (selectedDevice?.id)!)
+        
+        let alertVC = UIAlertController.init(title: "Are you sure you want to delete this device?", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let yesAction = UIAlertAction.init(title: "Yes", style: UIAlertActionStyle.default) { (alertAction) in
+            self.deleteDeviceWithID(deviceID: self.selectedDevice?.id)
+        }
+        let noAction = UIAlertAction.init(title: "No", style: UIAlertActionStyle.default)
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     @IBAction func graphButtonTapped() {
