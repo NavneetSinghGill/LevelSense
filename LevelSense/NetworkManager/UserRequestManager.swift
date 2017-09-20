@@ -133,6 +133,18 @@ class UserRequestManager: NSObject {
         
     }
     
+    static func deleteDeviceAPICallWith(deviceID: String, block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().deleteDeviceWith(request: UserRequest().deleteDeviceRequestWith(deviceID: deviceID), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
     //MARK: Graph
     
     static func postGetDeviceDataListAPICallWith(deviceID: String, limit: Int, fromTimestamp: Int, toTimestamp: Int,block:@escaping requestCompletionBlock)

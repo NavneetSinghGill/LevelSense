@@ -23,6 +23,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     var deviceData: Dictionary<String, Any>!
     
     var selectedDevice: Device?
+    var selectedIndexPath: IndexPath?
     
     var alarmConfigAllData: Dictionary<String,Any>!
     var deviceDetail: Dictionary<String,Any>!
@@ -72,6 +73,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             cell.changeViewIf(isSelected: true, withAnimation: true)
             openBottomView()
             selectedDevice = devices[indexPath.row]
+            selectedIndexPath = indexPath
             
         } else if currentSelectedIndex.row == indexPath.row {
             
@@ -81,6 +83,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             currentSelectedIndex = IndexPath.init(row: -1, section: 0)
             closeBottomViewWith(animation: true)
             selectedDevice = nil
+            selectedIndexPath = nil
             
         } else {
             
@@ -93,6 +96,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             cell = tableView.cellForRow(at: currentSelectedIndex) as? MyDevicesTableViewCell
             cell?.changeViewIf(isSelected: true, withAnimation: true)
             selectedDevice = devices[indexPath.row]
+            selectedIndexPath = indexPath
         }
         
     }
@@ -171,6 +175,21 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    func deleteDeviceWithID(deviceID: String) {
+        startAnimating()
+        UserRequestManager.deleteDeviceAPICallWith(deviceID: deviceID) { (success, response, error) in
+            if success {
+                
+                self.devices.remove(at: (self.selectedIndexPath?.row)!)
+                self.tableView.deleteRows(at: [self.selectedIndexPath!], with: UITableViewRowAnimation.top)
+                self.tableView.reloadData()
+                
+                Banner.showSuccessWithTitle(title: "Device deleted successfully")
+            }
+            self.stopAnimating()
+        }
+    }
+    
     //MARK: IBAction methods
     
     @IBAction func deviceDetailButtonTapped() {
@@ -199,6 +218,10 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             }
             self.stopAnimating()
         }
+    }
+    
+    @IBAction func deleteDeviceButtonTapped() {
+        deleteDeviceWithID(deviceID: (selectedDevice?.id)!)
     }
     
     @IBAction func graphButtonTapped() {

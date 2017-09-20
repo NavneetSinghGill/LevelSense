@@ -85,6 +85,14 @@ class UserRequest: Request {
         return self
     }
     
+    func deleteDeviceRequestWith(deviceID: String) -> UserRequest {
+        
+        parameters["id"] = deviceID
+        
+        self.urlPath = deleteDeviceApiUrlSuffix
+        return self
+    }
+    
     //MARK: Graph
     
     func createPostGetDeviceDataListRequestWith(deviceID: String, limit: Int, fromTimestamp: Int, toTimestamp: Int) -> UserRequest {

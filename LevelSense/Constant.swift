@@ -62,6 +62,7 @@ let kGetDeviceApiUrlSuffix = "getDevice"
 let kGetDeviceDataListApiUrlSuffix = "getDeviceDataList"
 let kPostEditApiUrlSuffix = "editDevice"
 let getAlarmConfigApiUrlSuffix = "getAlarmConfig"
+let deleteDeviceApiUrlSuffix = "deleteDevice"
 
 let kGetContactListApiUrlSuffix = "getContactList"
 let kAddContactApiUrlSuffix = "addContact"

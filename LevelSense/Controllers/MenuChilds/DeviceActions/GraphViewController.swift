@@ -10,7 +10,7 @@ import UIKit
 
 class GraphViewController: LSViewController, LineGraphProtocol {
     
-    let colors: NSArray = [UIColor.green, UIColor.blue, UIColor.orange, UIColor.brown]
+    let colors: NSArray = [UIColor.green, UIColor.blue, UIColor.orange]
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!

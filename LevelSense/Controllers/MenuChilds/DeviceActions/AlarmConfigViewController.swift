@@ -349,7 +349,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             startAnimating()
             UserRequestManager.postEditDeviceAPICallWith(deviceDict: finalRequestDict!) { (success, response, error) in
                 if success {
-                    
+                    Banner.showSuccessWithTitle(title: "Alarm configuration updated successfully")
                 }
                 self.stopAnimating()
             }

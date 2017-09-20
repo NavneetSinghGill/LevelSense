@@ -238,6 +238,9 @@
                                                     <constraint firstAttribute="width" constant="45" id="chj-EC-Qmn"/>
                                                 </constraints>
                                                 <state key="normal" image="deviceDelete"/>
+                                                <connections>
+                                                    <action selector="deleteDeviceButtonTapped" destination="L9x-1r-sOR" eventType="touchUpInside" id="q2J-Sw-Dsm"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
