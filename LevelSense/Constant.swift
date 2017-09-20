@@ -47,7 +47,7 @@ let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/"
 let v1 = "v1/"
 let v2 = "v2/"
 
-let v2APIUrls: NSArray = [kGetDeviceDataListApiUrlSuffix, kGetDeviceApiUrlSuffix]
+let v2APIUrls: NSArray = [kGetDeviceDataListApiUrlSuffix, kGetDeviceApiUrlSuffix, getAlarmConfigApiUrlSuffix]
 
 let kLoginApiUrl = "login"
 let kLogoutApiUrl = "logout"
@@ -61,6 +61,7 @@ let kRegisterDeviceApiUrlSuffix = "registerDevice"
 let kGetDeviceApiUrlSuffix = "getDevice"
 let kGetDeviceDataListApiUrlSuffix = "getDeviceDataList"
 let kPostEditApiUrlSuffix = "editDevice"
+let getAlarmConfigApiUrlSuffix = "getAlarmConfig"
 
 let kGetContactListApiUrlSuffix = "getContactList"
 let kAddContactApiUrlSuffix = "addContact"

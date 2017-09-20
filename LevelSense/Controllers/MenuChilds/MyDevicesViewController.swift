@@ -189,7 +189,16 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func alarmConfigButtonTapped() {
-        self.performSegue(withIdentifier: "alarmConfig", sender: self)
+        startAnimating()
+        UserRequestManager.getAlarmConfigAPICallWith(deviceDict: ["id": selectedDevice?.id ?? ""]) { (success, response, error) in
+            if success {
+                if let responseDict = response as? Dictionary<String,Any> {
+                    self.alarmConfigAllData = responseDict["device"] as? Dictionary<String,Any>
+                    self.performSegue(withIdentifier: "alarmConfig", sender: self)
+                }
+            }
+            self.stopAnimating()
+        }
     }
     
     @IBAction func graphButtonTapped() {

@@ -32,6 +32,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     
     @IBOutlet weak var leakSensorOptionsLabel: UILabel!
     @IBOutlet weak var floatSwitchOptionsLabel: UILabel!
+    @IBOutlet weak var waterLevelLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var incomingPowerLabel: UILabel!
@@ -59,15 +60,19 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         let tap: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         scrollView.addGestureRecognizer(tap)
         
-        alarmConfigOnly = alarmConfigAllData?["alarmConfiguration"] as! Array<Dictionary<String,Any>>
+        alarmConfigOnly = alarmConfigAllData?["sensorLimit"] as! Array<Dictionary<String,Any>>
         updateUIWithConfig()
     }
     
     //MARK:- IBAction methods
     
     @IBAction func leakSensorOptionButtonTapped(button: UIButton) {
+        var statusList: NSArray = []
+        if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+            
+            statusList = (input as NSArray)
+        }
         
-        let statusList: NSArray = (leakSensorDict["statusList"] as! Array<Dictionary<String,Any>> as NSArray)
         let allLabels: NSArray = statusList.value(forKey: "label") as! NSArray
         
         let startIndex = allLabels.index(of: leakSensorOptionsLabel.text!)
@@ -76,7 +81,11 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     }
     
     @IBAction func floatSwitchOptionButtonTapped(button: UIButton) {
-        let statusList: NSArray = (floatSwitchDict["statusList"] as! Array<Dictionary<String,Any>> as NSArray)
+        var statusList: NSArray = []
+        if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+            
+            statusList = (input as NSArray)
+        }
         let allLabels: NSArray = statusList.value(forKey: "label") as! NSArray
         
         let startIndex = allLabels.index(of: floatSwitchOptionsLabel.text!)
@@ -91,42 +100,18 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     //MARK: Checkbox handling actions
     
     @IBAction func temperatureCheckBoxTapped(checkBoxButton: UIButton) {
-//        if checkBoxButton.isSelected {
-//            unCheckAllButtonsWith(baseTag: tempCheckBoxesBaseTag)
-//        } else {
-//            unCheckAllButtonsWith(baseTag: tempCheckBoxesBaseTag)
-//            checkBoxButton.isSelected = true
-//        }
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
     @IBAction func humidityCheckBoxTapped(checkBoxButton: UIButton) {
-//        if checkBoxButton.isSelected {
-//            unCheckAllButtonsWith(baseTag: humidityCheckBoxesBaseTag)
-//        } else {
-//            unCheckAllButtonsWith(baseTag: humidityCheckBoxesBaseTag)
-//            checkBoxButton.isSelected = true
-//        }
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
     @IBAction func incomingPowerCheckBoxTapped(checkBoxButton: UIButton) {
-//        if checkBoxButton.isSelected {
-//            unCheckAllButtonsWith(baseTag: incomingPowerCheckBoxesBaseTag)
-//        } else {
-//            unCheckAllButtonsWith(baseTag: incomingPowerCheckBoxesBaseTag)
-//            checkBoxButton.isSelected = true
-//        }
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
     @IBAction func leakSensorCheckBoxTapped(checkBoxButton: UIButton) {
-//        if checkBoxButton.isSelected {
-//            unCheckAllButtonsWith(baseTag: leakSensorCheckBoxesBaseTag)
-//        } else {
-//            unCheckAllButtonsWith(baseTag: leakSensorCheckBoxesBaseTag)
-//            checkBoxButton.isSelected = true
-//        }
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
@@ -143,7 +128,10 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     //MARK: Popup action
     
     @IBAction func tempMinTapped(sender: UIButton) {
-        let minValuesDict = tempDict["min"] as? NSArray
+        let tempMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["tempc"] as! Dictionary<String, Any>
+        let tempMin = tempMetaData["min"]
+        
+        let minValuesDict = tempMin as? NSArray
         let minValues: NSArray = minValuesDict?.value(forKey: "value") as! NSArray
         
         let optionVC: OptionSelectionViewController = getOptionVCWith(content: minValues, startIndex: minValues.index(of: Int(self.temperatureMinTextField.text!) ?? ""), sender: sender)
@@ -151,7 +139,10 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     }
     
     @IBAction func tempMaxTapped(sender: UIButton) {
-        let maxValuesDict = tempDict["max"] as? NSArray
+        let tempMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["tempc"] as! Dictionary<String, Any>
+        let tempMax = tempMetaData["max"]
+        
+        let maxValuesDict = tempMax as? NSArray
         let maxValues: NSArray = maxValuesDict?.value(forKey: "value") as! NSArray
         
         let optionVC: OptionSelectionViewController = getOptionVCWith(content: maxValues, startIndex: maxValues.index(of: Int(self.temperatureMaxTextField.text!) ?? ""), sender: sender)
@@ -159,7 +150,10 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     }
     
     @IBAction func humidityMinTapped(sender: UIButton) {
-        let minValuesDict = humidityDict["min"] as? NSArray
+        let humidityMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["rh"] as! Dictionary<String, Any>
+        let humidityMin = humidityMetaData["min"]
+        
+        let minValuesDict = humidityMin as? NSArray
         let minValues: NSArray = minValuesDict?.value(forKey: "value") as! NSArray
         
         let optionVC: OptionSelectionViewController = getOptionVCWith(content: minValues, startIndex: minValues.index(of: Int(self.humidityMinTextField.text!) ?? ""), sender: sender)
@@ -167,7 +161,10 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     }
     
     @IBAction func humidityMaxTapped(sender: UIButton) {
-        let maxValuesDict = humidityDict["max"] as? NSArray
+        let humidityMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["rh"] as! Dictionary<String, Any>
+        let humidityMin = humidityMetaData["max"]
+        
+        let maxValuesDict = humidityMin as? NSArray
         let maxValues: NSArray = maxValuesDict?.value(forKey: "value") as! NSArray
         
         let optionVC: OptionSelectionViewController = getOptionVCWith(content: maxValues, startIndex: maxValues.index(of: Int(self.humidityMaxTextField.text!) ?? ""), sender: sender)
@@ -178,29 +175,50 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     
     func selectedOption(index:NSInteger, sender: Any?) {
         if sender as? UIButton == leakSensorButton {
-            let statusList: NSArray = (leakSensorDict["statusList"] as! Array<Dictionary<String,Any>> as NSArray)
+            var statusList: NSArray = []
+            if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+                
+                statusList = (input as NSArray)
+            }
+            
             let allLabels: NSArray = statusList.value(forKey: "label") as! NSArray
             
             leakSensorOptionsLabel.text = allLabels[index] as? String
         } else if sender as? UIButton == floatSwitchButton {
-            let statusList: NSArray = (floatSwitchDict["statusList"] as! Array<Dictionary<String,Any>> as NSArray)
+            var statusList: NSArray = []
+            if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+                
+                statusList = (input as NSArray)
+            }
             let allLabels: NSArray = statusList.value(forKey: "label") as! NSArray
             
             floatSwitchOptionsLabel.text = allLabels[index] as? String
         } else if sender as? UIButton == temperatureMinButton {
-            let minValuesDict = tempDict["min"] as? NSArray
+            let tempMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["tempc"] as! Dictionary<String, Any>
+            let tempMin = tempMetaData["min"]
+            
+            let minValuesDict = tempMin as? NSArray
             let minValues: NSArray = minValuesDict?.value(forKey: "value") as! NSArray
             temperatureMinTextField.text = "\(minValues.object(at: index))"
         } else if sender as? UIButton == temperatureMaxButton {
-            let maxValuesDict = tempDict["max"] as? NSArray
+            let tempMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["tempc"] as! Dictionary<String, Any>
+            let tempMax = tempMetaData["max"]
+            
+            let maxValuesDict = tempMax as? NSArray
             let maxValues: NSArray = maxValuesDict?.value(forKey: "value") as! NSArray
             temperatureMaxTextField.text = "\(maxValues.object(at: index))"
         } else if sender as? UIButton == humidityMinButton {
-            let minValuesDict = humidityDict["min"] as? NSArray
+            let humidityMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["rh"] as! Dictionary<String, Any>
+            let humidityMin = humidityMetaData["min"]
+            
+            let minValuesDict = humidityMin as? NSArray
             let minValues: NSArray = minValuesDict?.value(forKey: "value") as! NSArray
             humidityMinTextField.text = "\(minValues.object(at: index))"
         } else if sender as? UIButton == humidityMaxButton {
-            let maxValuesDict = humidityDict["max"] as? NSArray
+            let humidityMetaData: Dictionary<String, Any> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String, Any>)!["rh"] as! Dictionary<String, Any>
+            let humidityMin = humidityMetaData["max"]
+            
+            let maxValuesDict = humidityMin as? NSArray
             let maxValues: NSArray = maxValuesDict?.value(forKey: "value") as! NSArray
             humidityMaxTextField.text = "\(maxValues.object(at: index))"
         }
@@ -235,8 +253,9 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         if tempDict != nil {
             var newTempDict: Dictionary<String,Any> = [:]
             newTempDict["sensorId"] = tempDict["sensorId"]
-            newTempDict["ucl"] = temperatureMinTextField.text
-            newTempDict["lcl"] = temperatureMaxTextField.text
+            newTempDict["lcl"] = temperatureMinTextField.text
+            newTempDict["ucl"] = temperatureMaxTextField.text
+            newTempDict["sensorSlug"] = tempDict["sensorSlug"]
             
             newTempDict["relay"] = getCheckBox(withTag: 1, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 2 : 0
             newTempDict["siren"] = getCheckBox(withTag: 2, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
@@ -247,8 +266,9 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         if humidityDict != nil {
             var newHumidityDict: Dictionary<String,Any> = [:]
             newHumidityDict["sensorId"] = humidityDict["sensorId"]
-            newHumidityDict["ucl"] = humidityMinTextField.text
-            newHumidityDict["lcl"] = humidityMaxTextField.text
+            newHumidityDict["lcl"] = humidityMinTextField.text
+            newHumidityDict["ucl"] = humidityMaxTextField.text
+            newHumidityDict["sensorSlug"] = humidityDict["sensorSlug"]
             
             newHumidityDict["relay"] = getCheckBox(withTag: 1, andBaseTag: humidityCheckBoxesBaseTag).isSelected ? 2 : 0
             newHumidityDict["siren"] = getCheckBox(withTag: 2, andBaseTag: humidityCheckBoxesBaseTag).isSelected ? 1 : 0
@@ -260,6 +280,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             var newPowerDict: Dictionary<String,Any> = [:]
             newPowerDict["sensorId"] = powerDict["sensorId"]
             newPowerDict["currentValue"] = incomingPowerLabel.text
+            newPowerDict["sensorSlug"] = powerDict["sensorSlug"]
             
             newPowerDict["relay"] = getCheckBox(withTag: 1, andBaseTag: incomingPowerCheckBoxesBaseTag).isSelected ? 2 : 0
             newPowerDict["siren"] = getCheckBox(withTag: 2, andBaseTag: incomingPowerCheckBoxesBaseTag).isSelected ? 1 : 0
@@ -272,10 +293,19 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newLeakSensorDict["sensorId"] = leakSensorDict["sensorId"]
             newLeakSensorDict["currentValue"] = leakSensorLabel.text
             newLeakSensorDict["status"] = leakSensorOptionsLabel.text
+            newLeakSensorDict["sensorSlug"] = leakSensorDict["sensorSlug"]
             
             newLeakSensorDict["relay"] = getCheckBox(withTag: 1, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 2 : 0
             newLeakSensorDict["siren"] = getCheckBox(withTag: 2, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
             newLeakSensorDict["email"] = getCheckBox(withTag: 3, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            
+            if ((leakSensorOptionsLabel.text?.range(of: "open")) != nil) {
+                newLeakSensorDict["lcl"] = 700
+                newLeakSensorDict["ucl"] = 65535
+            } else {
+                newLeakSensorDict["lcl"] = 65535
+                newLeakSensorDict["ucl"] = 700
+            }
             
             alarmConfigs.append(newLeakSensorDict)
         }
@@ -284,10 +314,19 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newFloatSwitchDict["sensorId"] = floatSwitchDict["sensorId"]
             newFloatSwitchDict["currentValue"] = leakSensorLabel.text
             newFloatSwitchDict["status"] = leakSensorOptionsLabel.text
+            newFloatSwitchDict["sensorSlug"] = floatSwitchDict["sensorSlug"]
             
             newFloatSwitchDict["relay"] = getCheckBox(withTag: 1, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 2 : 0
             newFloatSwitchDict["siren"] = getCheckBox(withTag: 2, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
             newFloatSwitchDict["email"] = getCheckBox(withTag: 3, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            
+            if ((floatSwitchOptionsLabel.text?.range(of: "open")) != nil) {
+                newFloatSwitchDict["lcl"] = 700
+                newFloatSwitchDict["ucl"] = 65535
+            } else {
+                newFloatSwitchDict["lcl"] = 65535
+                newFloatSwitchDict["ucl"] = 700
+            }
             
             alarmConfigs.append(newFloatSwitchDict)
         }
@@ -307,13 +346,13 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     private func editDevice() {
         let finalRequestDict = getDeviceIfEntriesValid()
         if finalRequestDict != nil {
-//            startAnimating()
-//            UserRequestManager.postEditDeviceAPICallWith(deviceDict: finalRequestDict!) { (success, response, error) in
-//                if success {
-//                    
-//                }
-//                self.stopAnimating()
-//            }
+            startAnimating()
+            UserRequestManager.postEditDeviceAPICallWith(deviceDict: finalRequestDict!) { (success, response, error) in
+                if success {
+                    
+                }
+                self.stopAnimating()
+            }
         }
     }
     
@@ -325,6 +364,8 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             let id: Int = Int((self.alarmConfigOnly[i])["sensorId"] as! String)!
         
             switch id {
+            case 1:
+                updateWaterLevelWith(dict: alarmConfigOnly[i])
             case 2:
                 updateTemperatureWith(dict: alarmConfigOnly[i])
             case 3:
@@ -341,10 +382,18 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         }
     }
     
+    func updateWaterLevelWith(dict: Dictionary<String,Any>) {
+        let unit: String = dict["sensorDisplayUnits"] as! String
+        let value = dict["currentValue"] as? String ?? ""
+        self.waterLevelLabel.text = "\((value.characters.count) > 0 ? value : "--")\(unit.characters.count > 0 ? unit : "℉")"
+    }
+    
     func updateTemperatureWith(dict: Dictionary<String,Any>) {
         tempDict = dict
         
-        self.tempLabel.text = "\(dict["currentValue"] as? String ?? "--")℉"
+        let unit: String = dict["sensorDisplayUnits"] as! String
+        let value = dict["currentValue"] as? String ?? ""
+        self.tempLabel.text = "\((value.characters.count) > 0 ? value : "--")\(unit.characters.count > 0 ? unit : "℉")"
         setCheckBoxesWith(dict: dict, andBaseTag: tempCheckBoxesBaseTag)
         
         self.temperatureMinTextField.text = "\(dict["lcl"] as! Int)"
@@ -354,7 +403,9 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     func updateHumidityWith(dict: Dictionary<String,Any>) {
         humidityDict = dict
         
-        self.humidityLabel.text = "\(dict["currentValue"] as? String ?? "--")%"
+        let unit: String = dict["sensorDisplayUnits"] as! String
+        let value = dict["currentValue"] as? String ?? ""
+        self.humidityLabel.text = "\((value.characters.count) > 0 ? value : "--")\(unit.characters.count > 0 ? unit : "%")"
         setCheckBoxesWith(dict: dict, andBaseTag: humidityCheckBoxesBaseTag)
         
         self.humidityMinTextField.text = "\(dict["lcl"] as! Int)"
@@ -374,10 +425,26 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         self.leakSensorLabel.text = dict["currentValue"] as? String
         setCheckBoxesWith(dict: dict, andBaseTag: leakSensorCheckBoxesBaseTag)
         
-        for statusListDict in (dict["statusList"] as! Array<Dictionary<String,Any>>) {
-            if statusListDict["selected"] as? Bool == true {
-                leakSensorOptionsLabel.text = statusListDict["label"] as? String
-                break
+        if dict["lcl"] as? Int == 700 && dict["ucl"] as? Int == 65535 {
+            
+            if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+                
+                for statusListDict in input {
+                    if (statusListDict["value"] as? String)?.lowercased() == "open" {
+                        leakSensorOptionsLabel.text = statusListDict["label"] as? String
+                        break
+                    }
+                }
+            }
+        } else {
+            if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+                
+                for statusListDict in input {
+                    if (statusListDict["value"] as? String)?.lowercased() == "closed" {
+                        leakSensorOptionsLabel.text = statusListDict["label"] as? String
+                        break
+                    }
+                }
             }
         }
     }
@@ -387,11 +454,27 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         
         self.floatSwitchLabel.text = dict["currentValue"] as? String
         setCheckBoxesWith(dict: dict, andBaseTag: floatSwitchCheckBoxesBaseTag)
-        
-        for statusListDict in (dict["statusList"] as! Array<Dictionary<String,Any>>) {
-            if statusListDict["selected"] as? Bool == true {
-                floatSwitchOptionsLabel.text = statusListDict["label"] as? String
-                break
+
+        if dict["lcl"] as? Int == 700 && dict["ucl"] as? Int == 65535 {
+            
+            if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+                
+                for statusListDict in input {
+                    if (statusListDict["value"] as? String)?.lowercased() == "open" {
+                        floatSwitchOptionsLabel.text = statusListDict["label"] as? String
+                        break
+                    }
+                }
+            }
+        } else {
+            if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
+                
+                for statusListDict in input {
+                    if (statusListDict["value"] as? String)?.lowercased() == "closed" {
+                        floatSwitchOptionsLabel.text = statusListDict["label"] as? String
+                        break
+                    }
+                }
             }
         }
     }

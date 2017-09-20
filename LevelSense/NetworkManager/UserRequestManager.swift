@@ -121,6 +121,18 @@ class UserRequestManager: NSObject {
         
     }
     
+    static func getAlarmConfigAPICallWith(deviceDict: Dictionary<String,Any>, block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            UserInterface().getAlarmConfigWith(request: UserRequest().getAlarmConfigRequestWith(deviceDict: deviceDict), withCompletionBlock: block)
+            
+        } else {
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
+    
     //MARK: Graph
     
     static func postGetDeviceDataListAPICallWith(deviceID: String, limit: Int, fromTimestamp: Int, toTimestamp: Int,block:@escaping requestCompletionBlock)
