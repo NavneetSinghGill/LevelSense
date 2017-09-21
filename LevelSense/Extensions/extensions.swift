@@ -70,6 +70,18 @@ extension UITableView {
     }
 }
 
+extension CALayer {
+    func removeSubLayersAndPaths() {
+        for i in 0..<(self.sublayers?.count != nil ? (self.sublayers?.count)! : 0) {
+            let subLayer = self.sublayers?[i]
+            if let shape = subLayer as? CAShapeLayer {
+                shape.path = nil
+            }
+            subLayer?.removeSubLayersAndPaths()
+        }
+    }
+}
+
 //extension NSObject {
 //    func printMe() {
 //        let reflected = reflect(self)

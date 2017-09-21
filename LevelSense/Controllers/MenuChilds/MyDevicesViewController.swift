@@ -106,7 +106,11 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "graph" {
             let graphVC: GraphViewController = segue.destination as! GraphViewController
+            graphVC.toTimeStamp_ = Int(Date().timeIntervalSince1970)
+            let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: -1, to: Date())
+            graphVC.fromTimeStamp_ = Int(lastMonth.timeIntervalSince1970)
             graphVC.allDeviceData = self.deviceData
+            graphVC.device = (devices[currentSelectedIndex.row])
         } else if segue.identifier == "alarmConfig" {
             let alarmConfigVC: AlarmConfigViewController = segue.destination as! AlarmConfigViewController
             alarmConfigVC.alarmConfigAllData = alarmConfigAllData

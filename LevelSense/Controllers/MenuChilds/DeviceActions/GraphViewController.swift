@@ -22,6 +22,11 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
+    @IBOutlet weak var dateRangeLabel: UILabel!
+    
+    var toTimeStamp_: Int!
+    var fromTimeStamp_: Int!
+    
     var allDeviceData: Dictionary<String, Any>!
     var graphViews: [UIView] = []
     var heightOfScrollInnerView: CGFloat = 0
@@ -29,39 +34,69 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     var areGraphsDrawn: Bool = false
     var isPopupOpen: Bool = false
     
+    var device: Device?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addBackButton()
         setNavigationTitle(title: "Graph")
+        setTextForDateLabel(fromTimeStamp: fromTimeStamp_, toTimeStamp: toTimeStamp_)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         if !areGraphsDrawn {
-            var count: Int = 0
-            for key in self.allDeviceData.keys {
-                
-                let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
-                print("\(deviceData?["sensorDisplayName"] ?? "")")
-                
-                let graphView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
-                let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: (colors.object(at: count%colors.count) as? UIColor)?.cgColor, fillColor: nil)
-                
-                if creationOfLayerSuccessful {
-                    graphView.frame.size.height = (graphView.layer.sublayers?.first?.frame.size.height)!
-                    addView(layerView: graphView)
-                    
-                    if count != 0 {
-                        addDividerTo(parentView: graphView)
-                    }
-                    
-                    count += 1
-                }
-            }
+            readDataAndPlotGraph()
             areGraphsDrawn = true
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        resetUI()
+    }
+    
+    func readDataAndPlotGraph() {
+        var count: Int = 0
+        for key in self.allDeviceData.keys { 
+            
+            let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
+            print("\(deviceData?["sensorDisplayName"] ?? "")")
+            
+            let graphView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
+            let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: (colors.object(at: count%colors.count) as? UIColor)?.cgColor, fillColor: nil)
+            
+            if creationOfLayerSuccessful {
+                graphView.frame.size.height = (graphView.layer.sublayers?.first?.frame.size.height)!
+                addView(layerView: graphView)
+                
+                if count != 0 {
+                    addDividerTo(parentView: graphView)
+                }
+                
+                count += 1
+            }
+        }
+        scrollView.isHidden = count == 0
+    }
+    
+    func resetUI() {
+        for graph in graphViews {
+            graph.layer.removeSubLayersAndPaths()
+        }
+        for subview in self.mainView.subviews {
+            subview.removeFromSuperview()
+        }
+        
+        mainView.frame.size.height = 0;
+        heightOfScrollInnerView = 0;
+        
+        graphViews.removeAll()
+        scrollInnerviewHeightConstraint.constant = 0
+        view.layoutIfNeeded()
     }
     
     func addView(layerView: UIView) {
@@ -184,10 +219,48 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }
     }
     
+    func setDeviceDetails(fromTimeStamp: Int!, toTimeStamp: Int!) {
+        
+        startAnimating()
+        UserRequestManager.postGetDeviceDataListAPICallWith(deviceID: device!.id, limit: 100000, fromTimestamp: fromTimeStamp, toTimestamp: toTimeStamp) { (success, response, error) in
+            if success {
+                self.resetUI()
+                self.allDeviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)
+                
+                self.fromTimeStamp_ = fromTimeStamp
+                self.toTimeStamp_ = toTimeStamp
+                self.setTextForDateLabel(fromTimeStamp: fromTimeStamp, toTimeStamp: toTimeStamp)
+                
+                self.readDataAndPlotGraph()
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    func setTextForDateLabel(fromTimeStamp: Int!, toTimeStamp: Int!) {
+        self.dateRangeLabel.text = "\(getDateFor(timeStamp: CGFloat(fromTimeStamp))) - \(getDateFor(timeStamp: CGFloat(toTimeStamp)))"
+    }
+    
     //MARK: IBAction methods
     
     @IBAction func popupTapped() {
         hidePopup()
+    }
+    
+    @IBAction func leftDateButtonTapped() {
+        let toTimestamp: Int! = Int(fromTimeStamp_)
+        let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: -1, to: Date(timeIntervalSince1970: Double(toTimestamp)))
+        let fromTimestamp: Int! = Int(lastMonth.timeIntervalSince1970)
+        
+        setDeviceDetails(fromTimeStamp: fromTimestamp, toTimeStamp: toTimestamp)
+    }
+    
+    @IBAction func rightDateButtonTapped() {
+        let fromTimestamp: Int! = Int(toTimeStamp_)
+        let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: Double(fromTimestamp)))
+        let toTimestamp: Int! = Int(lastMonth.timeIntervalSince1970)
+        
+        setDeviceDetails(fromTimeStamp: fromTimestamp, toTimeStamp: toTimestamp)
     }
     
     //MARK: Line graph layer delegate
