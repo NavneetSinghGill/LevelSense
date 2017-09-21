@@ -351,7 +351,7 @@ class LineGraphLayer: CAShapeLayer {
             indexesSelected.append(childLayer.getIndexOfValueFor(locationOnLayer: mirrorLocation))
             values.append(childLayer.values)
         }
-        print("location: \(location)... mirror: \(mirrorLocation)..... size: \(self.frame.size)")
+        print("location: \(location)... mirror: \(mirrorLocation)..... selectedIndex: \(indexesSelected) size: \(self.frame.size)")
         self.lineGraphDelegate?.lineGraphTapped(atLocation: mirrorLocation, withIndexs: indexesSelected, inValues: values)
     }
     

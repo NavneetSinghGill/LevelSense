@@ -100,17 +100,26 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         for entry in (data as! Array<Dictionary<String, Any>>) {
             values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
         }
+//        values.append(CGPoint(x: CGFloat(1505977680), y: CGFloat(3)))
+//        values.append(CGPoint(x: CGFloat(1507014480), y: CGFloat(3.5)))
+//        values.append(CGPoint(x: CGFloat(1507025480), y: CGFloat(3.8)))
+//        values.append(CGPoint(x: CGFloat(1507044480), y: CGFloat(4.4)))
+//        values.append(CGPoint(x: CGFloat(1508569680), y: CGFloat(5)))
         if deviceData?["minTimestamp"] != nil {
             xMin = (deviceData?["minTimestamp"]) as? CGFloat
+//            xMin = CGFloat(1505977680)
         }
         if deviceData?["maxTimestamp"] != nil {
             xMax = (deviceData?["maxTimestamp"]) as? CGFloat
+//            xMax = CGFloat(1508569680)
         }
         if deviceData?["minValue"] != nil {
             yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+//            yMin = CGFloat(3)
         }
         if deviceData?["maxValue"] != nil {
             yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+//            yMax = CGFloat(5)
         }
         
         
@@ -131,13 +140,13 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 
                 var xValues : [CGFloat] = [CGFloat]()
                 
-                let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot)
+                let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot-1)
                 for i in 0..<pointsCountToPlot {
                     xValues.append(xMin + xMaxMinDiff * CGFloat(i))
                 }
                 
                 var yValues : [CGFloat] = [CGFloat]()
-                let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot)
+                let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot-1)
                 for i in 0..<pointsCountToPlot {
                     yValues.append(yMin + yMaxMinDiff * CGFloat(i))
                 }
@@ -159,7 +168,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }) { (isComplete) in
             
         }
-        valueLabel.text = "\(value)"
+        valueLabel.text = "\(value.rounded(toPlaces: 2))"
         timeLabel.text = getDateFor(timeStamp: timeStamp)
         isPopupOpen = true
     }
@@ -219,8 +228,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func getDateFor(timeStamp: CGFloat) -> String {
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dMMM,YY"
-        let date: Date = Date.init(timeIntervalSince1970: TimeInterval(timeStamp*1000))
+        dateFormatter.dateFormat = "dMMM,yy"
+        let date: Date = Date.init(timeIntervalSince1970: TimeInterval(timeStamp))
         let dateString: String = dateFormatter.string(from: date)
         
         return dateString
