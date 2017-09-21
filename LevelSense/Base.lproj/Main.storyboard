@@ -2209,6 +2209,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No notifications found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydg-hJ-AtI">
+                                <rect key="frame" x="91.5" y="322" width="190.5" height="21.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2BX-3o-Ynv">
                                 <rect key="frame" x="0.0" y="64" width="375" height="533"/>
                                 <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -2246,7 +2252,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="ydg-hJ-AtI" firstAttribute="centerY" secondItem="Tbr-9g-F4s" secondAttribute="centerY" id="4JP-zZ-Nu2"/>
                             <constraint firstItem="2BX-3o-Ynv" firstAttribute="leading" secondItem="Tbr-9g-F4s" secondAttribute="leading" id="6d9-K7-mGn"/>
+                            <constraint firstItem="ydg-hJ-AtI" firstAttribute="centerX" secondItem="Tbr-9g-F4s" secondAttribute="centerX" id="BpO-ev-MR1"/>
                             <constraint firstItem="0hN-FK-xCk" firstAttribute="top" secondItem="2BX-3o-Ynv" secondAttribute="bottom" constant="5" id="D8g-FS-NoY"/>
                             <constraint firstItem="0hN-FK-xCk" firstAttribute="leading" secondItem="Tbr-9g-F4s" secondAttribute="leading" constant="5" id="LOa-cS-kXu"/>
                             <constraint firstItem="il9-qb-GoD" firstAttribute="top" secondItem="0hN-FK-xCk" secondAttribute="bottom" constant="5" id="ZXj-ts-J1D"/>
