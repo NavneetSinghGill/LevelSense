@@ -42,6 +42,10 @@
 		539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDB1F542D5000662521 /* ContactInterface.swift */; };
 		539DEDDE1F542D7F00662521 /* ContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDD1F542D7F00662521 /* ContactRequest.swift */; };
 		53A0AA1E1F5FDA7E00570A6A /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */; };
+		53A2A94F1F76531E0058767A /* DeviceLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A2A94E1F76531E0058767A /* DeviceLog.swift */; };
+		53A2A9511F765C2D0058767A /* AlarmLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A2A9501F765C2D0058767A /* AlarmLogViewController.swift */; };
+		53A2A9541F76675B0058767A /* AlarmLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A2A9521F76675B0058767A /* AlarmLogTableViewCell.swift */; };
+		53A2A9551F76675B0058767A /* AlarmLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */; };
 		53BC17CE1F5D484A00E78F7D /* UIBezierPath+Interpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */; };
 		53BC17D11F5D48B900E78F7D /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D01F5D48B900E78F7D /* CGPointExtension.m */; };
 		53BC17D31F5D555700E78F7D /* LineGraphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D21F5D555700E78F7D /* LineGraphLayer.swift */; };
@@ -100,6 +104,10 @@
 		539DEDDB1F542D5000662521 /* ContactInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInterface.swift; sourceTree = "<group>"; };
 		539DEDDD1F542D7F00662521 /* ContactRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequest.swift; sourceTree = "<group>"; };
 		53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		53A2A94E1F76531E0058767A /* DeviceLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLog.swift; sourceTree = "<group>"; };
+		53A2A9501F765C2D0058767A /* AlarmLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmLogViewController.swift; sourceTree = "<group>"; };
+		53A2A9521F76675B0058767A /* AlarmLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmLogTableViewCell.swift; sourceTree = "<group>"; };
+		53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmLogTableViewCell.xib; sourceTree = "<group>"; };
 		53BC17CC1F5D484A00E78F7D /* UIBezierPath+Interpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Interpolation.h"; sourceTree = "<group>"; };
 		53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Interpolation.m"; sourceTree = "<group>"; };
 		53BC17CF1F5D48B900E78F7D /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -192,6 +200,8 @@
 				539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */,
 				539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */,
 				535793381F56AF5100F28DC5 /* AddContactTableViewCell.xib */,
+				53A2A9521F76675B0058767A /* AlarmLogTableViewCell.swift */,
+				53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -219,6 +229,7 @@
 				539671611F6BC0B500892132 /* DeviceDetailViewController.swift */,
 				538650451F584473000B454E /* AlarmConfigViewController.swift */,
 				53A0AA1D1F5FDA7E00570A6A /* GraphViewController.swift */,
+				53A2A9501F765C2D0058767A /* AlarmLogViewController.swift */,
 			);
 			path = DeviceActions;
 			sourceTree = "<group>";
@@ -325,6 +336,7 @@
 				530D61741F4C6DB300AB583F /* Device.swift */,
 				539DEDD91F542AD700662521 /* Contact.swift */,
 				538AA73D1F55A9C6004559EC /* ServiceProvider.swift */,
+				53A2A94E1F76531E0058767A /* DeviceLog.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -396,6 +408,7 @@
 				F19DAE691F3DB03D007F14FF /* Assets.xcassets in Resources */,
 				5357933A1F56AF5100F28DC5 /* AddContactTableViewCell.xib in Resources */,
 				539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */,
+				53A2A9551F76675B0058767A /* AlarmLogTableViewCell.xib in Resources */,
 				2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */,
 				53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */,
 				2A60C1BE1F45D29F003F4C9B /* Main.storyboard in Resources */,
@@ -487,6 +500,8 @@
 				5366569E1F4AD381003A5E71 /* extensions.swift in Sources */,
 				539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */,
 				538650461F584473000B454E /* AlarmConfigViewController.swift in Sources */,
+				53A2A9541F76675B0058767A /* AlarmLogTableViewCell.swift in Sources */,
+				53A2A94F1F76531E0058767A /* DeviceLog.swift in Sources */,
 				F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */,
 				F19DAE891F3DD8D0007F14FF /* NetworkHttpClient.swift in Sources */,
 				539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */,
@@ -503,6 +518,7 @@
 				F19DAE761F3DCCBB007F14FF /* Reachability.swift in Sources */,
 				5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */,
 				2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */,
+				53A2A9511F765C2D0058767A /* AlarmLogViewController.swift in Sources */,
 				F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */,
 				536656AA1F4AE3B8003A5E71 /* Banner.swift in Sources */,
 				F19DAE791F3DD14A007F14FF /* LoginRequestManager.swift in Sources */,

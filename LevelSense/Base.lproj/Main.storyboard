@@ -280,6 +280,9 @@
                                                     <constraint firstAttribute="height" constant="45" id="aQY-ih-765"/>
                                                 </constraints>
                                                 <state key="normal" image="deviceAlarm"/>
+                                                <connections>
+                                                    <action selector="alarmLogsButtonTapped" destination="L9x-1r-sOR" eventType="touchUpInside" id="Ofj-WP-mR9"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -340,6 +343,7 @@
                         <segue destination="Ltb-cb-vqx" kind="show" identifier="graph" id="fTf-ac-8bw"/>
                         <segue destination="h3j-6N-baL" kind="show" identifier="alarmConfig" id="OsE-w5-gzI"/>
                         <segue destination="hHt-Or-Hdk" kind="show" identifier="deviceDetail" id="daQ-ey-Thg"/>
+                        <segue destination="70p-Pa-agc" kind="show" identifier="AlarmLogs" id="9Oo-Gf-zsT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBh-uz-jkG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2226,7 +2230,44 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV6-wD-IRn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4893.6000000000004" y="-2115.2923538230884"/>
+            <point key="canvasLocation" x="4394" y="-2115"/>
+        </scene>
+        <!--Alarm Log View Controller-->
+        <scene sceneID="xH3-JL-U7c">
+            <objects>
+                <viewController storyboardIdentifier="AlarmLogViewController" automaticallyAdjustsScrollViewInsets="NO" id="70p-Pa-agc" customClass="AlarmLogViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="avu-WR-bTF"/>
+                        <viewControllerLayoutGuide type="bottom" id="5kI-84-g3M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wQD-a5-X85">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Sts-5r-WOW">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="70p-Pa-agc" id="dgF-Q0-4p7"/>
+                                    <outlet property="delegate" destination="70p-Pa-agc" id="u8Y-zZ-0Gs"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5kI-84-g3M" firstAttribute="top" secondItem="Sts-5r-WOW" secondAttribute="bottom" id="95p-qN-FW7"/>
+                            <constraint firstItem="Sts-5r-WOW" firstAttribute="top" secondItem="avu-WR-bTF" secondAttribute="bottom" id="CrL-uY-tz0"/>
+                            <constraint firstItem="Sts-5r-WOW" firstAttribute="leading" secondItem="wQD-a5-X85" secondAttribute="leading" id="Kah-rp-1a6"/>
+                            <constraint firstAttribute="trailing" secondItem="Sts-5r-WOW" secondAttribute="trailing" id="fbk-BW-DLX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Sts-5r-WOW" id="y5r-HJ-1o9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zfF-w1-I0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5114.3999999999996" y="-2115.2923538230884"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oCw-Gt-SUu">

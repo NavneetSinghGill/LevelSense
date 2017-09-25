@@ -17,6 +17,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     var currentSelectedIndex:IndexPath = IndexPath.init(row: -1, section: 0)
     var devices: [Device] = []
+    var devicesLogs: Dictionary<String,Any>!
     
     let myDevicesTableViewCellIdentifier = "MyDevicesTableViewCell"
 
@@ -117,6 +118,11 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         } else if segue.identifier == "deviceDetail" {
             let deviceDetailVC: DeviceDetailViewController = segue.destination as! DeviceDetailViewController
             deviceDetailVC.deviceDetail = deviceDetail
+        } else if segue.identifier == "AlarmLogs" {
+            let alarmLogsVC: AlarmLogViewController = segue.destination as! AlarmLogViewController
+            let deviceLogList = self.devicesLogs?["LIST"] as? NSArray
+            alarmLogsVC.deviceLogs = DeviceLog.getDeviceLogFromDictionaryArray(deviceLogDictionaries: deviceLogList!)
+            alarmLogsVC.paging = self.devicesLogs?["PAGING"] as? Dictionary<String,Any>
         }
     }
     
@@ -237,6 +243,22 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         alertVC.addAction(noAction)
         
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func alarmLogsButtonTapped() {
+        startAnimating()
+        UserRequestManager.getAlarmLogsAPICallWith(deviceDict: ["id": selectedDevice?.id ?? ""]) { (success, response, error) in
+            if success {
+                self.devicesLogs = ((response as! Dictionary<String, Any>)["deviceLogList"] as? Dictionary<String,Any>)
+                let deviceLogList = self.devicesLogs?["LIST"] as? NSArray
+                if deviceLogList?.count != 0 {
+                    self.performSegue(withIdentifier: "AlarmLogs", sender: self)
+                } else {
+                    Banner.showFailureWithTitle(title: "No logs found")
+                }
+            }
+            self.stopAnimating()
+        }
     }
     
     @IBAction func graphButtonTapped() {

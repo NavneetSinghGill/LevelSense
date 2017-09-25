@@ -93,6 +93,14 @@ class UserRequest: Request {
         return self
     }
     
+    func getAlarmLogsRequestWith(deviceDict: Dictionary<String,Any>) -> UserRequest {
+        
+        parameters = deviceDict
+        
+        self.urlPath = getDeviceLogListApiUrlSuffix
+        return self
+    }
+    
     //MARK: Graph
     
     func createPostGetDeviceDataListRequestWith(deviceID: String, limit: Int, fromTimestamp: Int, toTimestamp: Int) -> UserRequest {

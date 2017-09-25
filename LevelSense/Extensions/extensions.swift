@@ -78,6 +78,7 @@ extension CALayer {
                 shape.path = nil
             }
             subLayer?.removeSubLayersAndPaths()
+            subLayer?.sublayers?.removeAll()
         }
     }
 }
