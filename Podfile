@@ -10,5 +10,6 @@ target 'LevelSense' do
 pod 'Alamofire'
 pod 'NotificationBannerSwift'
 pod 'NVActivityIndicatorView'
+pod 'CCBottomRefreshControl'
 
 end

@@ -12,10 +12,14 @@ class AlarmLogViewController: LSViewController, UITableViewDataSource, UITableVi
     
     let alarmLogTableViewCellIdentifier = "AlarmLogTableViewCell"
     
+    
     var deviceLogs: [DeviceLog] = []
-    var paging: Dictionary<String,Any>!
+    var deviceID: String!
+    var currentPage: Int!
+    var limit: Int!
     
     @IBOutlet weak var tableView: UITableView!
+    var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +32,11 @@ class AlarmLogViewController: LSViewController, UITableViewDataSource, UITableVi
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Refresh logs")
+        refreshControl.addTarget(self, action: #selector(AlarmLogViewController.getLogsList), for: UIControlEvents.valueChanged)
+        tableView.bottomRefreshControl = refreshControl
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -57,6 +66,30 @@ class AlarmLogViewController: LSViewController, UITableViewDataSource, UITableVi
     //MARK:- Public methods
     
     func read(responseDict: Dictionary<String,Any>) {
+        
+    }
+    
+    //MARK:- Private methods
+    
+    func getLogsList() {
+        
+        let deviceDict: Dictionary<String,Any> = ["id": deviceID ?? "", "currentPage": currentPage + 1, "limit": limit]
+        
+        UserRequestManager.getAlarmLogsAPICallWith(deviceDict: deviceDict) { (success, response, error) in
+            if success {
+                let devicesLogs = ((response as! Dictionary<String, Any>)["deviceLogList"] as? Dictionary<String,Any>)
+                let deviceLogList = devicesLogs?["LIST"] as? NSArray
+                
+                if deviceLogList?.count != 0 {
+                    self.deviceLogs.append(contentsOf: DeviceLog.getDeviceLogFromDictionaryArray(deviceLogDictionaries: deviceLogList!))
+                    self.tableView.reloadData()
+                    self.currentPage = self.currentPage + 1
+                } else {
+                    Banner.showFailureWithTitle(title: "No more logs found")
+                }
+            }
+            self.refreshControl.endRefreshing()
+        }
         
     }
 }

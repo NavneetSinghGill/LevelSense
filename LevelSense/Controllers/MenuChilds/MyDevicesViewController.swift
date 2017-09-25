@@ -10,6 +10,8 @@ import UIKit
 
 class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let alarmLogsLimit = 10
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bottomActionView: UIView!
     @IBOutlet weak var heightConstaintOfActionView: NSLayoutConstraint!
@@ -122,7 +124,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             let alarmLogsVC: AlarmLogViewController = segue.destination as! AlarmLogViewController
             let deviceLogList = self.devicesLogs?["LIST"] as? NSArray
             alarmLogsVC.deviceLogs = DeviceLog.getDeviceLogFromDictionaryArray(deviceLogDictionaries: deviceLogList!)
-            alarmLogsVC.paging = self.devicesLogs?["PAGING"] as? Dictionary<String,Any>
+            alarmLogsVC.currentPage = 1
+            alarmLogsVC.limit = alarmLogsLimit
+            alarmLogsVC.deviceID = selectedDevice?.id
         }
     }
     
@@ -247,7 +251,9 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     @IBAction func alarmLogsButtonTapped() {
         startAnimating()
-        UserRequestManager.getAlarmLogsAPICallWith(deviceDict: ["id": selectedDevice?.id ?? ""]) { (success, response, error) in
+        let deviceDict: Dictionary<String,Any> = ["id": selectedDevice?.id ?? "", "currentPage": 1, "limit": alarmLogsLimit]
+        
+        UserRequestManager.getAlarmLogsAPICallWith(deviceDict: deviceDict) { (success, response, error) in
             if success {
                 self.devicesLogs = ((response as! Dictionary<String, Any>)["deviceLogList"] as? Dictionary<String,Any>)
                 let deviceLogList = self.devicesLogs?["LIST"] as? NSArray
