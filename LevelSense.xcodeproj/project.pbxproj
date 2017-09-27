@@ -117,7 +117,7 @@
 		BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.release.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.release.xcconfig"; sourceTree = "<group>"; };
 		D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.debug.xcconfig"; sourceTree = "<group>"; };
 		E033AA869FE6722239659C82 /* Pods_LevelSense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LevelSense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F19DAE5B1F3DB03D007F14FF /* LevelSense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LevelSense.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F19DAE5B1F3DB03D007F14FF /* Level Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Level Sense.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F19DAE661F3DB03D007F14FF /* LevelSense.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LevelSense.xcdatamodel; sourceTree = "<group>"; };
 		F19DAE681F3DB03D007F14FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 		F19DAE5C1F3DB03D007F14FF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F19DAE5B1F3DB03D007F14FF /* LevelSense.app */,
+				F19DAE5B1F3DB03D007F14FF /* Level Sense.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -344,9 +344,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F19DAE5A1F3DB03D007F14FF /* LevelSense */ = {
+		F19DAE5A1F3DB03D007F14FF /* Level Sense */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F19DAE701F3DB03D007F14FF /* Build configuration list for PBXNativeTarget "LevelSense" */;
+			buildConfigurationList = F19DAE701F3DB03D007F14FF /* Build configuration list for PBXNativeTarget "Level Sense" */;
 			buildPhases = (
 				8022D203C6EDD6B385BABC79 /* [CP] Check Pods Manifest.lock */,
 				F19DAE571F3DB03D007F14FF /* Sources */,
@@ -359,9 +359,9 @@
 			);
 			dependencies = (
 			);
-			name = LevelSense;
+			name = "Level Sense";
 			productName = LevelSense;
-			productReference = F19DAE5B1F3DB03D007F14FF /* LevelSense.app */;
+			productReference = F19DAE5B1F3DB03D007F14FF /* Level Sense.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -394,7 +394,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F19DAE5A1F3DB03D007F14FF /* LevelSense */,
+				F19DAE5A1F3DB03D007F14FF /* Level Sense */,
 			);
 		};
 /* End PBXProject section */
@@ -716,7 +716,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F19DAE701F3DB03D007F14FF /* Build configuration list for PBXNativeTarget "LevelSense" */ = {
+		F19DAE701F3DB03D007F14FF /* Build configuration list for PBXNativeTarget "Level Sense" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F19DAE711F3DB03D007F14FF /* Debug */,
