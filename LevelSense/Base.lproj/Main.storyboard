@@ -9,11 +9,18 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Bold</string>
+            <string>HelveticaNeue-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="9eW-pK-xUu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="fhv-5v-AVA" customClass="LoginViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="fhv-5v-AVA" customClass="LoginViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yeK-E8-RTk"/>
                         <viewControllerLayoutGuide type="bottom" id="eJo-X8-BRp"/>
@@ -23,7 +30,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="51o-EJ-ngH">
-                                <rect key="frame" x="15" y="155" width="345" height="30"/>
+                                <rect key="frame" x="15" y="205" width="345" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
@@ -32,13 +39,13 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ard-rf-wku">
-                                <rect key="frame" x="15" y="120" width="345" height="20"/>
+                                <rect key="frame" x="15" y="170" width="345" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.43137254901960786" blue="0.74509803921568629" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sO9-ze-IFs">
-                                <rect key="frame" x="15" y="240" width="345" height="30"/>
+                                <rect key="frame" x="15" y="290" width="345" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -47,13 +54,13 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqs-Wy-OHW">
-                                <rect key="frame" x="15" y="205" width="345" height="20"/>
+                                <rect key="frame" x="15" y="255" width="345" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4v-tH-HKS">
-                                <rect key="frame" x="15" y="370" width="345" height="35"/>
+                                <rect key="frame" x="15" y="420" width="345" height="35"/>
                                 <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                 <state key="normal" title="Login"/>
@@ -66,6 +73,13 @@
                                     <action selector="logInButtonTapped:" destination="fhv-5v-AVA" eventType="touchUpInside" id="diG-do-pdU"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="bZV-2U-6ea">
+                                <rect key="frame" x="151" y="40" width="73" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="gYr-Nb-mz7"/>
+                                    <constraint firstAttribute="width" secondItem="bZV-2U-6ea" secondAttribute="height" multiplier="8:11" id="uh2-Tl-UvY"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -75,7 +89,9 @@
                             <constraint firstItem="Sqs-Wy-OHW" firstAttribute="leading" secondItem="ard-rf-wku" secondAttribute="leading" id="EPK-rs-HpH"/>
                             <constraint firstItem="h4v-tH-HKS" firstAttribute="centerX" secondItem="9J9-Oa-V5X" secondAttribute="centerX" id="Gte-gj-LI0"/>
                             <constraint firstItem="51o-EJ-ngH" firstAttribute="top" secondItem="ard-rf-wku" secondAttribute="bottom" constant="15" id="Ydx-rC-wgc"/>
-                            <constraint firstItem="ard-rf-wku" firstAttribute="top" secondItem="yeK-E8-RTk" secondAttribute="bottom" constant="100" id="hFY-ch-fd8"/>
+                            <constraint firstItem="bZV-2U-6ea" firstAttribute="centerX" secondItem="9J9-Oa-V5X" secondAttribute="centerX" id="aZ4-yb-d9k"/>
+                            <constraint firstItem="bZV-2U-6ea" firstAttribute="top" secondItem="yeK-E8-RTk" secondAttribute="bottom" constant="20" id="bZt-XZ-aQO"/>
+                            <constraint firstItem="ard-rf-wku" firstAttribute="top" secondItem="yeK-E8-RTk" secondAttribute="bottom" constant="150" id="hFY-ch-fd8"/>
                             <constraint firstItem="sO9-ze-IFs" firstAttribute="top" secondItem="Sqs-Wy-OHW" secondAttribute="bottom" constant="15" id="igR-A6-Aik"/>
                             <constraint firstItem="sO9-ze-IFs" firstAttribute="leading" secondItem="ard-rf-wku" secondAttribute="leading" id="jML-SP-gSz"/>
                             <constraint firstItem="h4v-tH-HKS" firstAttribute="width" secondItem="sO9-ze-IFs" secondAttribute="width" id="jQe-TZ-HsO"/>
@@ -121,7 +137,7 @@
         <!--My Devices View Controller-->
         <scene sceneID="oJj-0N-u1m">
             <objects>
-                <viewController storyboardIdentifier="MyDevicesViewController" automaticallyAdjustsScrollViewInsets="NO" id="L9x-1r-sOR" customClass="MyDevicesViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyDevicesViewController" automaticallyAdjustsScrollViewInsets="NO" id="L9x-1r-sOR" customClass="MyDevicesViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Zj-ex-rBf"/>
                         <viewControllerLayoutGuide type="bottom" id="31f-B1-C4r"/>
@@ -353,7 +369,7 @@
         <!--Alarm Config View Controller-->
         <scene sceneID="XpR-jV-fZN">
             <objects>
-                <viewController storyboardIdentifier="AlarmConfigViewController" automaticallyAdjustsScrollViewInsets="NO" id="h3j-6N-baL" customClass="AlarmConfigViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AlarmConfigViewController" automaticallyAdjustsScrollViewInsets="NO" id="h3j-6N-baL" customClass="AlarmConfigViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lcJ-eT-xwo"/>
                         <viewControllerLayoutGuide type="bottom" id="Y9p-Uk-BR2"/>
@@ -1464,7 +1480,7 @@
         <!--Option Selection View Controller-->
         <scene sceneID="Tea-z3-V4B">
             <objects>
-                <viewController storyboardIdentifier="OptionSelectionViewController" id="eeY-C3-z5Z" customClass="OptionSelectionViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OptionSelectionViewController" id="eeY-C3-z5Z" customClass="OptionSelectionViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="G5F-pg-CjT"/>
                         <viewControllerLayoutGuide type="bottom" id="75X-VG-DlT"/>
@@ -1649,7 +1665,7 @@
         <!--Menu View Controller-->
         <scene sceneID="mvL-gd-3eF">
             <objects>
-                <viewController storyboardIdentifier="MenuViewController" id="eCp-zh-IFL" customClass="MenuViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" id="eCp-zh-IFL" customClass="MenuViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ur1-yA-BdY"/>
                         <viewControllerLayoutGuide type="bottom" id="qg3-AY-Dtu"/>
@@ -1764,7 +1780,7 @@
         <!--Claim Device View Controller-->
         <scene sceneID="dvj-ub-ccA">
             <objects>
-                <viewController storyboardIdentifier="ClaimDeviceViewController" automaticallyAdjustsScrollViewInsets="NO" id="Tgl-9H-acO" customClass="ClaimDeviceViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ClaimDeviceViewController" automaticallyAdjustsScrollViewInsets="NO" id="Tgl-9H-acO" customClass="ClaimDeviceViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cHq-W8-cRx"/>
                         <viewControllerLayoutGuide type="bottom" id="6Ra-WF-Dor"/>
@@ -2061,7 +2077,7 @@
         <!--Graph View Controller-->
         <scene sceneID="l5U-Q3-8ax">
             <objects>
-                <viewController storyboardIdentifier="GraphViewController" automaticallyAdjustsScrollViewInsets="NO" id="Ltb-cb-vqx" customClass="GraphViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GraphViewController" automaticallyAdjustsScrollViewInsets="NO" id="Ltb-cb-vqx" customClass="GraphViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LFm-v4-qe6"/>
                         <viewControllerLayoutGuide type="bottom" id="32N-eq-NfB"/>
@@ -2235,7 +2251,7 @@
         <!--Alarm Log View Controller-->
         <scene sceneID="xH3-JL-U7c">
             <objects>
-                <viewController storyboardIdentifier="AlarmLogViewController" automaticallyAdjustsScrollViewInsets="NO" id="70p-Pa-agc" customClass="AlarmLogViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AlarmLogViewController" automaticallyAdjustsScrollViewInsets="NO" id="70p-Pa-agc" customClass="AlarmLogViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="avu-WR-bTF"/>
                         <viewControllerLayoutGuide type="bottom" id="5kI-84-g3M"/>
@@ -2290,7 +2306,7 @@
         <!--Notifications View Controller-->
         <scene sceneID="jEB-nF-JzO">
             <objects>
-                <viewController storyboardIdentifier="NotificationsViewController" automaticallyAdjustsScrollViewInsets="NO" id="yGq-Qe-L7N" customClass="NotificationsViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotificationsViewController" automaticallyAdjustsScrollViewInsets="NO" id="yGq-Qe-L7N" customClass="NotificationsViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ski-bV-FPb"/>
                         <viewControllerLayoutGuide type="bottom" id="il9-qb-GoD"/>
@@ -2385,7 +2401,7 @@
         <!--Personal Info View Controller-->
         <scene sceneID="glJ-f2-2jb">
             <objects>
-                <viewController storyboardIdentifier="PersonalInfoViewController" automaticallyAdjustsScrollViewInsets="NO" id="yZH-Ne-3Yu" customClass="PersonalInfoViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonalInfoViewController" automaticallyAdjustsScrollViewInsets="NO" id="yZH-Ne-3Yu" customClass="PersonalInfoViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="69d-Vu-lCq"/>
                         <viewControllerLayoutGuide type="bottom" id="ZQe-Kb-rs0"/>
@@ -2682,7 +2698,7 @@
         <!--Device Detail View Controller-->
         <scene sceneID="8KY-LJ-wRF">
             <objects>
-                <viewController storyboardIdentifier="DeviceDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="hHt-Or-Hdk" customClass="DeviceDetailViewController" customModule="LevelSense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DeviceDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="hHt-Or-Hdk" customClass="DeviceDetailViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xPX-A0-uWP"/>
                         <viewControllerLayoutGuide type="bottom" id="I5d-hT-Jvb"/>
@@ -2982,6 +2998,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="LaunchLogo" width="206" height="277"/>
         <image name="check" width="40" height="40"/>
         <image name="device" width="200" height="58"/>
         <image name="deviceAlarm" width="42" height="42"/>
