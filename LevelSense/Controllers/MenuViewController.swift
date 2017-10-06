@@ -33,6 +33,8 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         refreshUser()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUser), name: NSNotification.Name(rawValue: LNRefreshUser), object: nil)
+        
+        tableView.reloadData()
     }
     
     func refreshUser() {
@@ -40,9 +42,9 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         let lastName = User.user.lastName
         
         if firstName != nil && lastName != nil {
-            userNameLabel.text = "\(firstName!) \(lastName!)"
+            userNameLabel.text = "\(firstName!) \(lastName!)".uppercased()
         } else if firstName != nil {
-            userNameLabel.text = "\(firstName!)"
+            userNameLabel.text = "\(firstName!)".uppercased()
         } else {
             userNameLabel.text = ""
         }
@@ -58,6 +60,14 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         let menuCell: MenuTableViewCell! = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
         menuCell.optionImageView.image = UIImage(named: optionImageNames.object(at: indexPath.row) as! String)
         menuCell.optionNameLabel.text = optionNames.object(at: indexPath.row) as? String
+        
+        if indexPath.row == indexOfSelectedScreen {
+            menuCell.contentView.backgroundColor = drakBlueColor
+            menuCell.dividerLine.isHidden = true
+        } else {
+            menuCell.contentView.backgroundColor = blueColor
+            menuCell.dividerLine.isHidden = false
+        }
         
         return menuCell
     }
@@ -95,6 +105,7 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         
         if screenToShow != nil {
             indexOfSelectedScreen = indexPath.row
+            tableView.reloadData()
             revealViewController().pushFrontViewController(UINavigationController.init(rootViewController: screenToShow!), animated: true)
         }
     }

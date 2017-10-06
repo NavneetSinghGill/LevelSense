@@ -12,6 +12,7 @@ class MenuTableViewCell: UITableViewCell {
 
     @IBOutlet var optionImageView: UIImageView!
     @IBOutlet var optionNameLabel: UILabel!
+    @IBOutlet var dividerLine: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

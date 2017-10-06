@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NMa-5Y-eic">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NMa-5Y-eic">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1710,10 +1711,10 @@
                                     <constraint firstAttribute="height" constant="2" id="sIZ-4c-KZA"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xec-jA-8Vf">
-                                <rect key="frame" x="15" y="22" width="345" height="48"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xec-jA-8Vf">
+                                <rect key="frame" x="25" y="22" width="335" height="48"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtD-x5-NM9" userLabel="LeftBlueView">
@@ -1733,7 +1734,7 @@
                             <constraint firstItem="mJZ-e9-ja1" firstAttribute="top" secondItem="xec-jA-8Vf" secondAttribute="bottom" id="6j9-Sq-gnf"/>
                             <constraint firstItem="mJZ-e9-ja1" firstAttribute="top" secondItem="jtD-x5-NM9" secondAttribute="bottom" id="7TQ-Oz-jiS"/>
                             <constraint firstItem="jtD-x5-NM9" firstAttribute="top" secondItem="h3Q-Rf-CxJ" secondAttribute="bottom" id="Jak-xs-iZF"/>
-                            <constraint firstItem="xec-jA-8Vf" firstAttribute="leading" secondItem="QCi-7w-FMV" secondAttribute="leading" constant="15" id="Mch-xH-UmF"/>
+                            <constraint firstItem="xec-jA-8Vf" firstAttribute="leading" secondItem="QCi-7w-FMV" secondAttribute="leading" constant="25" id="Mch-xH-UmF"/>
                             <constraint firstItem="sZk-DR-Z50" firstAttribute="leading" secondItem="jtD-x5-NM9" secondAttribute="trailing" id="OKC-8k-M57"/>
                             <constraint firstItem="mJZ-e9-ja1" firstAttribute="top" secondItem="sZk-DR-Z50" secondAttribute="bottom" id="P8e-Ul-cdo"/>
                             <constraint firstAttribute="trailing" secondItem="mJZ-e9-ja1" secondAttribute="trailing" id="PcP-Bn-oSs"/>
@@ -1745,6 +1746,11 @@
                             <constraint firstItem="jtD-x5-NM9" firstAttribute="leading" secondItem="QCi-7w-FMV" secondAttribute="leading" id="m7W-cR-qIf"/>
                             <constraint firstItem="qg3-AY-Dtu" firstAttribute="top" secondItem="mJZ-e9-ja1" secondAttribute="bottom" id="rv3-YP-ceO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="sZk-DR-Z50"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="mJZ-e9-ja1" id="SF6-9L-4Kf"/>
@@ -1765,7 +1771,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="O03-c4-jVN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0ma-J1-pE6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2291,7 +2297,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zny-ig-DyM" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SVn-sz-CY7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2386,7 +2392,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bJd-ou-v8s" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="l5n-wO-FPg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2683,7 +2689,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nte-1U-72p" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zBi-pI-aG9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -3012,7 +3018,7 @@
         <image name="unCheck" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5wU-yC-Dya"/>
         <segue reference="6Ax-Uu-jST"/>
+        <segue reference="5wU-yC-Dya"/>
     </inferredMetricsTieBreakers>
 </document>

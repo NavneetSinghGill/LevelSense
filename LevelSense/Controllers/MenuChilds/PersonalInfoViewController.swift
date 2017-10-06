@@ -36,6 +36,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     var fullStates : NSArray = []       // all states
     var countryStates : NSArray = []    // states with specific countryID
     
+    var countryOrStatesApiInProgress = true
+    
     var optionSelectionInProgress: OptionSelectionInProgress!
     
     var countryID: Int! = -1
@@ -52,6 +54,7 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
         self.setDetailsOf(user: User.user)
         
         getUserDetails()
+        getCountryList()
     }
     
     //MARK:- IBActions methods
@@ -62,29 +65,51 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
     }
     
     @IBAction func countryButtonTapped(button: UIButton) {
-        let optionVC : OptionSelectionViewController = getOptionVC()
-        
-        optionVC.options = self.countries.value(forKey: "name") as! NSArray
-        optionSelectionInProgress = .country
-        
-        let startIndex: Int! = optionVC.options.index(of: self.countryTextField.text!)
-        optionVC.startIndex =  (startIndex != Int.max) ? startIndex : 0
-        
-        self.present(optionVC, animated: true, completion: nil)
+        if countryOrStatesApiInProgress {
+            startAnimating()
+        } else {
+            if countries.count == 0 {
+                startAnimating()
+                getCountryList()
+            } else {
+                let optionVC : OptionSelectionViewController = getOptionVC()
+                
+                optionVC.options = self.countries.value(forKey: "name") as! NSArray
+                optionSelectionInProgress = .country
+                
+                let startIndex: Int! = optionVC.options.index(of: self.countryTextField.text!)
+                optionVC.startIndex =  (startIndex != Int.max) ? startIndex : 0
+                
+                self.present(optionVC, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func stateButtonTapped(button: UIButton) {
-        let optionVC : OptionSelectionViewController = getOptionVC()
-        
-        refreshCountryStatesWithCountryID()
-        
-        optionVC.options = self.countryStates.value(forKey: "name") as! NSArray
-        optionSelectionInProgress = .state
-        
-        let startIndex: Int! = optionVC.options.index(of: self.stateTextField.text!)
-        optionVC.startIndex =  (startIndex != Int.max) ? startIndex : 0
-        
-        self.present(optionVC, animated: true, completion: nil)
+        if countryOrStatesApiInProgress {
+            startAnimating()
+        } else {
+            if fullStates.count == 0 {
+                startAnimating()
+                if countryID == -1 {
+                    getCountryList()
+                } else {
+                    getStateListWithCountryID(countryID: countryID)
+                }
+            } else {
+                let optionVC : OptionSelectionViewController = getOptionVC()
+                
+                refreshCountryStatesWithCountryID()
+                
+                optionVC.options = self.countryStates.value(forKey: "name") as! NSArray
+                optionSelectionInProgress = .state
+                
+                let startIndex: Int! = optionVC.options.index(of: self.stateTextField.text!)
+                optionVC.startIndex =  (startIndex != Int.max) ? startIndex : 0
+                
+                self.present(optionVC, animated: true, completion: nil)
+            }
+        }
     }
     
     //MARK:- selectedOption protocol method
@@ -118,8 +143,8 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                 self.setDetailsOf(user: user!)
                 
                 self.postUserRefreshNotification()
-                self.getCountryList()
             }
+            self.stopAnimating()
         }
     }
     
@@ -154,12 +179,14 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                 
                 if self.countryID == -1 {
                     self.stopAnimating()
+                    self.countryOrStatesApiInProgress = false
                 } else {
                     self.getStateListWithCountryID(countryID: self.countryID)
                 }
             } else {
                 Banner.showFailureWithTitle(title: "An error occured while fetching countries")
                 self.stopAnimating()
+                self.countryOrStatesApiInProgress = false
             }
         }
     }
@@ -182,6 +209,7 @@ class PersonalInfoViewController: LSViewController, UITextFieldDelegate, UIGestu
                     Banner.showFailureWithTitle(title: "An error occured while fetching states")
                 }
                 self.stopAnimating()
+                self.countryOrStatesApiInProgress = false
             }
         } else {
             Banner.showFailureWithTitle(title: "Please select country first")

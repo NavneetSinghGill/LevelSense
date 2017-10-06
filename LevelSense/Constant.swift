@@ -21,7 +21,7 @@ let email = "Email"
 let notificationOptionTypes: NSArray = [email, textMessage]
 
 //MARK: Colors
-
+let drakBlueColor = UIColor.init(colorLiteralRed: 0, green: 74/255.0, blue: 128/255, alpha: 1.0)
 let blueColor = UIColor.init(colorLiteralRed: 0, green: 110/255.0, blue: 190/255, alpha: 1.0)
 let veryLightblueColor = UIColor.init(colorLiteralRed: 230/255.0, green: 240/255.0, blue: 1, alpha: 1.0)
 let myDevicesCellBackgroundSelectionColor = UIColor.init(colorLiteralRed: 230/255.0, green: 240/255.0, blue: 1.0, alpha: 1.0)

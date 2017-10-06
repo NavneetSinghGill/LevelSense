@@ -19,7 +19,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     var contacts: [Contact] = []
-    var serviceProviders: NSMutableArray = [ServiceProvider]() as! NSMutableArray
+    var serviceProviders: [ServiceProvider] = []
     var indexOfExpandedCell: Int! = -1
     var isAddContactActive: Bool = false
     
@@ -58,6 +58,8 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                 let contactDicts = (response as! Dictionary<String, Any>)["contactList"] as? NSArray
                 if contactDicts?.count != 0 {
                     self.contacts = Contact.getContactFromDictionaryArray(contactDictionaries: contactDicts!)
+                    self.isAddContactActive = false
+                    self.indexOfExpandedCell = -1
                     self.tableView.reloadData()
                 }
             } else {
@@ -73,7 +75,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                 
                 let serviceProviderDicts = (response as! Dictionary<String, Any>)["cellProviderList"] as? NSArray
                 if serviceProviderDicts?.count != 0 {
-                    self.serviceProviders = ServiceProvider.getServiceProviderFromDictionaryArray(serviceProviderDictionaries: serviceProviderDicts!) as! NSMutableArray
+                    self.serviceProviders = ServiceProvider.getServiceProviderFromDictionaryArray(serviceProviderDictionaries: serviceProviderDicts!)
                     self.tableView.reloadData()
                 }
             }
@@ -94,7 +96,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             let cell: NotificationsTableViewCell = tableView.cellForRow(at: indexPath) as! NotificationsTableViewCell
             optionVC.delegate = cell;
             
-            let names = serviceProviders.value(forKey: "name") as! NSArray
+            let names = (serviceProviders as NSArray).value(forKey: "name") as! NSArray
             optionVC.options = names
             optionVC.startIndex = names.index(of: currentValue)
         } else {
@@ -110,20 +112,20 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     }
     
     func getProviderNameFor(code: String) -> String {
-        let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
+        let providerCodes: NSArray = (serviceProviders as NSArray).value(forKey: "code") as! NSArray
         if providerCodes.count != 0 {
             let index: Int = providerCodes.index(of: code)
-            let providerNames: NSArray = serviceProviders.value(forKey: "name") as! NSArray
+            let providerNames: NSArray = (serviceProviders as NSArray).value(forKey: "name") as! NSArray
             return providerNames.object(at: index) as! String
         }
         return ""
     }
     
     func getCodeFor(providerName: String) -> String {
-        let providerNames: NSArray = serviceProviders.value(forKey: "name") as! NSArray
+        let providerNames: NSArray = (serviceProviders as NSArray).value(forKey: "name") as! NSArray
         if providerNames.count != 0 {
             let index: Int = providerNames.index(of: providerName)
-            let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
+            let providerCodes: NSArray = (serviceProviders as NSArray).value(forKey: "code") as! NSArray
             if index != Int.max {
                 return providerCodes.object(at: index) as! String
             }
@@ -132,12 +134,12 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     }
     
     func getProviderNameFor(index: Int) -> String {
-        let providerNames: NSArray = serviceProviders.value(forKey: "name") as! NSArray
+        let providerNames: NSArray = (serviceProviders as NSArray).value(forKey: "name") as! NSArray
         return providerNames.object(at: index) as! String
     }
     
     func getCodeFor(index: Int) -> String {
-        let providerCodes: NSArray = serviceProviders.value(forKey: "code") as! NSArray
+        let providerCodes: NSArray = (serviceProviders as NSArray).value(forKey: "code") as! NSArray
         return providerCodes.object(at: index) as! String
     }
     
@@ -270,6 +272,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             } else {
                 cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: false)
             }
+            cell.tableView = tableView
             return cell
         } else {
             let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: addContactTableViewCellCellIdentifier, for: indexPath) as! NotificationsTableViewCell
@@ -279,6 +282,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             cell.setupForAddContact()
             
             cell.openOrCollapseWith(shouldExpand: true, andShouldAnimateArrow: false)
+            cell.tableView = tableView
             return cell
         }
         
@@ -302,7 +306,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     //MARK:- Notification methods
     
     override func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.tableViewBottomConstraint.constant = keyboardSize.size.height - self.addContactSuperView.frame.size.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()

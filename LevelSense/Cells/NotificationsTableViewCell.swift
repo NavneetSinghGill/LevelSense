@@ -51,6 +51,8 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     @IBOutlet weak var cellPhoneSuperViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var emailSuperViewHeightConstraint: NSLayoutConstraint!
     
+    var tableView: UITableView?
+    
     let defaultProviderName = "----"
     
     
@@ -85,6 +87,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         openOrCollapseWith(shouldExpand: !isExpanded, andShouldAnimateArrow: true)
         updateTableView()
         delegate?.cellExpandedWith?(indexPath: indexPathOfCell)
+        tableView!.superview!.endEditing(true)
     }
     
     @IBAction private func saveButtonTapped(sender: UIButton) {
@@ -179,10 +182,9 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     }
     
     func updateTableView() {
-        if self.superview?.superview != nil {
-            let tableView: UITableView = (self.superview?.superview) as! UITableView
-            tableView.beginUpdates()
-            tableView.endUpdates()
+        if tableView != nil {
+            tableView?.beginUpdates()
+            tableView?.endUpdates()
         }
     }
     
@@ -235,19 +237,18 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     }
     
     func scrollToIndexPath(indexPath: IndexPath, withAnimation: Bool) {
-        if self.superview?.superview != nil {
-            let tableView: UITableView = (self.superview?.superview) as! UITableView
-            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: withAnimation)
+        if tableView != nil {
+            tableView?.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: withAnimation)
         }
     }
     
-    func tableView() -> UITableView? {
-        if self.superview?.superview != nil {
-            let tableView: UITableView = (self.superview?.superview) as! UITableView
-            return tableView
-        }
-        return nil
-    }
+//    func tableView() -> UITableView? {
+//        if self.superview?.superview != nil {
+//            let tableView: UITableView = (self.superview?.superview) as! UITableView
+//            return tableView
+//        }
+//        return nil
+//    }
     
     //MARK: Selected option delegate methods
     
@@ -344,10 +345,10 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         if nextField != nil {
             nextField?.becomeFirstResponder()
             
-            let tableViewCellX = tableView()?.rectForRow(at: indexPathOfCell).origin.y ?? 0
-            var rect = nextField?.frame
-            rect?.size.height += tableViewCellX
-            tableView()?.scrollRectToVisible(rect!, animated: true)
+            let tableViewCellY = tableView?.rectForRow(at: indexPathOfCell).origin.y ?? 0 + 5
+            var rect = extensionInnerView?.convert((nextField?.frame)!, to: self.contentView)
+            rect?.origin.y += tableViewCellY
+            tableView?.scrollRectToVisible(rect!, animated: true)
         } else {
             textField.resignFirstResponder()
         }
@@ -356,7 +357,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        tableView()!.superview!.endEditing(true)
+        tableView!.superview!.endEditing(true)
         //Controllers view
     }
     
