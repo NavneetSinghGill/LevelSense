@@ -98,7 +98,7 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
             screenToShow = storyboard?.instantiateViewController(withIdentifier: "PersonalInfoViewController")
         case 4:
             screenToShow = nil
-            performLogout()
+            showAlertForLogout()
         default:
             break
         }
@@ -111,6 +111,18 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
     }
     
     //MARK: Private methods
+    
+    private func showAlertForLogout() {
+        let alertVC = UIAlertController.init(title: "Are you sure you want to logout?", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let yesAction = UIAlertAction.init(title: "Yes", style: UIAlertActionStyle.default) { (alertAction) in
+            self.performLogout()
+        }
+        let noAction = UIAlertAction.init(title: "No", style: UIAlertActionStyle.default)
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        
+        self.present(alertVC, animated: true, completion: nil)
+    }
     
     private func performLogout() {
         
