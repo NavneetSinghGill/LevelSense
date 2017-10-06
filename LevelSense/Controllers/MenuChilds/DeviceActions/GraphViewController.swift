@@ -10,6 +10,11 @@ import UIKit
 
 class GraphViewController: LSViewController, LineGraphProtocol {
     
+    enum TimeStampType {
+        case Month
+        case Day
+    }
+    
     let colors: NSArray = [UIColor.green, UIColor.blue, UIColor.orange]
     
     @IBOutlet weak var mainView: UIView!
@@ -24,8 +29,10 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     @IBOutlet weak var dateRangeLabel: UILabel!
     
-    var toTimeStamp_: Int!
-    var fromTimeStamp_: Int!
+    @IBOutlet weak var timeStampSegmentControl: UISegmentedControl!
+    
+    var savedToTimeStamp: Int!
+    var savedFromTimeStamp: Int!
     
     var allDeviceData: Dictionary<String, Any>!
     var graphViews: [UIView] = []
@@ -35,13 +42,14 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     var isPopupOpen: Bool = false
     
     var device: Device?
+    var timeStampType: TimeStampType = .Month
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addBackButton()
         setNavigationTitle(title: "Graph")
-        setTextForDateLabel(fromTimeStamp: fromTimeStamp_, toTimeStamp: toTimeStamp_)
+        setTextForDateLabel(fromTimeStamp: savedFromTimeStamp, toTimeStamp: savedToTimeStamp)
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,6 +66,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         
         resetUI()
     }
+    
+    //MARK: Private methods
     
     func readDataAndPlotGraph() {
         var count: Int = 0
@@ -185,7 +195,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 for i in 0..<pointsCountToPlot {
                     yValues.append(yMin + yMaxMinDiff * CGFloat(i))
                 }
-                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: "Time-stamp", yAxisName: "Units")
+                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: "Time-stamp", yAxisName: "Values")
             }
             
             let graphName = "\(deviceData?["sensorDisplayName"] ?? "")"
@@ -227,8 +237,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 self.resetUI()
                 self.allDeviceData = (((response as? Dictionary<String, Any>)!["deviceDataList"]!) as? Dictionary<String,Any>)
                 
-                self.fromTimeStamp_ = fromTimeStamp
-                self.toTimeStamp_ = toTimeStamp
+                self.savedFromTimeStamp = fromTimeStamp
+                self.savedToTimeStamp = toTimeStamp
                 self.setTextForDateLabel(fromTimeStamp: fromTimeStamp, toTimeStamp: toTimeStamp)
                 
                 self.readDataAndPlotGraph()
@@ -237,8 +247,36 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }
     }
     
+    func setDeviceDetails(fromTimeStamp: Int!) {
+        
+        let lastMonth: Date! = Calendar.current.date(byAdding: getCurrentDateComponent(), value: 1, to: Date(timeIntervalSince1970: Double(fromTimeStamp)))
+        let toTimeStamp: Int! = Int(lastMonth.timeIntervalSince1970)
+        
+        setDeviceDetails(fromTimeStamp: fromTimeStamp, toTimeStamp: toTimeStamp)
+    }
+    
     func setTextForDateLabel(fromTimeStamp: Int!, toTimeStamp: Int!) {
         self.dateRangeLabel.text = "\(getDateFor(timeStamp: CGFloat(fromTimeStamp))) - \(getDateFor(timeStamp: CGFloat(toTimeStamp)))"
+    }
+    
+    func getCurrentDateComponent() -> Calendar.Component {
+        switch timeStampType {
+        case .Month:
+            return .month
+        case .Day:
+            return .day
+        }
+    }
+    
+    //MARK: Segment control methods
+    
+    @IBAction func segmentControlValueChanged(segmentControl: UISegmentedControl) {
+        if segmentControl.selectedSegmentIndex == 1 { //Month
+            timeStampType = .Month
+        } else if segmentControl.selectedSegmentIndex == 0 { //Day
+            timeStampType = .Day
+        }
+        setDeviceDetails(fromTimeStamp: savedFromTimeStamp)
     }
     
     //MARK: IBAction methods
@@ -248,16 +286,16 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     }
     
     @IBAction func leftDateButtonTapped() {
-        let toTimestamp: Int! = Int(fromTimeStamp_)
-        let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: -1, to: Date(timeIntervalSince1970: Double(toTimestamp)))
+        let toTimestamp: Int! = Int(savedFromTimeStamp)
+        let lastMonth: Date! = Calendar.current.date(byAdding: getCurrentDateComponent(), value: -1, to: Date(timeIntervalSince1970: Double(toTimestamp)))
         let fromTimestamp: Int! = Int(lastMonth.timeIntervalSince1970)
         
         setDeviceDetails(fromTimeStamp: fromTimestamp, toTimeStamp: toTimestamp)
     }
     
     @IBAction func rightDateButtonTapped() {
-        let fromTimestamp: Int! = Int(toTimeStamp_)
-        let lastMonth: Date! = Calendar.current.date(byAdding: .month, value: 1, to: Date(timeIntervalSince1970: Double(fromTimestamp)))
+        let fromTimestamp: Int! = Int(savedToTimeStamp)
+        let lastMonth: Date! = Calendar.current.date(byAdding: getCurrentDateComponent(), value: 1, to: Date(timeIntervalSince1970: Double(fromTimestamp)))
         let toTimestamp: Int! = Int(lastMonth.timeIntervalSince1970)
         
         setDeviceDetails(fromTimeStamp: fromTimestamp, toTimeStamp: toTimestamp)
@@ -301,7 +339,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func getDateFor(timeStamp: CGFloat) -> String {
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dMMM,yy"
+        dateFormatter.dateFormat = "d MMM,yy"
         let date: Date = Date.init(timeIntervalSince1970: TimeInterval(timeStamp))
         let dateString: String = dateFormatter.string(from: date)
         
