@@ -11,8 +11,8 @@ import UIKit
 class GraphViewController: LSViewController, LineGraphProtocol {
     
     enum TimeStampType {
-        case Month
-        case Day
+        case Today
+        case Week
     }
     
     let colors: NSArray = [UIColor.green, UIColor.blue, UIColor.orange]
@@ -42,7 +42,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     var isPopupOpen: Bool = false
     
     var device: Device?
-    var timeStampType: TimeStampType = .Month
+    var timeStampType: TimeStampType = .Today
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,7 +195,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 for i in 0..<pointsCountToPlot {
                     yValues.append(yMin + yMaxMinDiff * CGFloat(i))
                 }
-                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: "Time-stamp", yAxisName: "Values")
+                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: nil, yAxisName: nil)
             }
             
             let graphName = "\(deviceData?["sensorDisplayName"] ?? "")"
@@ -247,10 +247,10 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }
     }
     
-    func setDeviceDetails(fromTimeStamp: Int!) {
+    func setDeviceDetails(toTimeStamp: Int!) {
         
-        let lastMonth: Date! = Calendar.current.date(byAdding: getCurrentDateComponent(), value: 1, to: Date(timeIntervalSince1970: Double(fromTimeStamp)))
-        let toTimeStamp: Int! = Int(lastMonth.timeIntervalSince1970)
+        let lastDay: Date! = Calendar.current.date(byAdding: getCurrentDateComponent(), value: -1, to: Date(timeIntervalSince1970: Double(toTimeStamp)))
+        let fromTimeStamp: Int! = Int(lastDay.timeIntervalSince1970)
         
         setDeviceDetails(fromTimeStamp: fromTimeStamp, toTimeStamp: toTimeStamp)
     }
@@ -261,22 +261,22 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func getCurrentDateComponent() -> Calendar.Component {
         switch timeStampType {
-        case .Month:
-            return .month
-        case .Day:
+        case .Today:
             return .day
+        case .Week:
+            return .weekOfYear
         }
     }
     
     //MARK: Segment control methods
     
     @IBAction func segmentControlValueChanged(segmentControl: UISegmentedControl) {
-        if segmentControl.selectedSegmentIndex == 1 { //Month
-            timeStampType = .Month
-        } else if segmentControl.selectedSegmentIndex == 0 { //Day
-            timeStampType = .Day
+        if segmentControl.selectedSegmentIndex == 1 { //Week
+            timeStampType = .Week
+        } else if segmentControl.selectedSegmentIndex == 0 { //Today
+            timeStampType = .Today
         }
-        setDeviceDetails(fromTimeStamp: savedFromTimeStamp)
+        setDeviceDetails(toTimeStamp: savedToTimeStamp)
     }
     
     //MARK: IBAction methods
@@ -339,7 +339,11 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     func getDateFor(timeStamp: CGFloat) -> String {
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMM,yy"
+        if timeStampType == .Today {
+            dateFormatter.dateFormat = "HH:mm"
+        } else {
+            dateFormatter.dateFormat = "d MMM,yy"
+        }
         let date: Date = Date.init(timeIntervalSince1970: TimeInterval(timeStamp))
         let dateString: String = dateFormatter.string(from: date)
         

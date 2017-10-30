@@ -25,6 +25,13 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     @IBOutlet weak var humidityMinButton: UIButton!
     @IBOutlet weak var humidityMaxButton: UIButton!
     
+    @IBOutlet weak var waterNameLabel: UILabel!
+    @IBOutlet weak var temperatureNameLabel: UILabel!
+    @IBOutlet weak var humidityNameLabel: UILabel!
+    @IBOutlet weak var powerNameLabel: UILabel!
+    @IBOutlet weak var leakSensorNameButton: UIButton!
+    @IBOutlet weak var floatSwitchNameButton: UIButton!
+    
     @IBOutlet weak var temperatureMinTextField: UITextField!
     @IBOutlet weak var temperatureMaxTextField: UITextField!
     @IBOutlet weak var humidityMinTextField: UITextField!
@@ -51,6 +58,8 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     var alarmConfigAllData: Dictionary<String,Any>!
     var alarmConfigOnly: Array<Dictionary<String,Any>>!
     
+    var didEditAnything: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,6 +71,24 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         
         alarmConfigOnly = alarmConfigAllData?["sensorLimit"] as! Array<Dictionary<String,Any>>
         updateUIWithConfig()
+    }
+    
+    override func backButtonTapped() {
+        if didEditAnything {
+            let alertVC = UIAlertController.init(title: "Do you want to save your changes?", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+            let yesAction = UIAlertAction.init(title: "Yes", style: UIAlertActionStyle.default) { (alertAction) in
+                self.editDevice(shouldCloseScreenOnSuccess: true)
+            }
+            let noAction = UIAlertAction.init(title: "No", style: UIAlertActionStyle.default) { (alertAction) in
+                super.backButtonTapped()
+            }
+            alertVC.addAction(yesAction)
+            alertVC.addAction(noAction)
+            
+            self.present(alertVC, animated: true, completion: nil)
+        } else {
+            super.backButtonTapped()
+        }
     }
     
     //MARK:- IBAction methods
@@ -94,24 +121,59 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     }
     
     @IBAction func submitButtonTapped(button: UIButton) {
-        editDevice()
+        editDevice(shouldCloseScreenOnSuccess: false)
+    }
+    
+    @IBAction func floatSwitchButtonTapped() {
+        openPopup(with: "Change \'\( (self.floatSwitchNameButton.title(for: .normal))! )\' name to:", filledText: (floatSwitchNameButton.title(for: .normal))!) { (newText) in
+            self.floatSwitchNameButton.setTitle(newText, for: .normal)
+        }
+    }
+    
+    @IBAction func leakSensorButtonTapped() {
+        openPopup(with: "Change \'\( (self.leakSensorNameButton.title(for: .normal))! )\' name to:", filledText: (leakSensorNameButton.title(for: .normal))!) { (newText) in
+            self.leakSensorNameButton.setTitle(newText, for: .normal)
+        }
+    }
+    
+    func openPopup(with text:String, filledText: String, completionHandler: @escaping (_ newText: String) -> Void) {
+        let alertController = UIAlertController(title: text, message: nil, preferredStyle: .alert)
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { (alertAction) in
+            self.didEditAnything = true
+            completionHandler((alertController.textFields?.first?.text)!)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(submitAction)
+        alertController.addAction(cancelAction)
+        
+        alertController.addTextField { (textField) in
+            textField.text = filledText
+            textField.placeholder = text
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //MARK: Checkbox handling actions
     
     @IBAction func temperatureCheckBoxTapped(checkBoxButton: UIButton) {
+        didEditAnything = true
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
     @IBAction func humidityCheckBoxTapped(checkBoxButton: UIButton) {
+        didEditAnything = true
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
     @IBAction func incomingPowerCheckBoxTapped(checkBoxButton: UIButton) {
+        didEditAnything = true
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
     @IBAction func leakSensorCheckBoxTapped(checkBoxButton: UIButton) {
+        didEditAnything = true
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
@@ -122,6 +184,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
 //            unCheckAllButtonsWith(baseTag: floatSwitchCheckBoxesBaseTag)
 //            checkBoxButton.isSelected = true
 //        }
+        didEditAnything = true
         checkBoxButton.isSelected = !checkBoxButton.isSelected
     }
     
@@ -174,6 +237,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     //MARK: - Selection option protocol
     
     func selectedOption(index:NSInteger, sender: Any?) {
+        didEditAnything = true
         if sender as? UIButton == leakSensorButton {
             var statusList: NSArray = []
             if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
@@ -260,6 +324,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newTempDict["relay"] = getCheckBox(withTag: 1, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 2 : 0
             newTempDict["siren"] = getCheckBox(withTag: 2, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
             newTempDict["email"] = getCheckBox(withTag: 3, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
+            newTempDict["voice"] = getCheckBox(withTag: 4, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
             
             alarmConfigs.append(newTempDict)
         }
@@ -273,6 +338,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newHumidityDict["relay"] = getCheckBox(withTag: 1, andBaseTag: humidityCheckBoxesBaseTag).isSelected ? 2 : 0
             newHumidityDict["siren"] = getCheckBox(withTag: 2, andBaseTag: humidityCheckBoxesBaseTag).isSelected ? 1 : 0
             newHumidityDict["email"] = getCheckBox(withTag: 3, andBaseTag: humidityCheckBoxesBaseTag).isSelected ? 1 : 0
+            newHumidityDict["voice"] = getCheckBox(withTag: 4, andBaseTag: humidityCheckBoxesBaseTag).isSelected ? 1 : 0
             
             alarmConfigs.append(newHumidityDict)
         }
@@ -285,6 +351,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newPowerDict["relay"] = getCheckBox(withTag: 1, andBaseTag: incomingPowerCheckBoxesBaseTag).isSelected ? 2 : 0
             newPowerDict["siren"] = getCheckBox(withTag: 2, andBaseTag: incomingPowerCheckBoxesBaseTag).isSelected ? 1 : 0
             newPowerDict["email"] = getCheckBox(withTag: 3, andBaseTag: incomingPowerCheckBoxesBaseTag).isSelected ? 1 : 0
+            newPowerDict["voice"] = getCheckBox(withTag: 4, andBaseTag: incomingPowerCheckBoxesBaseTag).isSelected ? 1 : 0
             
             alarmConfigs.append(newPowerDict)
         }
@@ -298,6 +365,8 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newLeakSensorDict["relay"] = getCheckBox(withTag: 1, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 2 : 0
             newLeakSensorDict["siren"] = getCheckBox(withTag: 2, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
             newLeakSensorDict["email"] = getCheckBox(withTag: 3, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            newLeakSensorDict["voice"] = getCheckBox(withTag: 4, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            newLeakSensorDict["sensorDisplayName"] = (self.leakSensorNameButton.title(for: .normal))!
             
             if ((leakSensorOptionsLabel.text?.range(of: "open")) != nil) {
                 newLeakSensorDict["lcl"] = 700
@@ -319,6 +388,8 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newFloatSwitchDict["relay"] = getCheckBox(withTag: 1, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 2 : 0
             newFloatSwitchDict["siren"] = getCheckBox(withTag: 2, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
             newFloatSwitchDict["email"] = getCheckBox(withTag: 3, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            newFloatSwitchDict["voice"] = getCheckBox(withTag: 4, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            newFloatSwitchDict["sensorDisplayName"] = (self.floatSwitchNameButton.title(for: .normal))!
             
             if ((floatSwitchOptionsLabel.text?.range(of: "open")) != nil) {
                 newFloatSwitchDict["lcl"] = 700
@@ -343,13 +414,17 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         return deviceDict
     }
     
-    private func editDevice() {
+    private func editDevice(shouldCloseScreenOnSuccess: Bool) {
         let finalRequestDict = getDeviceIfEntriesValid()
         if finalRequestDict != nil {
             startAnimating()
             UserRequestManager.postEditDeviceAPICallWith(deviceDict: finalRequestDict!) { (success, response, error) in
                 if success {
+                    self.didEditAnything = false
                     Banner.showSuccessWithTitle(title: "Alarm configuration updated successfully")
+                    if shouldCloseScreenOnSuccess {
+                        super.backButtonTapped()
+                    }
                 }
                 self.stopAnimating()
             }
@@ -386,6 +461,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         let unit: String = dict["sensorDisplayUnits"] as! String
         let value = dict["currentValue"] as? String ?? ""
         self.waterLevelLabel.text = "\((value.characters.count) > 0 ? value : "--")\(unit.characters.count > 0 ? unit : "℉")"
+        waterNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Water Level")
     }
     
     func updateTemperatureWith(dict: Dictionary<String,Any>) {
@@ -393,7 +469,9 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         
         let unit: String = dict["sensorDisplayUnits"] as! String
         let value = dict["currentValue"] as? String ?? ""
-        self.tempLabel.text = "\((value.characters.count) > 0 ? value : "--")\(unit.characters.count > 0 ? unit : "℉")"
+        let valueCGFloat: Float = Float(value)!
+        self.tempLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "℉")"
+        self.temperatureNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Current Temperature")
         setCheckBoxesWith(dict: dict, andBaseTag: tempCheckBoxesBaseTag)
         
         self.temperatureMinTextField.text = "\(dict["lcl"] as! Int)"
@@ -405,7 +483,9 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         
         let unit: String = dict["sensorDisplayUnits"] as! String
         let value = dict["currentValue"] as? String ?? ""
-        self.humidityLabel.text = "\((value.characters.count) > 0 ? value : "--")\(unit.characters.count > 0 ? unit : "%")"
+        let valueCGFloat: Float = Float(value)!
+        self.humidityLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "%")"
+        self.humidityNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Current Humidity")
         setCheckBoxesWith(dict: dict, andBaseTag: humidityCheckBoxesBaseTag)
         
         self.humidityMinTextField.text = "\(dict["lcl"] as! Int)"
@@ -416,6 +496,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         powerDict = dict
         
         self.incomingPowerLabel.text = dict["currentValue"] as? String
+        self.powerNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Incoming Power")
         setCheckBoxesWith(dict: dict, andBaseTag: incomingPowerCheckBoxesBaseTag)
     }
     
@@ -423,6 +504,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         leakSensorDict = dict
         
         self.leakSensorLabel.text = dict["currentValue"] as? String
+        self.leakSensorNameButton.setTitle((dict["sensorDisplayName"] as? String ?? "Leak Sensor"), for: .normal)
         setCheckBoxesWith(dict: dict, andBaseTag: leakSensorCheckBoxesBaseTag)
         
         if dict["lcl"] as? Int == 700 && dict["ucl"] as? Int == 65535 {
@@ -453,6 +535,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         floatSwitchDict = dict
         
         self.floatSwitchLabel.text = dict["currentValue"] as? String
+        self.floatSwitchNameButton.setTitle((dict["sensorDisplayName"] as? String ?? "Float Switch"), for: .normal)
         setCheckBoxesWith(dict: dict, andBaseTag: floatSwitchCheckBoxesBaseTag)
 
         if dict["lcl"] as? Int == 700 && dict["ucl"] as? Int == 65535 {
@@ -488,6 +571,9 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         }
         if (dict["email"] as? Int) == 1 {
             checkBox(select: true, withTag: 3, andBaseTag: baseTag)
+        }
+        if (dict["voice"] as? Int) == 1 {
+            checkBox(select: true, withTag: 4, andBaseTag: baseTag)
         }
     }
     

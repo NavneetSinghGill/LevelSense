@@ -30,6 +30,14 @@ extension CGFloat {
     }
 }
 
+extension Float {
+    
+    func rounded(toPlaces places:Int) -> String {
+        let divisor: Float = pow(10.0, Float(places))
+        return "\((self * divisor).rounded() / divisor)"
+    }
+}
+
 extension UIView {
     @IBInspectable var borderWidth : CGFloat {
         set {

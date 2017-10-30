@@ -208,7 +208,7 @@ class LineGraphLayer: CAShapeLayer {
     var verticalPadding: CGFloat = 40.0
     var horizontalPadding: CGFloat = 40.0
     var origin: CGPoint = CGPoint.init(x: 40, y: 40)
-    var percentOfLineWhichShowsData: CGFloat = 0.9
+    var percentOfLineWhichShowsData: CGFloat = 1
     
     //The view's layer where the graphs are being made
     var parentView: UIView!
@@ -269,7 +269,7 @@ class LineGraphLayer: CAShapeLayer {
         return lineGraphLayer
     }
     
-    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat], xAxisName: String, yAxisName: String) {
+    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat], xAxisName: String?, yAxisName: String?) {
         
         self.xValues = xValues
         self.yValues = yValues
@@ -433,25 +433,31 @@ class TagLayer: CustomShapeLayer {
 
 class AxisNameLayer: CustomShapeLayer {
     
-    class func `init`(withXName xName: String, withYName yName: String, parentSize: CGSize) -> AxisNameLayer {
+    class func `init`(withXName xName: String?, withYName yName: String?, parentSize: CGSize) -> AxisNameLayer {
         let top = CGFloat(5)
         let height = CGFloat(20)
         let axisNameLayer = AxisNameLayer()
         axisNameLayer.frame = CGRect(x: 0, y: 0, width: parentSize.width/2, height: 0)
         
-        let yTextLayer = axisNameLayer.getTextLayerWith(text: "Y-axis: \(yName)")
-        yTextLayer.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: axisNameLayer.frame.size.width, height: height)
-        axisNameLayer.addSublayer(yTextLayer)
+        var yTextLayer: CATextLayer?
+        if yName != nil {
+            yTextLayer = axisNameLayer.getTextLayerWith(text: "Y-axis: \(yName!)")
+            yTextLayer?.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: axisNameLayer.frame.size.width, height: height)
+            axisNameLayer.addSublayer(yTextLayer!)
+        }
         
-        let xTextLayer = axisNameLayer.getTextLayerWith(text: "X-axis: \(xName)")
-        xTextLayer.frame = CGRect(x: CGFloat(0), y: yTextLayer.frame.origin.y + yTextLayer.frame.size.height, width: axisNameLayer.frame.size.width, height: height)
-        axisNameLayer.addSublayer(xTextLayer)
+        var xTextLayer: CATextLayer?
+        if xName != nil {
+            xTextLayer = axisNameLayer.getTextLayerWith(text: "X-axis: \(xName!)")
+            xTextLayer!.frame = CGRect(x: CGFloat(0), y: yTextLayer!.frame.origin.y + yTextLayer!.frame.size.height, width: axisNameLayer.frame.size.width, height: height)
+            axisNameLayer.addSublayer(xTextLayer!)
+        }
         
         axisNameLayer.backgroundColor = UIColor.clear.cgColor
-        xTextLayer.backgroundColor = UIColor.clear.cgColor
-        yTextLayer.backgroundColor = UIColor.clear.cgColor
+        xTextLayer?.backgroundColor = UIColor.clear.cgColor
+        yTextLayer?.backgroundColor = UIColor.clear.cgColor
         
-        axisNameLayer.frame.size.height = yTextLayer.frame.size.height + xTextLayer.frame.size.height + top
+        axisNameLayer.frame.size.height = (yTextLayer?.frame.size.height == nil ? 0 : yTextLayer!.frame.size.height) + (xTextLayer?.frame.size.height == nil ? 0 : xTextLayer!.frame.size.height) + top
         
         return axisNameLayer
     }
