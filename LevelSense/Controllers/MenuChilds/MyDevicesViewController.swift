@@ -17,6 +17,8 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var heightConstaintOfActionView: NSLayoutConstraint!
     @IBOutlet weak var bottomConstaintOfActionView: NSLayoutConstraint!
     
+    var refreshControl: UIRefreshControl!
+    
     var currentSelectedIndex:IndexPath = IndexPath.init(row: -1, section: 0)
     var devices: [Device] = []
     var devicesLogs: Dictionary<String,Any>!
@@ -39,6 +41,11 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         addMenuButton()
         setNavigationTitle(title: "MY DEVICES")
         tableView.registerNib(withIdentifierAndNibName: "MyDevicesTableViewCell")
+     
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Refresh Devices")
+        refreshControl.addTarget(self, action: #selector(MyDevicesViewController.getDevices), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl) // not required when using UITableViewController
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 30
@@ -173,6 +180,10 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     }
     
     func getDevices() {
+        selectedIndexPath = nil
+        selectedDevice = nil
+        currentSelectedIndex = IndexPath.init(row: -1, section: 0)
+        
         startAnimating()
         UserRequestManager.getDevicesAPICallWith() { (success, response, error) in
             if success {
@@ -186,6 +197,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
             if self.devices.count == 0 {
                 self.tableView.isHidden = true
             }
+            self.refreshControl.endRefreshing()
         }
     }
     
