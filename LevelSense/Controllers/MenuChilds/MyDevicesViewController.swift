@@ -183,6 +183,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
         selectedIndexPath = nil
         selectedDevice = nil
         currentSelectedIndex = IndexPath.init(row: -1, section: 0)
+        closeBottomViewWith(animation: true)
         
         startAnimating()
         UserRequestManager.getDevicesAPICallWith() { (success, response, error) in

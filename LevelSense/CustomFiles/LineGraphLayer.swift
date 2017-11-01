@@ -369,7 +369,8 @@ class CustomShapeLayer: CAShapeLayer {
         let label = CATextLayer()
         //        label.font = UIFont(name: "Helvetica", size: 5)
         //        label.contentsScale =  UIScreen.main.scale
-        label.font = 5 as CFTypeRef
+        label.font = CTFontCreateWithName("HelveticaNeue" as CFString, 5, nil)//5 as CFTypeRef
+        label.fontSize = 13
         label.foregroundColor = UIColor.black.cgColor
         label.string = text
         

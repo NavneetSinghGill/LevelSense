@@ -340,7 +340,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     func getDateFor(timeStamp: CGFloat) -> String {
         let dateFormatter: DateFormatter = DateFormatter()
         if timeStampType == .Today {
-            dateFormatter.dateFormat = "HH:mm"
+            dateFormatter.dateFormat = "hh:mm a"
         } else {
             dateFormatter.dateFormat = "d MMM,yy"
         }
