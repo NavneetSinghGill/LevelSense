@@ -480,13 +480,13 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ikI-oI-WA7">
                                                         <rect key="frame" x="20" y="34" width="339" height="25"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm above" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7j1-xo-awR">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm below" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7j1-xo-awR">
                                                                 <rect key="frame" x="0.0" y="0.0" width="159.5" height="25"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm below" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbo-DS-Ikh">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm above" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbo-DS-Ikh">
                                                                 <rect key="frame" x="179.5" y="0.0" width="159.5" height="25"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                                 <nil key="textColor"/>
@@ -706,6 +706,9 @@
                                                             <segment title="Fahrenheit"/>
                                                         </segments>
                                                         <color key="tintColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                                                        <connections>
+                                                            <action selector="temperatureUnitValueDidChange" destination="h3j-6N-baL" eventType="valueChanged" id="gDm-Ka-ZZx"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -792,13 +795,13 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpP-Jx-Jut">
                                                         <rect key="frame" x="20" y="34" width="339" height="25"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm above" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGO-H9-s6S">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm below" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGO-H9-s6S">
                                                                 <rect key="frame" x="0.0" y="0.0" width="159.5" height="25"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm below" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmF-oO-6F9">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm above" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmF-oO-6F9">
                                                                 <rect key="frame" x="179.5" y="0.0" width="159.5" height="25"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                                 <nil key="textColor"/>
@@ -1853,6 +1856,7 @@
                         <outlet property="temperatureMinButton" destination="aU3-Vr-2iI" id="svm-9l-4ZZ"/>
                         <outlet property="temperatureMinTextField" destination="A3V-l1-gZz" id="TJP-G4-4UN"/>
                         <outlet property="temperatureNameLabel" destination="EX9-Vj-VM4" id="SAb-Qc-BlE"/>
+                        <outlet property="temperatureSegmentControl" destination="Jcs-Ew-tVS" id="7GZ-ek-Hw0"/>
                         <outlet property="waterLevelLabel" destination="ou4-OJ-bQr" id="YJg-ly-Owb"/>
                         <outlet property="waterNameLabel" destination="Pf9-ni-hKF" id="9Ng-id-xRk"/>
                     </connections>

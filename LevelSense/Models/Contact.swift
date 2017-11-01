@@ -20,13 +20,14 @@ class Contact: NSObject {
     var defaultStatus: Bool!
     var lastName: String!
     var enableStatus: Bool!
+    var voiceActive: Bool!
     
     override init() {
         super.init()
         
     }
     
-    init(firstName: String, contactID: String, email: String, emailActive: Bool, mobile: String, cellProvider: String, smsActive: Bool, defaultStatus: Bool, lastName: String, enableStatus: Bool) {
+    init(firstName: String, contactID: String, email: String, emailActive: Bool, mobile: String, cellProvider: String, smsActive: Bool, defaultStatus: Bool, lastName: String, enableStatus: Bool, voiceActive: Bool) {
         self.firstName = firstName
         self.contactID = contactID
         self.email = email
@@ -37,6 +38,7 @@ class Contact: NSObject {
         self.defaultStatus = defaultStatus
         self.lastName = lastName
         self.enableStatus = enableStatus
+        self.voiceActive = voiceActive
     }
     
     func copy(with zone: NSZone? = nil) -> Contact {
@@ -49,7 +51,8 @@ class Contact: NSObject {
                                 smsActive: smsActive,
                                 defaultStatus: defaultStatus,
                                 lastName: lastName,
-                                enableStatus: enableStatus)
+                                enableStatus: enableStatus,
+                                voiceActive: voiceActive)
         return copy
     }
     
@@ -88,6 +91,7 @@ class Contact: NSObject {
         dict["smsActive"] = smsActive
         dict["defaultStatus"] = defaultStatus
         dict["enableStatus"] = enableStatus
+        dict["voiceActive"] = voiceActive
         
         return dict
     }
@@ -163,6 +167,12 @@ class Contact: NSObject {
             contact.enableStatus = dictionary!["enableStatus"] as? Bool
         } else {
             contact.enableStatus = false
+        }
+        
+        if dictionary!["voiceActive"] != nil {
+            contact.voiceActive = dictionary!["voiceActive"] as? Bool
+        } else {
+            contact.voiceActive = false
         }
         
         return contact

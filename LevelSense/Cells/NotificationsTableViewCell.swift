@@ -131,14 +131,17 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         emailTextField.text = "\(contact.email!)"
         cellPhoneNumberTextField.text = "\(contact.mobile!)"
         
-        if contact.smsActive {
-            typeLabel.text = textMessage
-            setUIForCellPhone()
+        if contact.voiceActive {
+            setUIForVoice()
         } else {
-            typeLabel.text = email
-            setUIForEmail()
+            if contact.smsActive {
+                typeLabel.text = textMessage
+                setUIForCellPhone()
+            } else {
+                typeLabel.text = email
+                setUIForEmail()
+            }
         }
-        
         enableButton.isSelected = contact.enableStatus == true
         
         if contact.smsActive {
@@ -201,6 +204,13 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         emailTextField.text = ""
     }
     
+    func setUIForVoice() {
+        emailSuperViewHeightConstraint.constant = 0
+        cellPhoneSuperViewHeightConstraint.constant = cellPhoneNumberTextField.frame.size.height + cellPhoneNumberTextField.frame.origin.y
+        emailTextField.text = ""
+        serviceProviderLabel.text = defaultProviderName
+    }
+    
     //MARK: Private methods
     
     private func updateArrowButton(forOpen: Bool, withAnimation: Bool) {
@@ -255,11 +265,15 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     func selectedOption(index: NSInteger, sender: Any?) {
         if sender as? UIButton == typeArrowButton {
             typeLabel.text = notificationOptionTypes.object(at: index) as? String
+            
             if index == 0 {
                 setUIForEmail()
-            } else {
+            } else if index == 1 {
                 setUIForCellPhone()
+            } else if index == 2 {
+                setUIForVoice()
             }
+            
             UIView.animate(withDuration: 0.3, animations: { 
                 self.layoutIfNeeded()
             })
@@ -288,8 +302,15 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     @IBAction private func addButtonTapped(button: UIButton) {
         let newContact: Contact = Contact()
         
-        newContact.emailActive = emailTextField.text?.characters.count != 0
-        newContact.smsActive = cellPhoneNumberTextField.text?.characters.count != 0
+        if emailTextField.text?.characters.count != 0 {
+            newContact.emailActive = emailTextField.text?.characters.count != 0
+            newContact.smsActive = false
+            newContact.voiceActive = false
+        } else {
+            newContact.emailActive = false
+            newContact.smsActive = serviceProviderLabel.text?.characters.count == 0
+            newContact.voiceActive = serviceProviderLabel.text?.characters.count != 0
+        }
         
         if areEntriesValidForContact(contact: newContact) {
             newContact.firstName = firstNameTextField.text

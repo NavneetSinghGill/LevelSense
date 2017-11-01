@@ -49,6 +49,8 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var temperatureSegmentControl: UISegmentedControl!
+    
     var tempDict: Dictionary<String,Any>!
     var humidityDict: Dictionary<String,Any>!
     var powerDict: Dictionary<String,Any>!
@@ -133,6 +135,14 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     @IBAction func leakSensorButtonTapped() {
         openPopup(with: "Change \'\( (self.leakSensorNameButton.title(for: .normal))! )\' name to:", filledText: (leakSensorNameButton.title(for: .normal))!) { (newText) in
             self.leakSensorNameButton.setTitle(newText, for: .normal)
+        }
+    }
+    
+    @IBAction func temperatureUnitValueDidChange() {
+        if temperatureSegmentControl.selectedSegmentIndex == 0 {
+            self.tempDict["sensorDisplayUnits"] = "C"
+        } else {
+            self.tempDict["sensorDisplayUnits"] = "F"
         }
     }
     
@@ -325,6 +335,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newTempDict["siren"] = getCheckBox(withTag: 2, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
             newTempDict["email"] = getCheckBox(withTag: 3, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
             newTempDict["voice"] = getCheckBox(withTag: 4, andBaseTag: tempCheckBoxesBaseTag).isSelected ? 1 : 0
+            newTempDict["sensorDisplayUnits"] = temperatureSegmentControl.selectedSegmentIndex == 0 ? "C" : "F"
             
             alarmConfigs.append(newTempDict)
         }
@@ -470,9 +481,11 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         let unit: String = dict["sensorDisplayUnits"] as! String
         let value = dict["currentValue"] as? String ?? ""
         let valueCGFloat: Float = Float(value)!
-        self.tempLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "℉")"
-        self.temperatureNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Current Temperature")
+        self.tempLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "")"
+        self.temperatureNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Temperature")
         setCheckBoxesWith(dict: dict, andBaseTag: tempCheckBoxesBaseTag)
+        
+        temperatureSegmentControl.selectedSegmentIndex = unit == "F" ? 1 : 0
         
         self.temperatureMinTextField.text = "\(dict["lcl"] as! Int)"
         self.temperatureMaxTextField.text = "\(dict["ucl"] as! Int)"
@@ -485,7 +498,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         let value = dict["currentValue"] as? String ?? ""
         let valueCGFloat: Float = Float(value)!
         self.humidityLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "%")"
-        self.humidityNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Current Humidity")
+        self.humidityNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Humidity")
         setCheckBoxesWith(dict: dict, andBaseTag: humidityCheckBoxesBaseTag)
         
         self.humidityMinTextField.text = "\(dict["lcl"] as! Int)"

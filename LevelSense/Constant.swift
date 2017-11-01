@@ -18,7 +18,8 @@ let screenHeight = UIScreen.main.bounds.height
 
 let textMessage = "Text message"
 let email = "Email"
-let notificationOptionTypes: NSArray = [email, textMessage]
+let voice = "Voice"
+let notificationOptionTypes: NSArray = [email, textMessage, voice]
 
 //MARK: Colors
 let drakBlueColor = UIColor.init(colorLiteralRed: 0, green: 74/255.0, blue: 128/255, alpha: 1.0)
