@@ -18,7 +18,9 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     @IBOutlet weak var addContactSuperView: UIView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
-    var contacts: [Contact] = []
+    var fromApiContacts = Array<Contact>()
+    var updatedContacts = Array<Contact>()
+    var addContact: Contact?
     var serviceProviders: [ServiceProvider] = []
     var indexOfExpandedCell: Int! = -1
     var isAddContactActive: Bool = false
@@ -57,7 +59,9 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                 
                 let contactDicts = (response as! Dictionary<String, Any>)["contactList"] as? NSArray
                 if contactDicts?.count != 0 {
-                    self.contacts = Contact.getContactFromDictionaryArray(contactDictionaries: contactDicts!)
+                    self.fromApiContacts = Contact.getContactFromDictionaryArray(contactDictionaries: contactDicts!)
+                    self.updatedContacts = self.fromApiContacts.map { $0.copy() }
+                    self.addContact = nil
                     self.isAddContactActive = false
                     self.indexOfExpandedCell = -1
                     self.tableView.reloadData()
@@ -111,12 +115,67 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
 
     }
     
+    func showSaveChangesPopupIfRequired(with indexPath: IndexPath, completionBlock: @escaping () -> Void) {
+        if indexOfExpandedCell == -1 {
+            //Opening new cell
+            completionBlock()
+        } else if indexOfExpandedCell == indexPath.row {
+            //Close same cell
+            openSaveChangesPopup(yesBlock: {
+                let cell: NotificationsTableViewCell? = self.tableView.cellForRow(at: indexPath) as? NotificationsTableViewCell
+                if cell != nil {
+                    cell?.saveChanges()
+                }
+            }, noBlock: {
+                //Reset changes done in contact
+                self.updatedContacts[indexPath.row] = self.fromApiContacts[indexPath.row].copy()
+                
+                completionBlock()
+                
+                //Reload that cell to reflect the changes
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            })
+        } else {
+            //Close old cell and open new cell
+            openSaveChangesPopup(yesBlock: {
+                let cell: NotificationsTableViewCell? = self.tableView.cellForRow(at: indexPath) as? NotificationsTableViewCell
+                if cell != nil {
+                    cell?.saveChanges()
+                }
+            }, noBlock: {
+                //Reset changes done in contact
+                self.updatedContacts[indexPath.row] = self.fromApiContacts[indexPath.row].copy()
+                
+                completionBlock()
+                
+                //Reload that cell to reflect the changes
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            })
+        }
+    }
+    
+    func openSaveChangesPopup(yesBlock: @escaping () -> Void, noBlock: @escaping () -> Void) {
+        let alertVC = UIAlertController.init(title: "You have unsaved changes", message: "Do you want to save your changes?", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let yesAction = UIAlertAction.init(title: "Yes", style: UIAlertActionStyle.default) { (alertAction) in
+            yesBlock()
+        }
+        let noAction = UIAlertAction.init(title: "No", style: UIAlertActionStyle.default) { (alertAction) in
+            noBlock()
+        }
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
     func getProviderNameFor(code: String) -> String {
         let providerCodes: NSArray = (serviceProviders as NSArray).value(forKey: "code") as! NSArray
         if providerCodes.count != 0 {
             let index: Int = providerCodes.index(of: code)
             let providerNames: NSArray = (serviceProviders as NSArray).value(forKey: "name") as! NSArray
-            return providerNames.object(at: index) as! String
+            if index != Int.max {
+                return providerNames.object(at: index) as! String
+            }
         }
         return ""
     }
@@ -154,7 +213,8 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                 cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
                 cell.updateTableView()
                 
-                self.contacts.remove(at: atIndexPath.row)
+                self.fromApiContacts.remove(at: atIndexPath.row)
+                self.updatedContacts.remove(at: atIndexPath.row)
                 self.tableView.deleteRows(at: [atIndexPath], with: UITableViewRowAnimation.top)
                 self.tableView.reloadData()
             }
@@ -172,13 +232,16 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                 cell.openOrCollapseWith(shouldExpand: false, andShouldAnimateArrow: true)
                 cell.updateTableView()
             }
+            updatedContacts[indexOfExpandedCell] = fromApiContacts[indexOfExpandedCell].copy()
             print("Cell close with index: \(indexOfExpandedCell)")
         }
+        
         if indexOfExpandedCell != indexPath.row {
             indexOfExpandedCell = indexPath.row
             print("New index: \(indexOfExpandedCell)")
             tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         } else {
+            updatedContacts[indexOfExpandedCell] = fromApiContacts[indexOfExpandedCell].copy()
             indexOfExpandedCell = -1
             print("New index -1")
         }
@@ -189,7 +252,8 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         ContactRequestManager.postEditContactAPICallWith(contact: contact, block: { (success, response, error) in
             if success {
                 Banner.showSuccessWithTitle(title: "Contact updated successfully")
-                self.contacts[ofIndexPath.row] = contact
+                self.fromApiContacts[ofIndexPath.row] = contact
+                self.updatedContacts[ofIndexPath.row] = contact
                 self.indexOfExpandedCell = -1
                 
                 //Update cell data and its UI
@@ -199,6 +263,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
                     self.tableView.beginUpdates()
                     self.tableView.endUpdates()
                     cell.setDetailsOf(contact: contact)
+                    cell.wasAnythingUpdated = false
                 }
             }
             self.stopAnimating()
@@ -252,7 +317,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return contacts.count
+            return fromApiContacts.count
         } else {
             return 1
         }
@@ -264,7 +329,10 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: notificationsTableViewCellIdentifier, for: indexPath) as! NotificationsTableViewCell
             cell.delegate = self
             cell.indexPathOfCell = indexPath
-            cell.setDetailsOf(contact: contacts[indexPath.row])
+            if indexPath.row == 9 {
+                
+            }
+            cell.setDetailsOf(contact: updatedContacts[indexPath.row])
             print("\(indexPath.row)")
             
             if indexOfExpandedCell == indexPath.row {
@@ -279,7 +347,7 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             cell.delegate = self
             cell.indexPathOfCell = indexPath
             cell.isAddContact = true
-            cell.setupForAddContact()
+            cell.setupForAddContact(contact: addContact!)
             
             cell.openOrCollapseWith(shouldExpand: true, andShouldAnimateArrow: false)
             cell.tableView = tableView
@@ -297,7 +365,15 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
             
             let index0Section1 = IndexPath.init(row: 0, section: 1)
             let cell: NotificationsTableViewCell = tableView.dequeueReusableCell(withIdentifier: addContactTableViewCellCellIdentifier, for: index0Section1) as! NotificationsTableViewCell
-            cell.setupForAddContact()
+            
+            if addContact == nil {
+                addContact = Contact()
+                addContact?.emailActive = true
+                addContact?.smsActive = false
+                addContact?.voiceActive = false
+            }
+            
+            cell.setupForAddContact(contact: addContact!)
             
             tableView.scrollToRow(at: index0Section1, at: UITableViewScrollPosition.top, animated: true)
         }

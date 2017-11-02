@@ -21,6 +21,7 @@ import UIKit
     func getCodeFor(providerName: String) -> String
     func getProviderNameFor(index: Int) -> String
     func getCodeFor(index: Int) -> String
+    func showSaveChangesPopupIfRequired(with indexPath: IndexPath, completionBlock: @escaping () -> Void)
     
     func showDeletePopupFor(contact: Contact, atIndexPath: IndexPath)
     func closeAddContact()
@@ -68,6 +69,8 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     
     var isAddContact: Bool! = false
     
+    var wasAnythingUpdated = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -84,30 +87,27 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     //MARK:- IBAction methods
     
     @IBAction private func openOrCollapse(sender: UIButton) {
-        openOrCollapseWith(shouldExpand: !isExpanded, andShouldAnimateArrow: true)
-        updateTableView()
-        delegate?.cellExpandedWith?(indexPath: indexPathOfCell)
-        tableView!.superview!.endEditing(true)
+        let allActionCode = {
+            self.openOrCollapseWith(shouldExpand: !self.isExpanded, andShouldAnimateArrow: true)
+            self.updateTableView()
+            self.delegate?.cellExpandedWith?(indexPath: self.indexPathOfCell)
+            self.tableView!.superview!.endEditing(true)
+        }
+        
+        
+        if wasAnythingUpdated {
+            //This is to ask user if they want to save their changes or not
+            delegate.showSaveChangesPopupIfRequired(with: indexPathOfCell) {
+                allActionCode()
+            }
+        } else {
+            allActionCode()
+        }
     }
     
     @IBAction private func saveButtonTapped(sender: UIButton) {
         
-        let newContact: Contact = contact.copy()
-        
-        if areEntriesValidForContact(contact: contact) {
-            newContact.firstName = firstNameTextField.text
-            newContact.lastName = lastNameTextField.text
-            newContact.email = emailTextField.text
-            newContact.mobile = cellPhoneNumberTextField.text
-            newContact.enableStatus = enableButton.isSelected
-            
-            let providerName = serviceProviderLabel.text == defaultProviderName ? "" : serviceProviderLabel.text
-            if providerName != defaultProviderName {
-                newContact.cellProvider = delegate?.getCodeFor(providerName: providerName!)
-            }
-        
-            delegate?.postEditOf(contact: newContact, ofIndexPath: indexPathOfCell)
-        }
+        saveChanges()
     }
     
     @IBAction private func deleteButtonTapped(sender: UIButton) {
@@ -120,6 +120,12 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     
     @IBAction private func enableButtonTapped(sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        contact.enableStatus = sender.isSelected
+        wasAnythingUpdated = true
+    }
+    
+    @IBAction private func typeButtonTapped(button: UIButton) {
+        delegate?.openOptionScreenForCellAt(indexPath: indexPathOfCell, currentValue: typeLabel.text! == defaultProviderName ? "" : typeLabel.text!, popupOf: 1, sender: button)
     }
     
     //MARK: Public methods
@@ -131,7 +137,11 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         emailTextField.text = "\(contact.email!)"
         cellPhoneNumberTextField.text = "\(contact.mobile!)"
         
+        if indexPathOfCell.row == 4 {
+            
+        }
         if contact.voiceActive {
+            typeLabel.text = voice
             setUIForVoice()
         } else {
             if contact.smsActive {
@@ -157,7 +167,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         if firstNameTextField.text?.characters.count == 0 {
             message = "Please enter first name"
         }
-        if !contact.smsActive {
+        if contact.emailActive {
             if emailTextField?.text?.trim().characters.count == 0 {
                 message = "Please enter email"
             } else if !(emailTextField?.text?.trim().isValidEmail())! {
@@ -184,6 +194,27 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         isExpanded = shouldExpand
     }
     
+    func saveChanges() {
+        let newContact: Contact = contact//.copy()
+        
+        if areEntriesValidForContact(contact: contact) {
+            newContact.firstName = firstNameTextField.text
+            newContact.lastName = lastNameTextField.text
+            newContact.email = emailTextField.text
+            newContact.mobile = cellPhoneNumberTextField.text
+            newContact.enableStatus = enableButton.isSelected
+            
+            setActiveStatesFor(contact: newContact)
+            
+            let providerName = serviceProviderLabel.text == defaultProviderName ? "" : serviceProviderLabel.text
+            if providerName != defaultProviderName {
+                newContact.cellProvider = delegate?.getCodeFor(providerName: providerName!)
+            }
+            
+            delegate?.postEditOf(contact: newContact, ofIndexPath: indexPathOfCell)
+        }
+    }
+    
     func updateTableView() {
         if tableView != nil {
             tableView?.beginUpdates()
@@ -203,7 +234,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         cellPhoneSuperViewHeightConstraint.constant = heightOfCellPhoneSuperView
         emailTextField.text = ""
     }
-    
+
     func setUIForVoice() {
         emailSuperViewHeightConstraint.constant = 0
         cellPhoneSuperViewHeightConstraint.constant = cellPhoneNumberTextField.frame.size.height + cellPhoneNumberTextField.frame.origin.y
@@ -228,7 +259,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         }
         
         if withAnimation {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 arrowAnimationBlock()
             })
         } else {
@@ -239,7 +270,7 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     func showHighlightEffect() {
         self.superContentView.backgroundColor = UIColor.clear
         self.superContentView.layer.backgroundColor = veryLightblueColor.cgColor
-        UIView.animate(withDuration: 0.3, animations: { 
+        UIView.animate(withDuration: 0.8, animations: {
             self.superContentView.layer.backgroundColor = UIColor.white.cgColor
         }) { (isCompleted) in
             self.superContentView.backgroundColor = UIColor.white
@@ -260,6 +291,18 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
 //        return nil
 //    }
     
+    func setActiveStatesFor(contact: Contact) {
+        if emailTextField.text?.characters.count != 0 {
+            contact.emailActive = emailTextField.text?.characters.count != 0
+            contact.smsActive = false
+            contact.voiceActive = false
+        } else {
+            contact.emailActive = false
+            contact.smsActive = serviceProviderLabel.text?.characters.count != 0 && serviceProviderLabel.text != defaultProviderName
+            contact.voiceActive = serviceProviderLabel.text?.characters.count == 0 || serviceProviderLabel.text == defaultProviderName
+        }
+    }
+    
     //MARK: Selected option delegate methods
     
     func selectedOption(index: NSInteger, sender: Any?) {
@@ -268,29 +311,69 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
             
             if index == 0 {
                 setUIForEmail()
+                if contact != nil {
+                    contact.emailActive = true
+                    contact.smsActive = false
+                    contact.voiceActive = false
+                }
             } else if index == 1 {
                 setUIForCellPhone()
+                if contact != nil {
+                    contact.emailActive = false
+                    contact.smsActive = true
+                    contact.voiceActive = false
+                }
             } else if index == 2 {
                 setUIForVoice()
+                if contact != nil {
+                    contact.emailActive = false
+                    contact.smsActive = false
+                    contact.voiceActive = true
+                }
             }
             
-            UIView.animate(withDuration: 0.3, animations: { 
+            UIView.animate(withDuration: 0.5, animations: {
                 self.layoutIfNeeded()
             })
             extensionOuterViewHeightConstraint.constant = extensionInnerView.frame.size.height
             updateTableView()
-            scrollToIndexPath(indexPath: indexPathOfCell, withAnimation: true)
+//            scrollToIndexPath(indexPath: indexPathOfCell, withAnimation: true)
         } else if sender as? UIButton == providerArrowButton {
             let providerName = delegate?.getProviderNameFor(index: index)
             serviceProviderLabel.text = providerName
+            contact.cellProvider = delegate.getCodeFor(providerName: providerName!)
         }
+        wasAnythingUpdated = true
     }
     
     //MARK:- Add Contact
     
-    func setupForAddContact() {
-        typeLabel.text = notificationOptionTypes.firstObject as? String
-        setUIForEmail()
+    func setupForAddContact(contact: Contact) {
+        self.contact = contact
+        
+        firstNameTextField.text = "\(contact.firstName ?? "")"
+        lastNameTextField.text = "\(contact.lastName ?? "")"
+        emailTextField.text = "\(contact.email ?? "")"
+        cellPhoneNumberTextField.text = "\(contact.mobile ?? "")"
+        
+        if contact.voiceActive {
+            typeLabel.text = voice
+            setUIForVoice()
+        } else {
+            if contact.smsActive {
+                typeLabel.text = textMessage
+                setUIForCellPhone()
+            } else {
+                typeLabel.text = email
+                setUIForEmail()
+            }
+        }
+        enableButton.isSelected = contact.enableStatus == true
+        
+        if contact.smsActive {
+            let providerName: String = (delegate?.getProviderNameFor(code: contact.cellProvider ?? ""))!
+            serviceProviderLabel.text = providerName.characters.count == 0 ? defaultProviderName : providerName
+        }
     }
     
     @IBAction private func cancelButtonTapped(button: UIButton) {
@@ -302,21 +385,18 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     @IBAction private func addButtonTapped(button: UIButton) {
         let newContact: Contact = Contact()
         
-        if emailTextField.text?.characters.count != 0 {
-            newContact.emailActive = emailTextField.text?.characters.count != 0
-            newContact.smsActive = false
-            newContact.voiceActive = false
-        } else {
-            newContact.emailActive = false
-            newContact.smsActive = serviceProviderLabel.text?.characters.count == 0
-            newContact.voiceActive = serviceProviderLabel.text?.characters.count != 0
-        }
+        setActiveStatesFor(contact: newContact)
         
         if areEntriesValidForContact(contact: newContact) {
             newContact.firstName = firstNameTextField.text
             newContact.lastName = lastNameTextField.text
-            newContact.email = emailTextField.text
-            newContact.mobile = cellPhoneNumberTextField.text
+            
+            if contact.emailActive {
+                newContact.email = emailTextField.text
+            } else if contact.smsActive || contact.voiceActive {
+                newContact.mobile = cellPhoneNumberTextField.text
+            }
+            
             newContact.enableStatus = enableButton.isSelected
             
             let providerName = serviceProviderLabel.text == defaultProviderName ? "" : serviceProviderLabel.text
@@ -326,10 +406,6 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
             
             delegate?.postAddOf(contact: newContact, ofIndexPath: indexPathOfCell)
         }
-    }
-    
-    @IBAction private func typeButtonTapped(button: UIButton) {
-        delegate?.openOptionScreenForCellAt(indexPath: indexPathOfCell, currentValue: typeLabel.text! == defaultProviderName ? "" : typeLabel.text!, popupOf: 1, sender: button)
     }
     
     //MARK:- Textfield delegate methods
@@ -375,6 +451,25 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
         }
         
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == firstNameTextField {
+            contact.firstName = firstNameTextField.text
+            if !isAddContact {
+                self.nameLabel.text = "\(self.contact.firstName!) \(self.contact.lastName!)"
+            }
+        } else if textField == lastNameTextField {
+            contact.lastName = lastNameTextField.text
+            if !isAddContact {
+                self.nameLabel.text = "\(self.contact.firstName!) \(self.contact.lastName!)"
+            }
+        } else if textField == emailTextField {
+            contact.email = emailTextField.text
+        } else if textField == cellPhoneNumberTextField {
+            contact.mobile = cellPhoneNumberTextField.text
+        }
+        wasAnythingUpdated = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -152,10 +152,10 @@
                                         <constraints>
                                             <constraint firstItem="gAY-Os-Vtb" firstAttribute="top" secondItem="1lE-N2-Rr3" secondAttribute="bottom" constant="5" id="6Mb-Nl-so7"/>
                                             <constraint firstItem="QL3-RW-zxT" firstAttribute="trailing" secondItem="FFa-bh-qbu" secondAttribute="trailing" constant="10" id="6eH-e7-Om8"/>
-                                            <constraint firstAttribute="bottom" secondItem="QL3-RW-zxT" secondAttribute="bottom" id="6g9-JL-zfy"/>
                                             <constraint firstItem="d7H-DL-8rw" firstAttribute="top" secondItem="QNf-N5-wT2" secondAttribute="top" constant="10" id="9hB-df-4bB"/>
                                             <constraint firstItem="QL3-RW-zxT" firstAttribute="leading" secondItem="QNf-N5-wT2" secondAttribute="leading" id="E5X-V9-z59"/>
                                             <constraint firstItem="FFa-bh-qbu" firstAttribute="leading" secondItem="gAY-Os-Vtb" secondAttribute="trailing" constant="15" id="SLm-wf-Lpr"/>
+                                            <constraint firstItem="QL3-RW-zxT" firstAttribute="bottom" secondItem="FFa-bh-qbu" secondAttribute="bottom" id="X5a-HY-Guk"/>
                                             <constraint firstAttribute="trailing" secondItem="7LA-dK-2Ok" secondAttribute="trailing" constant="15" id="XS8-Lh-hmJ"/>
                                             <constraint firstItem="7LA-dK-2Ok" firstAttribute="top" secondItem="d7H-DL-8rw" secondAttribute="bottom" constant="5" id="Z28-ZC-8f4"/>
                                             <constraint firstAttribute="trailing" secondItem="d7H-DL-8rw" secondAttribute="trailing" id="aFG-JZ-Pnb"/>
@@ -249,6 +249,21 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDown" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-So-PxC" userLabel="CountryOptions">
+                                        <rect key="frame" x="111" y="322" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="mMj-fE-Xpj"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Efx-GX-YDn" userLabel="OptionsButton">
+                                        <rect key="frame" x="15" y="316" width="126" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="v7l-H2-7Lp"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="typeButtonTappedWithButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0aZ-L2-c5l"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="URc-a5-sR6" firstAttribute="leading" secondItem="V9h-Td-aGg" secondAttribute="leading" constant="15" id="3NW-v4-T56"/>
@@ -259,18 +274,24 @@
                                     <constraint firstItem="EbC-we-i7x" firstAttribute="top" secondItem="bPl-af-76I" secondAttribute="bottom" id="CqL-lh-Ji3"/>
                                     <constraint firstItem="URc-a5-sR6" firstAttribute="top" secondItem="QNf-N5-wT2" secondAttribute="bottom" constant="15" id="Evs-TT-5lh"/>
                                     <constraint firstItem="EbC-we-i7x" firstAttribute="leading" secondItem="V9h-Td-aGg" secondAttribute="leading" constant="1" id="FOc-TL-TVi"/>
+                                    <constraint firstItem="Efx-GX-YDn" firstAttribute="centerY" secondItem="URc-a5-sR6" secondAttribute="centerY" id="HAk-mZ-pMX"/>
+                                    <constraint firstItem="DzR-So-PxC" firstAttribute="centerY" secondItem="iyn-m3-bPH" secondAttribute="centerY" id="Hqq-GG-Vln"/>
                                     <constraint firstAttribute="trailing" secondItem="EbC-we-i7x" secondAttribute="trailing" id="IZL-Ak-08d"/>
                                     <constraint firstItem="1in-aK-OOR" firstAttribute="leading" secondItem="V9h-Td-aGg" secondAttribute="leading" constant="15" id="JCZ-5L-Cuf"/>
                                     <constraint firstItem="G6q-6q-uht" firstAttribute="leading" secondItem="V9h-Td-aGg" secondAttribute="leading" constant="15" id="MlV-5L-me3"/>
                                     <constraint firstItem="9Yv-bg-Xoy" firstAttribute="leading" secondItem="V9h-Td-aGg" secondAttribute="leading" constant="15" id="Oqn-0x-LlJ"/>
                                     <constraint firstItem="1in-aK-OOR" firstAttribute="top" secondItem="9Yv-bg-Xoy" secondAttribute="bottom" constant="5" id="QEw-Ar-g65"/>
                                     <constraint firstItem="hI1-Jm-ZMM" firstAttribute="width" secondItem="FLu-5b-5yd" secondAttribute="width" id="QXJ-gh-Ldc"/>
+                                    <constraint firstItem="DzR-So-PxC" firstAttribute="leading" secondItem="iyn-m3-bPH" secondAttribute="trailing" constant="15" id="R5O-or-KXN"/>
+                                    <constraint firstItem="Efx-GX-YDn" firstAttribute="leading" secondItem="URc-a5-sR6" secondAttribute="leading" id="RR3-n3-NFg"/>
                                     <constraint firstItem="FLu-5b-5yd" firstAttribute="top" secondItem="hjA-QK-xOy" secondAttribute="bottom" constant="20" id="UFq-DY-5QA"/>
                                     <constraint firstItem="hI1-Jm-ZMM" firstAttribute="centerY" secondItem="FLu-5b-5yd" secondAttribute="centerY" id="ZlN-1h-Pcw"/>
                                     <constraint firstItem="bPl-af-76I" firstAttribute="top" secondItem="qlr-ae-WSZ" secondAttribute="bottom" constant="5" id="Zmp-t6-7F4"/>
+                                    <constraint firstItem="Efx-GX-YDn" firstAttribute="trailing" secondItem="DzR-So-PxC" secondAttribute="trailing" constant="10" id="cHH-Vv-3Fy"/>
                                     <constraint firstItem="9Yv-bg-Xoy" firstAttribute="top" secondItem="V9h-Td-aGg" secondAttribute="top" constant="15" id="dT6-Ft-NyK"/>
                                     <constraint firstItem="bPl-af-76I" firstAttribute="leading" secondItem="qlr-ae-WSZ" secondAttribute="leading" id="eEP-RI-hMF"/>
                                     <constraint firstItem="bPl-af-76I" firstAttribute="width" secondItem="1in-aK-OOR" secondAttribute="width" id="fvR-Fo-MhO"/>
+                                    <constraint firstItem="DzR-So-PxC" firstAttribute="width" secondItem="DzR-So-PxC" secondAttribute="height" id="gai-CW-bAt"/>
                                     <constraint firstItem="iyn-m3-bPH" firstAttribute="centerY" secondItem="URc-a5-sR6" secondAttribute="centerY" id="gxi-bR-tuC"/>
                                     <constraint firstItem="QNf-N5-wT2" firstAttribute="top" secondItem="EbC-we-i7x" secondAttribute="bottom" id="i6d-Xc-xYe"/>
                                     <constraint firstItem="hI1-Jm-ZMM" firstAttribute="leading" secondItem="FLu-5b-5yd" secondAttribute="trailing" constant="15" id="kls-HE-hIk"/>
@@ -336,6 +357,7 @@
                 <outlet property="providerArrowButton" destination="QL3-RW-zxT" id="9z0-Ic-A93"/>
                 <outlet property="serviceProviderLabel" destination="gAY-Os-Vtb" id="nC4-kJ-L6A"/>
                 <outlet property="superContentView" destination="8xP-rg-ali" id="3fM-bl-E1r"/>
+                <outlet property="typeArrowButton" destination="Efx-GX-YDn" id="uTW-Sz-GGs"/>
                 <outlet property="typeLabel" destination="iyn-m3-bPH" id="0YA-bv-YCY"/>
             </connections>
             <point key="canvasLocation" x="33" y="289"/>
