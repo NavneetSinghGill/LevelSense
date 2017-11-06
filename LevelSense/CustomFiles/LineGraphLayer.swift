@@ -37,13 +37,13 @@ import UIKit
      indexes are the indexes of points selected in all the graphs. If the any point is in range then the index is appended in the indexes else Int.max is added to it, therefore mainting the size of indexes array equal to number of layer which eventually helps in mapping indexes to layer.
      inValues is a 2D array containing all the values of all the child layers or say graphs
      */
-    func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues:[[CGPoint]])
+    func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues:[[CGPoint]], withHorizontalValues:[CGFloat]?, withVerticalValues:[CGFloat]?)
     
     /*
      It asks for any value which user wants to show as x and y aixs coodrinates
      */
-    func getValueToShowOnXaxisFor(value: Any!) -> Any!
-    func getValueToShowOnYaxisFor(value: Any!) -> Any!
+    func getValueToShowOnXaxisFor(value: Any!, withHorizontalValues:[CGFloat]?) -> Any!
+    func getValueToShowOnYaxisFor(value: Any!, withVerticalValues:[CGFloat]?) -> Any!
     
     /*
      Whenever the height of layer is updated then this delegate can notify sender and therefore parent view height can be changed as well.
@@ -352,7 +352,7 @@ class LineGraphLayer: CAShapeLayer {
             values.append(childLayer.values)
         }
         print("location: \(location)... mirror: \(mirrorLocation)..... selectedIndex: \(indexesSelected) size: \(self.frame.size)")
-        self.lineGraphDelegate?.lineGraphTapped(atLocation: mirrorLocation, withIndexs: indexesSelected, inValues: values)
+        self.lineGraphDelegate?.lineGraphTapped(atLocation: mirrorLocation, withIndexs: indexesSelected, inValues: values, withHorizontalValues:xValues, withVerticalValues:yValues)
     }
     
     func mirrorXOf(point: CGPoint, inFrameSize size: CGSize) -> CGPoint {
@@ -523,7 +523,7 @@ class VertialLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            var text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])"
+            var text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i], withVerticalValues: values! as? [CGFloat]) ?? values![i])"
             if Double(text) != nil {
                 //Reduce to 2 decimal places
                 text = CGFloat(Double(text)!).rounded(toPlaces: 2)
@@ -605,7 +605,7 @@ class HorizontalLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i]) as! String 
+            let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i], withHorizontalValues: values! as? [CGFloat]) as! String
             let textLayer = getTextLayerWith(text: "\(text)")
             let height: CGFloat = 30.0
             textLayer.frame = CGRect(x: xValue - self.oneValueDistance/2, y: lineStartY-height-2, width: self.oneValueDistance, height: height)

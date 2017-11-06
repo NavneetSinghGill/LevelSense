@@ -206,21 +206,38 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         return false
     }
     
-    func showPopupWith(value: CGFloat, andTimeStamp timeStamp: CGFloat) {
+    func showPopupWith(value: CGFloat, andTimeStamp timeStamp: CGFloat, withHorizontalValues:[CGFloat]?, withVerticalValues:[CGFloat]?) {
         popupTrailingConstraint.constant = 5
         UIView.animate(withDuration: 0.5, animations: { 
             self.view.layoutIfNeeded()
         }) { (isComplete) in
             
         }
-        var valueText: String
-        if value == 1 {
-            valueText = "ON"
-        } else if value == 0 {
-            valueText = "OFF"
+        
+        var valueText: String = ""
+        
+        if withVerticalValues != nil &&
+            withVerticalValues?.count == 2 &&
+            withVerticalValues![0] == 0 &&
+            withVerticalValues![1] == 1 {
+                
+            if value == 0 {
+                valueText = "OFF"
+            } else if value == 1 {
+                valueText = "ON"
+            } else {
+                valueText = "\(value.rounded(toPlaces: 2))"
+            }
+        } else if withVerticalValues != nil &&
+            withVerticalValues!.first == 0 &&
+            withVerticalValues!.last == 100 {
+            
+            valueText = "\(Int(value))%"
         } else {
             valueText = "\(value.rounded(toPlaces: 2))"
         }
+        
+        
         valueLabel.text = valueText
         timeLabel.text = getDateFor(timeStamp: timeStamp)
         isPopupOpen = true
@@ -311,13 +328,14 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     
     //MARK: Line graph layer delegate
     
-    func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues: [[CGPoint]]) {
+    func lineGraphTapped(atLocation point: CGPoint, withIndexs indexes: [Int], inValues:[[CGPoint]], withHorizontalValues:[CGFloat]?, withVerticalValues:[CGFloat]?) {
+        
         var someValueIsSelected: Bool = false
         for i in 0..<inValues.count {
             let values = inValues[i]
             if indexes[i] != Int.max && indexes[i] < values.count {
                 print("\(values[indexes[i]])")
-                self.showPopupWith(value: values[indexes[i]].y, andTimeStamp: values[indexes[i]].x)
+                self.showPopupWith(value: values[indexes[i]].y, andTimeStamp: values[indexes[i]].x, withHorizontalValues: withHorizontalValues, withVerticalValues: withVerticalValues)
                 someValueIsSelected = true
             }
         }
@@ -327,15 +345,26 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }
     }
     
-    func getValueToShowOnXaxisFor(value: Any!) -> Any! {
+    func getValueToShowOnXaxisFor(value: Any!, withHorizontalValues: [CGFloat]?) -> Any! {
         return getDateFor(timeStamp: value as! CGFloat)
     }
     
-    func getValueToShowOnYaxisFor(value: Any!) -> Any! {
-        if value as? Float == 0.0 {
-            return "OFF"
-        } else if value as? Float == 1.0 {
-            return "ON"
+    func getValueToShowOnYaxisFor(value: Any!, withVerticalValues: [CGFloat]?) -> Any! {
+        if withVerticalValues != nil &&
+            withVerticalValues?.count == 2 &&
+            withVerticalValues![0] == 0 &&
+            withVerticalValues![1] == 1 {
+            
+            if value as? Float == 0.0 {
+                return "OFF"
+            } else if value as? Float == 1.0 {
+                return "ON"
+            }
+        } else if withVerticalValues != nil &&
+            withVerticalValues!.first == 0 &&
+            withVerticalValues!.last == 100 {
+            
+            return "\((value as! Int))%"
         }
         return value!
     }
