@@ -18,10 +18,10 @@ class LoginViewController: LSViewController,UITextFieldDelegate {
 
 //        emailTextField?.text = "patildipakr@gmail.com"
 //        passwordTextField?.text = "Welcome123"
-        emailTextField?.text = "customerservice@sumpalarm.com"
-        passwordTextField?.text = "got3cats"
-        emailTextField?.text = "nishuk0007@gmail.com"
-        passwordTextField?.text = "123456"
+//        emailTextField?.text = "customerservice@sumpalarm.com"
+//        passwordTextField?.text = "got3cats"
+//        emailTextField?.text = "nishuk0007@gmail.com"
+//        passwordTextField?.text = "123456"
         emailTextField?.becomeFirstResponder()
     }
     

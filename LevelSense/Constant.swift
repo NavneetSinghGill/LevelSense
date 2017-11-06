@@ -44,7 +44,8 @@ let kSessionKey = "sessionKey"
 
 //MARK: Api URLs
 let kSuperBaseUrl = "https://dash.level-sense.com"
-let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/"
+//let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/app_dev.php/api/" //Staging
+let kBaseUrl = "\(kSuperBaseUrl)/Level-Sense-API/web/api/" //Production
 let v1 = "v1/"
 let v2 = "v2/"
 
