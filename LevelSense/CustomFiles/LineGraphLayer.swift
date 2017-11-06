@@ -485,10 +485,12 @@ class VertialLine: CustomShapeLayer {
         let layer = VertialLine()
         
         if values?.count != 0 {
+            let aspectRatio: CGFloat = CGFloat(lineGraphLayer.yValues.count - 1) / CGFloat(lineGraphLayer.xValues.count - 1)
+            
             layer.lineStartX = origin.x
             layer.lineEndX = origin.x
             layer.lineStartY = origin.y
-            layer.lineEndY = origin.y + (size.width - origin.x - lineGraphLayer.horizontalPadding) // |----layer----|
+            layer.lineEndY = origin.y + (size.width - origin.x - lineGraphLayer.horizontalPadding) * (aspectRatio>1 ? 1: aspectRatio)  // |----layer----|
             
             let lineDistance = (layer.lineEndY - layer.lineStartY) * lineGraphLayer.percentOfLineWhichShowsData
             let oneValueDistance = lineDistance/CGFloat((values?.count)!-1 >= 1 ? (values?.count)!-1: 1)
@@ -521,9 +523,12 @@ class VertialLine: CustomShapeLayer {
                 endPoint = dotPoint
             }
             
-            let text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])"
-            let decimalPlaces2 : String = CGFloat(Double(text)!).rounded(toPlaces: 2)
-            let textLayer = getTextLayerWith(text: decimalPlaces2)
+            var text: String = "\(lineGraphDelegate?.getValueToShowOnYaxisFor(value: values![i]) ?? values![i])"
+            if Double(text) != nil {
+                //Reduce to 2 decimal places
+                text = CGFloat(Double(text)!).rounded(toPlaces: 2)
+            }
+            let textLayer = getTextLayerWith(text: text)
             textLayer.frame = CGRect(x: 0, y: yValue-10, width: lineStartX-3, height: 30)
             textLayer.alignmentMode = "right"
             addSublayer(textLayer)
@@ -561,8 +566,10 @@ class HorizontalLine: CustomShapeLayer {
         
         if values?.count != 0 {
             
+            let aspectRatio: CGFloat = CGFloat(lineGraphLayer.xValues.count - 1) / CGFloat(lineGraphLayer.yValues.count - 1)
+            
             layer.lineStartX = origin.x
-            layer.lineEndX = size.width - lineGraphLayer.horizontalPadding
+            layer.lineEndX = (size.width - lineGraphLayer.horizontalPadding) * (aspectRatio>1 ? 1: aspectRatio)
             layer.lineStartY = origin.y
             layer.lineEndY = origin.y
             

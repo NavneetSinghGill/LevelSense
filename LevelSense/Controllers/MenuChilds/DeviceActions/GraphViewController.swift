@@ -145,26 +145,17 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         for entry in (data as! Array<Dictionary<String, Any>>) {
             values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
         }
-//        values.append(CGPoint(x: CGFloat(1505977680), y: CGFloat(3)))
-//        values.append(CGPoint(x: CGFloat(1507014480), y: CGFloat(3.5)))
-//        values.append(CGPoint(x: CGFloat(1507025480), y: CGFloat(3.8)))
-//        values.append(CGPoint(x: CGFloat(1507044480), y: CGFloat(4.4)))
-//        values.append(CGPoint(x: CGFloat(1508569680), y: CGFloat(5)))
         if deviceData?["minTimestamp"] != nil {
             xMin = (deviceData?["minTimestamp"]) as? CGFloat
-//            xMin = CGFloat(1505977680)
         }
         if deviceData?["maxTimestamp"] != nil {
             xMax = (deviceData?["maxTimestamp"]) as? CGFloat
-//            xMax = CGFloat(1508569680)
         }
         if deviceData?["minValue"] != nil {
             yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
-//            yMin = CGFloat(3)
         }
         if deviceData?["maxValue"] != nil {
             yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
-//            yMax = CGFloat(5)
         }
         
         
@@ -181,18 +172,27 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 lineGraphLayer?.yMax = yMax
                 
                 //Number of points to be shown on the graph on axis
-                let pointsCountToPlot: Int = 5
+                var pointsCountToPlotX: Int = 5
+                var pointsCountToPlotY: Int = 5
+                
+                if xMax == 1 && xMin == 0 {
+                    pointsCountToPlotX = 2
+                }
+                
+                if yMax == 1 && yMin == 0 {
+                    pointsCountToPlotY = 2
+                }
                 
                 var xValues : [CGFloat] = [CGFloat]()
                 
-                let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlot-1)
-                for i in 0..<pointsCountToPlot {
+                let xMaxMinDiff = (xMax - xMin)/CGFloat(pointsCountToPlotX - 1)
+                for i in 0..<pointsCountToPlotX {
                     xValues.append(xMin + xMaxMinDiff * CGFloat(i))
                 }
                 
                 var yValues : [CGFloat] = [CGFloat]()
-                let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlot-1)
-                for i in 0..<pointsCountToPlot {
+                let yMaxMinDiff = (yMax - yMin)/CGFloat(pointsCountToPlotY - 1)
+                for i in 0..<pointsCountToPlotY {
                     yValues.append(yMin + yMaxMinDiff * CGFloat(i))
                 }
                 lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: nil, yAxisName: nil)
@@ -213,7 +213,15 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }) { (isComplete) in
             
         }
-        valueLabel.text = "\(value.rounded(toPlaces: 2))"
+        var valueText: String
+        if value == 1 {
+            valueText = "ON"
+        } else if value == 0 {
+            valueText = "OFF"
+        } else {
+            valueText = "\(value.rounded(toPlaces: 2))"
+        }
+        valueLabel.text = valueText
         timeLabel.text = getDateFor(timeStamp: timeStamp)
         isPopupOpen = true
     }
@@ -324,6 +332,11 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     }
     
     func getValueToShowOnYaxisFor(value: Any!) -> Any! {
+        if value as? Float == 0.0 {
+            return "OFF"
+        } else if value as? Float == 1.0 {
+            return "ON"
+        }
         return value!
     }
     
