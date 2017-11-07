@@ -365,6 +365,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             withVerticalValues!.last == 100 {
             
             return "\((value as! Int))%"
+        } else if value as? CGFloat != nil {
+            return (value as! CGFloat).rounded(toPlaces: 1)
         }
         return value!
     }

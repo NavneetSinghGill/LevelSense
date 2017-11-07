@@ -30,31 +30,31 @@ class AlarmLogTableViewCell: UITableViewCell {
     }
     
     func setUIFor(deviceLog: DeviceLog) {
-        if deviceLog.event?.characters.count != 0 {
+        if deviceLog.event != nil && deviceLog.event?.characters.count != 0 {
             eventLabel.text = deviceLog.event
         } else {
             eventLabel.text = defaultValue
         }
         
-        if deviceLog.eventTime?.characters.count != 0 {
+        if deviceLog.eventTime != nil && deviceLog.eventTime?.characters.count != 0 {
             eventTimeLabel.text = deviceLog.eventTime
         } else {
             eventTimeLabel.text = defaultValue
         }
         
-        if deviceLog.logType?.characters.count != 0 {
+        if deviceLog.logType != nil && deviceLog.logType?.characters.count != 0{
             logTypeLabel.text = deviceLog.logType
         } else {
             logTypeLabel.text = defaultValue
         }
         
-        if deviceLog.message?.characters.count != 0 {
+        if deviceLog.message != nil && deviceLog.message?.characters.count != 0 {
             messageLabel.text = deviceLog.message
         } else {
             messageLabel.text = defaultValue
         }
         
-        if deviceLog.to?.characters.count != 0 {
+        if deviceLog.to != nil && deviceLog.to?.characters.count != 0 {
             toLabel.text = deviceLog.to
         } else {
             toLabel.text = defaultValue

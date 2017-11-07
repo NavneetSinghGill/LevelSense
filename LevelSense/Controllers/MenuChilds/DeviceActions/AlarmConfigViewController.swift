@@ -45,6 +45,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
     @IBOutlet weak var incomingPowerLabel: UILabel!
     @IBOutlet weak var leakSensorLabel: UILabel!
     @IBOutlet weak var floatSwitchLabel: UILabel!
+    @IBOutlet weak var calibratedLabel: UILabel!
     
     @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -72,6 +73,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         scrollView.addGestureRecognizer(tap)
         
         alarmConfigOnly = alarmConfigAllData?["sensorLimit"] as! Array<Dictionary<String,Any>>
+        self.calibratedLabel.text = (alarmConfigAllData["sensorLimitMeta"] as! Dictionary<String, AnyObject>)["cap_sense"]! as? String
         updateUIWithConfig()
     }
     

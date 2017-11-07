@@ -426,8 +426,8 @@
                                                     <constraint firstItem="ou4-OJ-bQr" firstAttribute="centerY" secondItem="Pf9-ni-hKF" secondAttribute="centerY" id="qib-yB-65r"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level Sensor Calibrated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="by5-gc-6WQ">
-                                                <rect key="frame" x="101.5" y="39" width="171" height="19"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level Sensor Calibrated" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="by5-gc-6WQ">
+                                                <rect key="frame" x="70" y="39" width="234" height="19"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1788,9 +1788,9 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="wfe-2R-yUD" secondAttribute="trailing" id="0jy-Mr-e5C"/>
                                             <constraint firstAttribute="bottom" secondItem="lv7-iH-Ufa" secondAttribute="bottom" constant="20" id="2dY-hL-5Fs"/>
-                                            <constraint firstItem="by5-gc-6WQ" firstAttribute="centerX" secondItem="CuW-hj-1St" secondAttribute="centerX" id="4Bq-7q-uZA"/>
                                             <constraint firstAttribute="trailing" secondItem="41T-Mw-Boy" secondAttribute="trailing" id="4gT-NW-YBK"/>
                                             <constraint firstItem="by5-gc-6WQ" firstAttribute="top" secondItem="6m9-8Z-7DW" secondAttribute="bottom" constant="5" id="7Ft-yF-wzS"/>
+                                            <constraint firstItem="by5-gc-6WQ" firstAttribute="leading" secondItem="CuW-hj-1St" secondAttribute="leading" constant="70" id="8r3-xr-rKx"/>
                                             <constraint firstAttribute="trailing" secondItem="siR-7U-daK" secondAttribute="trailing" id="9UF-EJ-Hpp"/>
                                             <constraint firstItem="N0U-s2-eMY" firstAttribute="leading" secondItem="CuW-hj-1St" secondAttribute="leading" id="AW0-9K-aCk"/>
                                             <constraint firstItem="6m9-8Z-7DW" firstAttribute="centerX" secondItem="CuW-hj-1St" secondAttribute="centerX" id="EVp-vQ-zTg"/>
@@ -1801,6 +1801,7 @@
                                             <constraint firstItem="N0U-s2-eMY" firstAttribute="top" secondItem="by5-gc-6WQ" secondAttribute="bottom" constant="10" id="bYc-Ym-Cch"/>
                                             <constraint firstAttribute="trailing" secondItem="lv7-iH-Ufa" secondAttribute="trailing" constant="30" id="ceJ-BZ-RVv"/>
                                             <constraint firstItem="6m9-8Z-7DW" firstAttribute="top" secondItem="CuW-hj-1St" secondAttribute="top" constant="15" id="etX-eJ-cM9"/>
+                                            <constraint firstAttribute="trailing" secondItem="by5-gc-6WQ" secondAttribute="trailing" constant="70" id="lnm-7Q-4yG"/>
                                             <constraint firstItem="41T-Mw-Boy" firstAttribute="leading" secondItem="CuW-hj-1St" secondAttribute="leading" id="mLZ-XM-9CN"/>
                                             <constraint firstItem="siR-7U-daK" firstAttribute="top" secondItem="N0U-s2-eMY" secondAttribute="bottom" constant="10" id="myo-L6-xhY"/>
                                             <constraint firstAttribute="trailing" secondItem="N0U-s2-eMY" secondAttribute="trailing" id="mzS-nZ-YzR"/>
@@ -1832,6 +1833,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="calibratedLabel" destination="by5-gc-6WQ" id="Qkt-X4-8a5"/>
                         <outlet property="floatSwitchButton" destination="eX8-da-glg" id="Re3-Pm-Ala"/>
                         <outlet property="floatSwitchLabel" destination="KvI-aa-typ" id="l2k-Nh-xAL"/>
                         <outlet property="floatSwitchNameButton" destination="hLc-Sp-jR0" id="aMa-DQ-fV8"/>
