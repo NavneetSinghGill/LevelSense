@@ -66,5 +66,16 @@ class ContactRequestManager: NSObject {
         }
         
     }
+    static func postSendTestAPICallWith(contact: Contact, block:@escaping requestCompletionBlock)
+    {
+        if appDelegate.isNetworkAvailable {
+            ContactInterface().postSendTestWith(request: ContactRequest().createSendTestRequestWith(contact: contact), withCompletionBlock: block)
+            
+        } else{
+            Banner.showSuccessWithTitle(title: kNoNetwork)
+            block(false, kNoNetwork, nil)
+        }
+        
+    }
     
 }

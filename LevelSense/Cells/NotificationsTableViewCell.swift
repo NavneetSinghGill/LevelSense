@@ -14,6 +14,7 @@ import UIKit
     
     func postEditOf(contact: Contact, ofIndexPath: IndexPath)
     func postAddOf(contact: Contact, ofIndexPath: IndexPath)
+    func postSendTestFor(contact: Contact, ofIndexPath: IndexPath)
     
     //The array of service providers is in notification controller only and not in the cells so to fetch the data from that array these methods are used
     func openOptionScreenForCellAt(indexPath: IndexPath, currentValue: String, popupOf: Int, sender: Any?) // 0 for service provider and 1 for type
@@ -126,6 +127,17 @@ class NotificationsTableViewCell: UITableViewCell, SelectedOptionProtocol, UITex
     
     @IBAction private func typeButtonTapped(button: UIButton) {
         delegate?.openOptionScreenForCellAt(indexPath: indexPathOfCell, currentValue: typeLabel.text! == defaultProviderName ? "" : typeLabel.text!, popupOf: 1, sender: button)
+    }
+    
+    @IBAction private func sendTestButtonTapped() {
+        let newContact = contact.copy(with: nil)
+        if typeLabel.text == "Email" {
+            newContact.mobile = ""
+            newContact.cellProvider = ""
+        } else {
+            newContact.email = ""
+        }
+        delegate.postSendTestFor(contact: contact, ofIndexPath: indexPathOfCell)
     }
     
     //MARK: Public methods

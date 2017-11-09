@@ -76,6 +76,19 @@ class ContactInterface: Interface {
         })
     }
     
+    func postSendTestWith(request:Request, withCompletionBlock block:@escaping requestCompletionBlock)
+    {
+        self.interfaceBlock = block
+        RealAPI().performPostAPICallWith(request: request, completionBlock: { success, response, error in
+            NSLog("\n \n Send test response: \(String(describing: response))")
+            if success {
+                self.parseGeneralReponse(response: response as! Dictionary<String, Any>)
+            } else {
+                block(success, response, error)
+            }
+        })
+    }
+    
     //MARK:- Parsing methods
     
     func parseGeneralReponse(response : Dictionary<String, Any>) {

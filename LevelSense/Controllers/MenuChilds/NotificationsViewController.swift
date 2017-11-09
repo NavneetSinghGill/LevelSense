@@ -284,6 +284,16 @@ class NotificationsViewController: LSViewController, UITableViewDataSource, UITa
         })
     }
     
+    func postSendTestFor(contact: Contact, ofIndexPath: IndexPath) {
+        startAnimating()
+        ContactRequestManager.postSendTestAPICallWith(contact: contact) { (success, response, error) in
+            if success {
+                Banner.showSuccessWithTitle(title: "Test sent successfully")
+            }
+            self.stopAnimating()
+        }
+    }
+    
     func refreshTableViewCellAt(indexPath: IndexPath) {
         tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
     }

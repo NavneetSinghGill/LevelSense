@@ -43,4 +43,17 @@ class ContactRequest: Request {
         return self
     }
     
+    
+    func createSendTestRequestWith(contact: Contact) -> ContactRequest {
+        if contact.email.characters.count != 0 {
+            parameters["email"] = contact.email
+            self.urlPath = kTestMailApiUrlSuffix
+        } else {
+            parameters["mobile"] = contact.mobile
+            self.urlPath = kTestSmsApiUrlSuffix
+        }
+
+        return self
+    }
+    
 }
