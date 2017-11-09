@@ -382,11 +382,11 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newLeakSensorDict["sensorDisplayName"] = (self.leakSensorNameButton.title(for: .normal))!
             
             if ((leakSensorOptionsLabel.text?.range(of: "open")) != nil) {
-                newLeakSensorDict["lcl"] = 700
-                newLeakSensorDict["ucl"] = 65535
-            } else {
-                newLeakSensorDict["lcl"] = 65535
                 newLeakSensorDict["ucl"] = 700
+                newLeakSensorDict["lcl"] = 65535
+            } else {
+                newLeakSensorDict["ucl"] = 65535
+                newLeakSensorDict["lcl"] = 700
             }
             
             alarmConfigs.append(newLeakSensorDict)
@@ -405,11 +405,11 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
             newFloatSwitchDict["sensorDisplayName"] = (self.floatSwitchNameButton.title(for: .normal))!
             
             if ((floatSwitchOptionsLabel.text?.range(of: "open")) != nil) {
-                newFloatSwitchDict["lcl"] = 700
-                newFloatSwitchDict["ucl"] = 65535
-            } else {
-                newFloatSwitchDict["lcl"] = 65535
                 newFloatSwitchDict["ucl"] = 700
+                newFloatSwitchDict["lcl"] = 65535
+            } else {
+                newFloatSwitchDict["ucl"] = 65535
+                newFloatSwitchDict["lcl"] = 700
             }
             
             alarmConfigs.append(newFloatSwitchDict)
@@ -522,7 +522,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         self.leakSensorNameButton.setTitle((dict["sensorDisplayName"] as? String ?? "Leak Sensor"), for: .normal)
         setCheckBoxesWith(dict: dict, andBaseTag: leakSensorCheckBoxesBaseTag)
         
-        if dict["lcl"] as? Int == 700 && dict["ucl"] as? Int == 65535 {
+        if dict["lcl"] as? Int == 65535 && dict["ucl"] as? Int == 700 {
             
             if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
                 
@@ -553,7 +553,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         self.floatSwitchNameButton.setTitle((dict["sensorDisplayName"] as? String ?? "Float Switch"), for: .normal)
         setCheckBoxesWith(dict: dict, andBaseTag: floatSwitchCheckBoxesBaseTag)
 
-        if dict["lcl"] as? Int == 700 && dict["ucl"] as? Int == 65535 {
+        if dict["lcl"] as? Int == 65535 && dict["ucl"] as? Int == 700 {
             
             if let input: Array<Dictionary<String, Any>> = (alarmConfigAllData["sensorLimitMeta"] as? Dictionary<String,Any>)?["input1"] as? Array<Dictionary<String, Any>> {
                 

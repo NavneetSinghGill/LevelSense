@@ -25,6 +25,9 @@ class DeviceDetailViewController: LSViewController, SelectedOptionProtocol {
     @IBOutlet weak var reportButton: UIButton!
     
     @IBOutlet weak var stateOfSirenLabel: UILabel!
+    @IBOutlet weak var stateOfRelayLabel: UILabel!
+    @IBOutlet weak var wirelessSignalStrengthNumberLabel: UILabel!
+    @IBOutlet weak var wirelessSignalStrengthRangeLabel: UILabel!
     
     var deviceDetail: Dictionary<String,Any>!
     var deviceConfig: Array<Dictionary<String, Any>>!
@@ -150,6 +153,35 @@ class DeviceDetailViewController: LSViewController, SelectedOptionProtocol {
             if let sirenState = deviceDetail["sirenState"] as? Bool {
                 self.stateOfSirenLabel.text = sirenState ? "On" : "Off"
             }
+            
+            if let relayState = deviceDetail["relayState"] as? Bool {
+                self.stateOfRelayLabel.text = relayState ? "On" : "Off"
+            }
+            
+            if let deviceData = deviceDetail["deviceData"] as? Array<AnyObject> {
+                for device in deviceData {
+                    if let validDevice = (device as? Dictionary<String, AnyObject>) {
+                        if (validDevice["sensorId"] as? String) == "11" { //RSSI id is 11
+                            self.wirelessSignalStrengthNumberLabel.text = validDevice["value"] as? String
+                            self.wirelessSignalStrengthRangeLabel.text = self.getSignalStrengthFor(signalValue: Float(validDevice["value"] as! String)!)
+                            break
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func getSignalStrengthFor(signalValue: Float) -> String {
+        
+        if signalValue >= Float(-50) {
+            return "(Excellent)"
+        } else if Float(-50) >= signalValue && signalValue > Float(-60) {
+            return "(Good)"
+        } else if Float(-60) >= signalValue && signalValue > Float(-70) {
+            return "(Fair)"
+        } else {
+            return "(Poor)"
         }
     }
     
