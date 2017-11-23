@@ -46,6 +46,10 @@
 		53A2A9511F765C2D0058767A /* AlarmLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A2A9501F765C2D0058767A /* AlarmLogViewController.swift */; };
 		53A2A9541F76675B0058767A /* AlarmLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A2A9521F76675B0058767A /* AlarmLogTableViewCell.swift */; };
 		53A2A9551F76675B0058767A /* AlarmLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */; };
+		53B2750E1FC6AA9800823A1D /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2750D1FC6AA9800823A1D /* ProductsViewController.swift */; };
+		53B275111FC6ADE300823A1D /* ProductsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2750F1FC6ADE300823A1D /* ProductsTableViewCell.swift */; };
+		53B275121FC6ADE300823A1D /* ProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B275101FC6ADE300823A1D /* ProductsTableViewCell.xib */; };
+		53B275141FC6B12D00823A1D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B275131FC6B12D00823A1D /* Product.swift */; };
 		53BC17CE1F5D484A00E78F7D /* UIBezierPath+Interpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */; };
 		53BC17D11F5D48B900E78F7D /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D01F5D48B900E78F7D /* CGPointExtension.m */; };
 		53BC17D31F5D555700E78F7D /* LineGraphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D21F5D555700E78F7D /* LineGraphLayer.swift */; };
@@ -108,6 +112,10 @@
 		53A2A9501F765C2D0058767A /* AlarmLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmLogViewController.swift; sourceTree = "<group>"; };
 		53A2A9521F76675B0058767A /* AlarmLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmLogTableViewCell.swift; sourceTree = "<group>"; };
 		53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmLogTableViewCell.xib; sourceTree = "<group>"; };
+		53B2750D1FC6AA9800823A1D /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
+		53B2750F1FC6ADE300823A1D /* ProductsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsTableViewCell.swift; sourceTree = "<group>"; };
+		53B275101FC6ADE300823A1D /* ProductsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductsTableViewCell.xib; sourceTree = "<group>"; };
+		53B275131FC6B12D00823A1D /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		53BC17CC1F5D484A00E78F7D /* UIBezierPath+Interpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Interpolation.h"; sourceTree = "<group>"; };
 		53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Interpolation.m"; sourceTree = "<group>"; };
 		53BC17CF1F5D48B900E78F7D /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
@@ -202,6 +210,8 @@
 				535793381F56AF5100F28DC5 /* AddContactTableViewCell.xib */,
 				53A2A9521F76675B0058767A /* AlarmLogTableViewCell.swift */,
 				53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */,
+				53B2750F1FC6ADE300823A1D /* ProductsTableViewCell.swift */,
+				53B275101FC6ADE300823A1D /* ProductsTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -242,6 +252,7 @@
 				5397E7651F4D82710060F3C7 /* ClaimDeviceViewController.swift */,
 				5397E76B1F4D8EB70060F3C7 /* NotificationsViewController.swift */,
 				5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */,
+				53B2750D1FC6AA9800823A1D /* ProductsViewController.swift */,
 			);
 			path = MenuChilds;
 			sourceTree = "<group>";
@@ -337,6 +348,7 @@
 				539DEDD91F542AD700662521 /* Contact.swift */,
 				538AA73D1F55A9C6004559EC /* ServiceProvider.swift */,
 				53A2A94E1F76531E0058767A /* DeviceLog.swift */,
+				53B275131FC6B12D00823A1D /* Product.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -405,6 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */,
+				53B275121FC6ADE300823A1D /* ProductsTableViewCell.xib in Resources */,
 				F19DAE691F3DB03D007F14FF /* Assets.xcassets in Resources */,
 				5357933A1F56AF5100F28DC5 /* AddContactTableViewCell.xib in Resources */,
 				539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */,
@@ -487,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A6D2AE71F46FDDD00C98631 /* LoginViewController.swift in Sources */,
+				53B275111FC6ADE300823A1D /* ProductsTableViewCell.swift in Sources */,
 				539DEDD81F542A5F00662521 /* ContactRequestManager.swift in Sources */,
 				2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */,
 				539671621F6BC0B500892132 /* DeviceDetailViewController.swift in Sources */,
@@ -510,6 +524,7 @@
 				F19DAE7F1F3DD1F4007F14FF /* LoginInterface.swift in Sources */,
 				538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */,
 				F19DAE7D1F3DD1C3007F14FF /* Request.swift in Sources */,
+				53B2750E1FC6AA9800823A1D /* ProductsViewController.swift in Sources */,
 				53A0AA1E1F5FDA7E00570A6A /* GraphViewController.swift in Sources */,
 				F19DAE811F3DD316007F14FF /* Constant.swift in Sources */,
 				2A6D2AF71F47080500C98631 /* SWRevealViewController.m in Sources */,
@@ -530,6 +545,7 @@
 				2A6D2AEC1F47014700C98631 /* LSViewController.swift in Sources */,
 				530D61751F4C6DB300AB583F /* Device.swift in Sources */,
 				535522B91F4EEB1100D0AE05 /* OptionSelectionViewController.swift in Sources */,
+				53B275141FC6B12D00823A1D /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

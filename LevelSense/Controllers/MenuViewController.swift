@@ -27,8 +27,8 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         let nib = UINib(nibName: "MenuTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MenuTableViewCell")
         
-        optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Logout"]
-        optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","logout"]
+        optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Products","Logout"]
+        optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","products","logout"]
         
         refreshUser()
         
@@ -97,6 +97,8 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         case 3:
             screenToShow = storyboard?.instantiateViewController(withIdentifier: "PersonalInfoViewController")
         case 4:
+            screenToShow = storyboard?.instantiateViewController(withIdentifier: "ProductsViewController")
+        case 5:
             screenToShow = nil
             showAlertForLogout()
         default:
