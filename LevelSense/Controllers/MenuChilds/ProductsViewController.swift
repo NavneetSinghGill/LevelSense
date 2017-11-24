@@ -26,15 +26,19 @@ class ProductsViewController: LSViewController, UITableViewDataSource, UITableVi
         
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Refresh Products")
-        refreshControl.addTarget(self, action: #selector(MyDevicesViewController.getDevices), for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(ProductsViewController.getProducts), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 60
         
+        getProducts()
+        
         let pr = Product()
         pr.name = "asd"
-        pr.price = "$10"
+        pr.price = "10"
+        pr.currency = "$"
+        pr.desc = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum \n \n Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum"
         products.append(pr)
         tableView.reloadData()
     }
@@ -53,6 +57,22 @@ class ProductsViewController: LSViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
+    //MARK:- TableView Delegate
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        openProductDetailsWith(product: self.products[indexPath.row])
+    }
+    
+    //MARK:- Private methods
+    
+    func openProductDetailsWith(product: Product) {
+        let productDetailViewController : ProductDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailViewController") as! ProductDetailViewController
+        productDetailViewController.product = product
+        self.navigationController?.pushViewController(productDetailViewController, animated: true)
+    }
+    
+    func getProducts() {
+        refreshControl.endRefreshing()
+    }
 
 }

@@ -22,6 +22,7 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     
     var menuBarButton: UIBarButtonItem!
     var backBarButton: UIBarButtonItem!
+    var cartBarButton: UIBarButtonItem!
     var navigationTitleLabel: UILabel!
 
     override func viewDidLoad() {
@@ -61,6 +62,13 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         if backBarButton == nil {
             backBarButton = UIBarButtonItem(customView: backButton())
             self.navigationItem.leftBarButtonItem = backBarButton!
+        }
+    }
+    
+    func addCartButton() {
+        if cartBarButton == nil {
+            cartBarButton = UIBarButtonItem(customView: cartButton())
+            self.navigationItem.rightBarButtonItem = cartBarButton!
         }
     }
     
@@ -110,8 +118,29 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     private func backButton() -> UIButton {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         button.backgroundColor = .clear
-        button.setImage(UIImage(named: "backIcon"), for: .normal)
+        
+        var backImage = UIImage(named: "backIcon")
+        let templateImage = backImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        backImage = templateImage
+        
+        button.setImage(backImage, for: .normal)
+        button.imageView?.tintColor = blueColor
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        return button
+    }
+    
+    private func cartButton() -> UIButton {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        button.backgroundColor = .clear
+        
+        var cartImage = UIImage(named: "cart")
+        let templateImage = cartImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        cartImage = templateImage
+        
+        button.setImage(cartImage, for: .normal)
+        button.imageView?.tintColor = blueColor
+        button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
         
         return button
     }
@@ -125,6 +154,10 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         if navigationController != nil {
             navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func cartButtonTapped() {
+        
     }
     
     //MARK:- IBAction methods

@@ -13,5 +13,7 @@ class Product: NSObject {
     var name: String?
     var imageURL: String?
     var price: String?
+    var currency: String?
+    var desc: String?
     
 }

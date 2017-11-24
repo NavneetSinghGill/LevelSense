@@ -12,6 +12,7 @@
     </dependencies>
     <customFonts key="customFonts">
         <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
             <string>HelveticaNeue-Medium</string>
         </array>
     </customFonts>
@@ -47,37 +48,29 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31h-Ye-SFV">
-                                <rect key="frame" x="85" y="45" width="215" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                <rect key="frame" x="85" y="45" width="215" height="19"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVi-sI-TOV">
-                                <rect key="frame" x="253" y="74.5" width="47" height="30"/>
-                                <state key="normal" title="  BUY  ">
-                                    <color key="titleColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="buyButtonTapped" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0wh-Gm-YOs"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="Yfj-Ut-Vme">
+                                <rect key="frame" x="280" y="47.5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="D71-j9-32g"/>
+                                    <constraint firstAttribute="width" constant="20" id="aYH-dy-x7W"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="WVi-sI-TOV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3Jj-H2-Isg" secondAttribute="bottom" id="2vs-nM-QZh"/>
+                            <constraint firstAttribute="trailing" secondItem="Yfj-Ut-Vme" secondAttribute="trailing" constant="10" id="6ov-PH-5Iq"/>
                             <constraint firstItem="3Gv-6H-5rt" firstAttribute="centerY" secondItem="JOU-dE-bQh" secondAttribute="centerY" id="A3S-4N-Z5r"/>
                             <constraint firstAttribute="trailing" secondItem="3Jj-H2-Isg" secondAttribute="trailing" constant="10" id="FBi-wM-m2D"/>
                             <constraint firstAttribute="trailing" secondItem="31h-Ye-SFV" secondAttribute="trailing" constant="10" id="FGm-Rk-Ogq"/>
-                            <constraint firstAttribute="trailing" secondItem="WVi-sI-TOV" secondAttribute="trailing" constant="10" id="LzM-Tj-fkg"/>
-                            <constraint firstAttribute="bottom" secondItem="WVi-sI-TOV" secondAttribute="bottom" constant="10" id="O8j-d8-Ghr"/>
                             <constraint firstItem="31h-Ye-SFV" firstAttribute="leading" secondItem="3Jj-H2-Isg" secondAttribute="leading" id="OX8-Zw-JKi"/>
                             <constraint firstItem="3Gv-6H-5rt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JOU-dE-bQh" secondAttribute="top" constant="10" id="ZSa-cP-tDq"/>
                             <constraint firstItem="31h-Ye-SFV" firstAttribute="top" secondItem="3Jj-H2-Isg" secondAttribute="bottom" constant="10" id="fCz-Q0-CLx"/>
+                            <constraint firstItem="Yfj-Ut-Vme" firstAttribute="centerY" secondItem="JOU-dE-bQh" secondAttribute="centerY" id="gdy-PQ-Hjq"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3Gv-6H-5rt" secondAttribute="bottom" constant="10" id="mm4-nv-PPd"/>
                             <constraint firstItem="3Jj-H2-Isg" firstAttribute="leading" secondItem="3Gv-6H-5rt" secondAttribute="trailing" constant="15" id="oyf-ol-7ii"/>
                             <constraint firstItem="3Gv-6H-5rt" firstAttribute="leading" secondItem="JOU-dE-bQh" secondAttribute="leading" constant="10" id="s2n-cf-6AG"/>
@@ -95,7 +88,6 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="buyButton" destination="WVi-sI-TOV" id="lu7-i8-r0n"/>
                 <outlet property="priceLabel" destination="31h-Ye-SFV" id="IfY-Ka-wCh"/>
                 <outlet property="productImageView" destination="3Gv-6H-5rt" id="IIQ-9u-UES"/>
                 <outlet property="productNameLabel" destination="3Jj-H2-Isg" id="lNe-dZ-gWe"/>
@@ -103,4 +95,7 @@
             <point key="canvasLocation" x="33" y="96"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="arrowRight" width="42" height="42"/>
+    </resources>
 </document>
