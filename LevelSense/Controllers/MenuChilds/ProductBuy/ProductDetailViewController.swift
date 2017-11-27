@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductDetailViewController: LSViewController {
+class ProductDetailViewController: PaymentViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var price1Label: UILabel!
@@ -41,6 +41,7 @@ class ProductDetailViewController: LSViewController {
         finalPriceLabel.text = "\(product.price ?? "0")\(product.currency ?? "")"
         countToBuy = 1
         countToBuyLabel.text = "1"
+        product.count = "1"
     }
     
     func setCount(to: Float) {
@@ -62,6 +63,19 @@ class ProductDetailViewController: LSViewController {
     }
     
     @IBAction func addToCartButtonTapped() {
+        
+//        var cartItems: Array<Product>?
+//        if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
+//            let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
+//            cartItems = unarc.decodeObject(forKey: "savedCartItems") as! Array<Product>
+//        }
+//
+//        if cartItems == nil {
+//            //No saved items, so just save the new items
+//
+//        } else {
+//            //Add the new items to existing items
+//        }
         
     }
     

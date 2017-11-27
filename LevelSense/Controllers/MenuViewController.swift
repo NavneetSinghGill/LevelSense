@@ -28,7 +28,7 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         tableView.register(nib, forCellReuseIdentifier: "MenuTableViewCell")
         
         optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Products","Logout"]
-        optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","products","logout"]
+        optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","cart","logout"]
         
         refreshUser()
         
@@ -58,7 +58,12 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let menuCell: MenuTableViewCell! = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
-        menuCell.optionImageView.image = UIImage(named: optionImageNames.object(at: indexPath.row) as! String)
+        
+        var tempImage = UIImage(named: optionImageNames.object(at: indexPath.row) as! String)
+        tempImage = tempImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        menuCell.optionImageView.image = tempImage
+        menuCell.optionImageView.tintColor = UIColor.white
+        
         menuCell.optionNameLabel.text = optionNames.object(at: indexPath.row) as? String
         
         if indexPath.row == indexOfSelectedScreen {

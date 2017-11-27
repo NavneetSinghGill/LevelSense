@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
+class ProductsViewController: PaymentViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var refreshControl: UIRefreshControl!
@@ -39,6 +39,7 @@ class ProductsViewController: LSViewController, UITableViewDataSource, UITableVi
         pr.price = "10"
         pr.currency = "$"
         pr.desc = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum \n \n Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum"
+        pr.id = "10"
         products.append(pr)
         tableView.reloadData()
     }
@@ -60,6 +61,7 @@ class ProductsViewController: LSViewController, UITableViewDataSource, UITableVi
     //MARK:- TableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         openProductDetailsWith(product: self.products[indexPath.row])
     }
     
