@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductsViewController: PaymentViewController, UITableViewDataSource, UITableViewDelegate {
+class ProductsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var refreshControl: UIRefreshControl!

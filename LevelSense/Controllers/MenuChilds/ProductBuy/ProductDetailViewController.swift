@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductDetailViewController: PaymentViewController {
+class ProductDetailViewController: LSViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var price1Label: UILabel!
@@ -48,12 +48,6 @@ class ProductDetailViewController: PaymentViewController {
         countToBuy = to
         countToBuyLabel.text = "\(Int(countToBuy))"
         finalPriceLabel.text = "\(countToBuy * Float(product.price ?? "0")!)\(product.currency ?? "")"
-    }
-    
-    func openCartScreenWith(products: Array<Product>?) {
-        let cartViewController : CartViewController = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
-        cartViewController.products = products
-        self.navigationController?.pushViewController(cartViewController, animated: true)
     }
     
     //MARK:- IBAction methods
@@ -107,14 +101,11 @@ class ProductDetailViewController: PaymentViewController {
     }
     
     @IBAction func proceedToCheckoutButtonTapped() {
-        var cartItems = Array<Product>()
-        if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
-            let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
-            cartItems = unarc.decodeObject(forKey: "root") as! Array<Product>
-        }
+        product.count = "\(countToBuy)"
         
-        
-        openCartScreenWith(products: cartItems)
+        let cartViewController : CartViewController = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
+        cartViewController.products = [product]
+        self.navigationController?.pushViewController(cartViewController, animated: true)
     }
 
 }

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import PassKit
 
-class CartViewController: PaymentViewController, UITableViewDataSource, UITableViewDelegate {
+class CartViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var itemsTableView: UITableView!
 
@@ -20,7 +21,8 @@ class CartViewController: PaymentViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
 
         addBackButton()
-        setNavigationTitle(title: "PROCEED TO CHECKOUT")
+        addPayButton()
+        setNavigationTitle(title: "CHECKOUT")
         itemsTableView.registerNib(withIdentifierAndNibName: cartTableViewCellTableViewCellIdentifier)
         
         itemsTableView.reloadData()
@@ -38,6 +40,34 @@ class CartViewController: PaymentViewController, UITableViewDataSource, UITableV
         cell.updateUIfor(product: products![indexPath.row])
         
         return cell
+    }
+    
+    //MARK:- Private methods
+    
+    func addPayButton() {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        button.backgroundColor = .clear
+        button.setTitle("Pay", for: .normal)
+        
+        button.setTitleColor(blueColor, for: .normal)
+        button.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    func payButtonTapped() {
+        var total = NSDecimalNumber(string: "0")
+        var items = Array<PKPaymentSummaryItem>()
+        
+        for product in products! {
+            let item = PKPaymentSummaryItem(label: "\(NumberFormatter().number(from: product.count!)!)" + " x " + product.name!, amount: NSDecimalNumber(string: product.price!))
+           total = total.adding( NSDecimalNumber(string: product.price!).multiplying(by: NSDecimalNumber(string: product.count!)))
+            items.append(item)
+        }
+        let totalItem = PKPaymentSummaryItem(label: "Total", amount: total)
+        items.append(totalItem)
+        
+        openApplePayScreen(with: items)
     }
 
 }

@@ -56,7 +56,6 @@
 		53BC17CE1F5D484A00E78F7D /* UIBezierPath+Interpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17CD1F5D484A00E78F7D /* UIBezierPath+Interpolation.m */; };
 		53BC17D11F5D48B900E78F7D /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D01F5D48B900E78F7D /* CGPointExtension.m */; };
 		53BC17D31F5D555700E78F7D /* LineGraphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC17D21F5D555700E78F7D /* LineGraphLayer.swift */; };
-		53C584461FC7EC3D0028BDFB /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C584451FC7EC3D0028BDFB /* PaymentViewController.swift */; };
 		53C584481FC7F7930028BDFB /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C584471FC7F7930028BDFB /* CartViewController.swift */; };
 		53C5844B1FC835E90028BDFB /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C5844A1FC835E90028BDFB /* extensions.swift */; };
 		53C5844D1FC835F50028BDFB /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C5844C1FC835F40028BDFB /* KeychainPasswordItem.swift */; };
@@ -132,7 +131,6 @@
 		53BC17D01F5D48B900E78F7D /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
 		53BC17D21F5D555700E78F7D /* LineGraphLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineGraphLayer.swift; sourceTree = "<group>"; };
 		53C584431FC7E7920028BDFB /* Level Sense.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Level Sense.entitlements"; sourceTree = "<group>"; };
-		53C584451FC7EC3D0028BDFB /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		53C584471FC7F7930028BDFB /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		53C5844A1FC835E90028BDFB /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		53C5844C1FC835F40028BDFB /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
@@ -273,7 +271,6 @@
 			children = (
 				53B2750D1FC6AA9800823A1D /* ProductsViewController.swift */,
 				53B275151FC6C60200823A1D /* ProductDetailViewController.swift */,
-				53C584451FC7EC3D0028BDFB /* PaymentViewController.swift */,
 				53C584471FC7F7930028BDFB /* CartViewController.swift */,
 			);
 			path = ProductBuy;
@@ -561,7 +558,6 @@
 				53A2A94F1F76531E0058767A /* DeviceLog.swift in Sources */,
 				F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */,
 				F19DAE891F3DD8D0007F14FF /* NetworkHttpClient.swift in Sources */,
-				53C584461FC7EC3D0028BDFB /* PaymentViewController.swift in Sources */,
 				539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */,
 				F19DAE7F1F3DD1F4007F14FF /* LoginInterface.swift in Sources */,
 				538AA73E1F55A9C6004559EC /* ServiceProvider.swift in Sources */,

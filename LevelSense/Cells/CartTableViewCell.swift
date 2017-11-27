@@ -29,7 +29,7 @@ class CartTableViewCell: UITableViewCell {
     
     func updateUIfor(product: Product) {
         productNameLabel.text = product.name
-        countLabel.text = product.count
+        countLabel.text = "\(NumberFormatter().number(from: product.count!)!)"
         priceLabel.text = "\(NumberFormatter().number(from: product.price!)!.floatValue * NumberFormatter().number(from: product.count!)!.floatValue)"
     }
     

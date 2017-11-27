@@ -17,6 +17,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import PassKit
 
 class LSViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -25,6 +26,8 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     var cartBarButton: UIBarButtonItem!
     var _cartButton: UIButton!
     var navigationTitleLabel: UILabel!
+    
+    var wasPaymentSuccessful = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,17 +180,79 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func cartButtonTapped() {
+        var cartItems = Array<Product>()
+        if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
+            let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
+            cartItems = unarc.decodeObject(forKey: "root") as! Array<Product>
+        }
         
+        let cartViewController : CartViewController = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
+        cartViewController.products = cartItems
+        self.navigationController?.pushViewController(cartViewController, animated: true)
+    }
+    
+    func openApplePayScreen(with items: [PKPaymentSummaryItem]) {
+        let request = PKPaymentRequest()
+        request.countryCode = "IN"
+        request.currencyCode = "INR"
+        
+        request.paymentSummaryItems = items
+        
+//        let freeShipping = PKShippingMethod(label: "Free Shipping", amount: 0)
+//        freeShipping.identifier = "free"
+//        freeShipping.detail = "Arrive in 1-2 weeks"
+//        
+//        request.shippingMethods = [freeShipping]
+        
+        let supportedPaymentNetworks = [PKPaymentNetwork.visa, PKPaymentNetwork.masterCard, PKPaymentNetwork.amex]
+        
+        //TODO: set this to apple pay button
+        //        applePayButton.hidden = !PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: supportedPaymentNetworks)
+        
+        request.merchantIdentifier = "merchant.com.LevelSense.LS"
+        request.supportedNetworks = supportedPaymentNetworks
+        request.merchantCapabilities = PKMerchantCapability.capability3DS
+        
+        request.requiredShippingAddressFields = [.postalAddress, .phone]
+        
+        let applePayController = PKPaymentAuthorizationViewController(paymentRequest: request)
+        applePayController.delegate = self
+        if applePayController != nil {
+            self.present(applePayController, animated: true, completion: nil)
+        }
     }
     
     //MARK:- IBAction methods
-    
-//    @IBAction func menuButtonTapped(sender: UIButton) {
-//        self.revealViewController().revealToggle(self)
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 
 }
+
+extension LSViewController: PKPaymentAuthorizationViewControllerDelegate {
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        
+        wasPaymentSuccessful = true
+        
+        //TODO: Make api call for letting server know about ordered products
+        completion(PKPaymentAuthorizationStatus.success)
+    }
+    
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        
+        controller.dismiss(animated: true, completion: nil)
+        
+        if wasPaymentSuccessful {
+            UserDefaults.standard.set(NSKeyedArchiver.archivedData(withRootObject: Array<Product>() ), forKey: "savedCartItems")
+            
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
+    
+    
+}
+
+
