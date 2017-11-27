@@ -36,6 +36,9 @@
 		5397E76E1F4D8EC90060F3C7 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */; };
 		539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */; };
 		539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */; };
+		539DE35B1FCBE5A700A2906C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539DE35A1FCBE5A600A2906C /* PassKit.framework */; };
+		539DE35E1FCC0CD700A2906C /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DE35C1FCC0CD700A2906C /* CartTableViewCell.swift */; };
+		539DE35F1FCC0CD800A2906C /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539DE35D1FCC0CD700A2906C /* CartTableViewCell.xib */; };
 		539DEDD81F542A5F00662521 /* ContactRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDD71F542A5F00662521 /* ContactRequestManager.swift */; };
 		539DEDDA1F542AD700662521 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDD91F542AD700662521 /* Contact.swift */; };
 		539DEDDC1F542D5000662521 /* ContactInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDDB1F542D5000662521 /* ContactInterface.swift */; };
@@ -106,6 +109,9 @@
 		5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsTableViewCell.xib; sourceTree = "<group>"; };
+		539DE35A1FCBE5A600A2906C /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		539DE35C1FCC0CD700A2906C /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
+		539DE35D1FCC0CD700A2906C /* CartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
 		539DEDD71F542A5F00662521 /* ContactRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestManager.swift; sourceTree = "<group>"; };
 		539DEDD91F542AD700662521 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		539DEDDB1F542D5000662521 /* ContactInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInterface.swift; sourceTree = "<group>"; };
@@ -156,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				539DE35B1FCBE5A700A2906C /* PassKit.framework in Frameworks */,
 				53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */,
 				536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */,
 				536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */,
@@ -170,6 +177,7 @@
 		07413B0771216111676D104C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				539DE35A1FCBE5A600A2906C /* PassKit.framework */,
 				53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */,
 				536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */,
 				536656A51F4AE39F003A5E71 /* SnapKit.framework */,
@@ -221,6 +229,8 @@
 				53A2A9531F76675B0058767A /* AlarmLogTableViewCell.xib */,
 				53B2750F1FC6ADE300823A1D /* ProductsTableViewCell.swift */,
 				53B275101FC6ADE300823A1D /* ProductsTableViewCell.xib */,
+				539DE35C1FCC0CD700A2906C /* CartTableViewCell.swift */,
+				539DE35D1FCC0CD700A2906C /* CartTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -416,6 +426,9 @@
 							com.apple.ApplePay = {
 								enabled = 1;
 							};
+							com.apple.Wallet = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -448,6 +461,7 @@
 				F19DAE691F3DB03D007F14FF /* Assets.xcassets in Resources */,
 				5357933A1F56AF5100F28DC5 /* AddContactTableViewCell.xib in Resources */,
 				539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */,
+				539DE35F1FCC0CD800A2906C /* CartTableViewCell.xib in Resources */,
 				53A2A9551F76675B0058767A /* AlarmLogTableViewCell.xib in Resources */,
 				2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */,
 				53590D4E1F4C129D001F414A /* MyDevicesTableViewCell.xib in Resources */,
@@ -561,6 +575,7 @@
 				53C584481FC7F7930028BDFB /* CartViewController.swift in Sources */,
 				539DEDDE1F542D7F00662521 /* ContactRequest.swift in Sources */,
 				5397E7691F4D82710060F3C7 /* ClaimDeviceViewController.swift in Sources */,
+				539DE35E1FCC0CD700A2906C /* CartTableViewCell.swift in Sources */,
 				539DEDDA1F542AD700662521 /* Contact.swift in Sources */,
 				F19DAE761F3DCCBB007F14FF /* Reachability.swift in Sources */,
 				5397E76C1F4D8EB70060F3C7 /* NotificationsViewController.swift in Sources */,

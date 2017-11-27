@@ -62,6 +62,9 @@ class PaymentViewController: LSViewController {
 extension PaymentViewController: PKPaymentAuthorizationViewControllerDelegate {
     
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        
+        
+        
         //TODO: Make api call for letting server know about ordered products
         completion(PKPaymentAuthorizationStatus.success)
     }

@@ -35,12 +35,21 @@ class ProductsViewController: PaymentViewController, UITableViewDataSource, UITa
         getProducts()
         
         let pr = Product()
-        pr.name = "asd"
+        pr.name = "Pro glasses"
         pr.price = "10"
         pr.currency = "$"
         pr.desc = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum \n \n Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum"
         pr.id = "10"
         products.append(pr)
+        
+        let pr1 = Product()
+        pr1.name = "Bubble maker"
+        pr1.price = "20"
+        pr1.currency = "$"
+        pr1.desc = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum \n \n Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum"
+        pr1.id = "11"
+        products.append(pr1)
+        
         tableView.reloadData()
     }
     

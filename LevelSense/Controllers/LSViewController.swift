@@ -23,6 +23,7 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     var menuBarButton: UIBarButtonItem!
     var backBarButton: UIBarButtonItem!
     var cartBarButton: UIBarButtonItem!
+    var _cartButton: UIButton!
     var navigationTitleLabel: UILabel!
 
     override func viewDidLoad() {
@@ -32,6 +33,24 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if cartBarButton != nil {
+            var cartItems: Array<Product>?
+            if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
+                let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
+                cartItems = unarc.decodeObject(forKey: "root") as? Array<Product>
+                
+                if cartItems?.count == 0 {
+                    _cartButton.setBadge(text: "0")
+                } else {
+                    _cartButton.setBadge(text: "\(cartItems?.count ?? 0)")
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,7 +86,8 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
     
     func addCartButton() {
         if cartBarButton == nil {
-            cartBarButton = UIBarButtonItem(customView: cartButton())
+            _cartButton = cartButton()
+            cartBarButton = UIBarButtonItem(customView: _cartButton)
             self.navigationItem.rightBarButtonItem = cartBarButton!
         }
     }

@@ -71,6 +71,57 @@ extension UIView {
     }
 }
 
+extension UIButton {
+    
+    func setBadge(text: String) {
+        let textLabelTag = 98765
+        var badgeLabel: UILabel?
+        
+        if Int(text) == 0 {
+            self.viewWithTag(textLabelTag)?.removeFromSuperview()
+            return
+        }
+        
+        if let label = self.viewWithTag(textLabelTag) as? UILabel {
+            label.text = text
+            label.sizeToFit()
+            badgeLabel = label
+        } else {
+            badgeLabel = getBadgeLabelWith(text: text)
+            badgeLabel?.tag = textLabelTag
+            self.addSubview(badgeLabel!)
+        }
+        //Just to make text more clear
+        badgeLabel?.frame.size.height = (badgeLabel?.frame.size.height)! + 3
+        
+        if badgeLabel!.frame.size.width < badgeLabel!.frame.size.height {
+            badgeLabel?.frame.size.width = (badgeLabel?.frame.size.height)!
+        }
+        badgeLabel?.frame = CGRect(x: self.frame.size.width - (badgeLabel?.frame.size.width)!,
+                                   y: 0,
+                                   width: (badgeLabel?.frame.size.width)!,
+                                   height: (badgeLabel?.frame.size.height)!)
+     
+        badgeLabel?.layer.cornerRadius = (badgeLabel?.frame.size.height)!/2
+    }
+    
+    func getBadgeLabelWith(text: String) -> UILabel {
+        let badgeLabel: UILabel = UILabel()
+        badgeLabel.text = text
+        badgeLabel.font = UIFont(name: "Helvetica-Medium", size: 9)
+        badgeLabel.sizeToFit()
+        badgeLabel.backgroundColor = .red
+        badgeLabel.textColor = .white
+        badgeLabel.layer.cornerRadius = 6
+        badgeLabel.borderColor = UIColor.white.cgColor
+        badgeLabel.borderWidth = 1
+        badgeLabel.layer.masksToBounds = true
+        badgeLabel.textAlignment = .center
+        
+        return badgeLabel
+    }
+}
+
 extension UITableView {
     func registerNib(withIdentifierAndNibName: String) -> Void {
         let nib = UINib(nibName: withIdentifierAndNibName, bundle: nil)

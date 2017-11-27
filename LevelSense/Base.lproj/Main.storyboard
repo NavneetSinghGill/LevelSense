@@ -3777,6 +3777,45 @@
             </objects>
             <point key="canvasLocation" x="1838.4000000000001" y="1781.1094452773614"/>
         </scene>
+        <!--Cart View Controller-->
+        <scene sceneID="s5e-sP-IE4">
+            <objects>
+                <viewController storyboardIdentifier="CartViewController" id="ydG-eM-f7u" customClass="CartViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JKz-1d-XnN"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bgo-vT-wp3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5H7-vS-FvP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i7J-fx-1Ly">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="ydG-eM-f7u" id="YFA-et-zUb"/>
+                                    <outlet property="delegate" destination="ydG-eM-f7u" id="rV2-De-BEI"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Bgo-vT-wp3" firstAttribute="top" secondItem="i7J-fx-1Ly" secondAttribute="bottom" id="bLq-R6-Mjc"/>
+                            <constraint firstAttribute="trailing" secondItem="i7J-fx-1Ly" secondAttribute="trailing" id="eie-Oq-j8s"/>
+                            <constraint firstItem="i7J-fx-1Ly" firstAttribute="top" secondItem="JKz-1d-XnN" secondAttribute="bottom" id="lG2-oe-wS0"/>
+                            <constraint firstItem="i7J-fx-1Ly" firstAttribute="leading" secondItem="5H7-vS-FvP" secondAttribute="leading" id="sED-yY-J3p"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="UYV-cn-uYU"/>
+                    <connections>
+                        <outlet property="itemsTableView" destination="i7J-fx-1Ly" id="4LI-dG-w0z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mbo-5D-7Xc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3977" y="1781"/>
+        </scene>
     </scenes>
     <resources>
         <image name="LaunchLogo" width="206" height="277"/>

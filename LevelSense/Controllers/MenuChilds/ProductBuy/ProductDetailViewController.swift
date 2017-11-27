@@ -50,6 +50,12 @@ class ProductDetailViewController: PaymentViewController {
         finalPriceLabel.text = "\(countToBuy * Float(product.price ?? "0")!)\(product.currency ?? "")"
     }
     
+    func openCartScreenWith(products: Array<Product>?) {
+        let cartViewController : CartViewController = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
+        cartViewController.products = products
+        self.navigationController?.pushViewController(cartViewController, animated: true)
+    }
+    
     //MARK:- IBAction methods
     
     @IBAction func increaseCountToBuyButtonTapped() {
@@ -63,24 +69,52 @@ class ProductDetailViewController: PaymentViewController {
     }
     
     @IBAction func addToCartButtonTapped() {
+        product.count = "\(countToBuy)"
         
-//        var cartItems: Array<Product>?
-//        if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
-//            let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
-//            cartItems = unarc.decodeObject(forKey: "savedCartItems") as! Array<Product>
-//        }
-//
-//        if cartItems == nil {
-//            //No saved items, so just save the new items
-//
-//        } else {
-//            //Add the new items to existing items
-//        }
+        var cartItems: Array<Product>?
+        if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
+            let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
+            cartItems = unarc.decodeObject(forKey: "root") as? Array<Product>
+        }
+
+        if cartItems == nil {
+            //No saved items, so just save the new items
+            UserDefaults.standard.set(NSKeyedArchiver.archivedData(withRootObject: [product]), forKey: "savedCartItems")
+            _cartButton.setBadge(text: "1")
+        } else {
+            //Add the new items to existing items
+            
+            var isProductAlreadyAdded = false
+
+            for cartItem in cartItems! {
+                if let cartItemProduct = cartItem as? Product {
+                    if cartItemProduct.id == product.id {
+                        cartItemProduct.count = "\(Int(Float(cartItemProduct.count ?? "0")! + Float(product.count ?? "0")!))"
+                        isProductAlreadyAdded = true
+                        break
+                    }
+                }
+            }
+            if !isProductAlreadyAdded {
+                cartItems?.append(product)
+            }
+            
+            UserDefaults.standard.set(NSKeyedArchiver.archivedData(withRootObject: cartItems ?? []), forKey: "savedCartItems")
+            
+            _cartButton.setBadge(text: "\(cartItems?.count ?? 0)")
+        }
         
     }
     
     @IBAction func proceedToCheckoutButtonTapped() {
+        var cartItems = Array<Product>()
+        if let data = UserDefaults.standard.object(forKey: "savedCartItems") as? NSData {
+            let unarc = NSKeyedUnarchiver(forReadingWith: data as Data)
+            cartItems = unarc.decodeObject(forKey: "root") as! Array<Product>
+        }
         
+        
+        openCartScreenWith(products: cartItems)
     }
 
 }

@@ -6,5 +6,9 @@
 	<array>
 		<string>merchant.com.LevelSense.LS</string>
 	</array>
+	<key>com.apple.developer.pass-type-identifiers</key>
+	<array>
+		<string>$(TeamIdentifierPrefix)*</string>
+	</array>
 </dict>
 </plist>
