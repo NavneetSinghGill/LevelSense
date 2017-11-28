@@ -3128,10 +3128,10 @@
             </objects>
             <point key="canvasLocation" x="1833" y="1069"/>
         </scene>
-        <!--Products View Controller-->
+        <!--My Products View Controller-->
         <scene sceneID="rX8-WG-R1f">
             <objects>
-                <viewController storyboardIdentifier="ProductsViewController" id="9WC-dR-0u5" customClass="ProductsViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyProductsViewController" id="9WC-dR-0u5" customClass="MyProductsViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HVT-Ik-tk0"/>
                         <viewControllerLayoutGuide type="bottom" id="PDT-Wz-b4R"/>
@@ -3777,10 +3777,10 @@
             </objects>
             <point key="canvasLocation" x="1838.4000000000001" y="1781.1094452773614"/>
         </scene>
-        <!--Cart View Controller-->
+        <!--My Cart View Controller-->
         <scene sceneID="s5e-sP-IE4">
             <objects>
-                <viewController storyboardIdentifier="CartViewController" id="ydG-eM-f7u" customClass="CartViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyCartViewController" id="ydG-eM-f7u" customClass="MyCartViewController" customModule="Level_Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JKz-1d-XnN"/>
                         <viewControllerLayoutGuide type="bottom" id="Bgo-vT-wp3"/>

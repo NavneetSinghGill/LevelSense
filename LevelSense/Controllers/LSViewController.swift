@@ -186,9 +186,9 @@ class LSViewController: UIViewController, NVActivityIndicatorViewable {
             cartItems = unarc.decodeObject(forKey: "root") as! Array<Product>
         }
         
-        let cartViewController : CartViewController = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
-        cartViewController.products = cartItems
-        self.navigationController?.pushViewController(cartViewController, animated: true)
+        let myCartViewController : MyCartViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCartViewController") as! MyCartViewController
+        myCartViewController.products = cartItems
+        self.navigationController?.pushViewController(myCartViewController, animated: true)
     }
     
     func openApplePayScreen(with items: [PKPaymentSummaryItem]) {

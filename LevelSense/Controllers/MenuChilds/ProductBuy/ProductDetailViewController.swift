@@ -103,9 +103,9 @@ class ProductDetailViewController: LSViewController {
     @IBAction func proceedToCheckoutButtonTapped() {
         product.count = "\(countToBuy)"
         
-        let cartViewController : CartViewController = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
-        cartViewController.products = [product]
-        self.navigationController?.pushViewController(cartViewController, animated: true)
+        let myCartViewController : MyCartViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCartViewController") as! MyCartViewController
+        myCartViewController.products = [product]
+        self.navigationController?.pushViewController(myCartViewController, animated: true)
     }
 
 }

@@ -102,7 +102,8 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         case 3:
             screenToShow = storyboard?.instantiateViewController(withIdentifier: "PersonalInfoViewController")
         case 4:
-            screenToShow = storyboard?.instantiateViewController(withIdentifier: "ProductsViewController")
+//            screenToShow = storyboard?.instantiateViewController(withIdentifier: "MyProductsViewController")
+            screenToShow = UIStoryboard(name: "Payment", bundle: nil).instantiateViewController(withIdentifier: "CollectionsViewController")
         case 5:
             screenToShow = nil
             showAlertForLogout()

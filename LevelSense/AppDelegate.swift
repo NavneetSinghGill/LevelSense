@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import NVActivityIndicatorView
+import Buy
+import Pay
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

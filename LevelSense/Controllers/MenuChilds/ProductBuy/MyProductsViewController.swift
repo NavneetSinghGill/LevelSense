@@ -1,5 +1,5 @@
 //
-//  ProductsViewController.swift
+//  MyProductsViewController.swift
 //  Level Sense
 //
 //  Created by Zoeb Sheikh on 11/23/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
+class MyProductsViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var refreshControl: UIRefreshControl!
@@ -26,7 +26,7 @@ class ProductsViewController: LSViewController, UITableViewDataSource, UITableVi
         
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Refresh Products")
-        refreshControl.addTarget(self, action: #selector(ProductsViewController.getProducts), for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(MyProductsViewController.getProducts), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
         
         tableView.rowHeight = UITableViewAutomaticDimension

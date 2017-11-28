@@ -9,7 +9,7 @@
 import UIKit
 import PassKit
 
-class CartViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
+class MyCartViewController: LSViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var itemsTableView: UITableView!
 
