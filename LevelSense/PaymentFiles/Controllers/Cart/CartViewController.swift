@@ -320,6 +320,14 @@ extension CartViewController: PaySessionDelegate {
                     if let payment = payment, checkout.paymentDue == payment.amount {
                         print("Checkout completed successfully.")
                         completeTransaction(.success)
+                        
+                        for  i in 0..<CartController.shared.items.count {
+                            CartController.shared.removeAllQuantities(at: i)
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     } else {
                         print("Checkout failed to complete.")
                         completeTransaction(.failure)
