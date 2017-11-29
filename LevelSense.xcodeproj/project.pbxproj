@@ -1312,7 +1312,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LevelSense.LS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6b58ad40-b945-4a55-8384-38ec23dc13aa";
+				PROVISIONING_PROFILE = "0003200b-a262-4034-957d-fcb10dcd23f3";
 				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDevelopment;
 				SWIFT_OBJC_BRIDGING_HEADER = "LevelSense/CustomFiles/LevelSense-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
