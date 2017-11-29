@@ -93,10 +93,12 @@ class CartButton: UIBarButtonItem {
     private func createCartButtonView() -> CartButtonView {
         
         let cartView   = CartButtonView(type: .system)
-        let cartImage  = #imageLiteral(resourceName: "cart")
+        var cartImage  = #imageLiteral(resourceName: "cart")
+        cartImage = cartImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         cartView.frame = CGRect(origin: .zero, size: cartImage.size).insetBy(dx: -10.0, dy: -5.0)
         
         cartView.contentHorizontalAlignment = .right
+        cartView.tintColor = blueColor
         cartView.setImage(cartImage, for: .normal)
         cartView.addTarget(self, action: #selector(cartAction(_:)), for: .touchUpInside)
         
@@ -266,8 +268,8 @@ private class CartButtonView: UIButton {
     private func layoutBadge() {
         self.badgeView.sizeToFit()
         self.badgeView.center = CGPoint(
-            x: floor(self.bounds.width - 2.0),
-            y: floor(0.0               + 5.0)
+            x: floor(self.bounds.width - 5.0),
+            y: floor(0.0               + 8.0)
         )
     }
 }

@@ -88,9 +88,9 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //Shouldnt open screen which is already open
-        if indexOfSelectedScreen == indexPath.row {
-            return
-        }
+//        if indexOfSelectedScreen == indexPath.row {
+//            return
+//        }
         
         switch indexPath.row {
         case 0:
@@ -129,7 +129,9 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         alertVC.addAction(yesAction)
         alertVC.addAction(noAction)
         
-        self.present(alertVC, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alertVC, animated: true, completion: nil)
+        }
     }
     
     private func performLogout() {

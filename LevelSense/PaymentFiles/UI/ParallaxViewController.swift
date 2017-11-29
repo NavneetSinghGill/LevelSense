@@ -26,7 +26,7 @@
 
 import UIKit
 
-class ParallaxViewController: UIViewController {
+class ParallaxViewController: LSViewController {
     
     enum Layout {
         case headerBelow

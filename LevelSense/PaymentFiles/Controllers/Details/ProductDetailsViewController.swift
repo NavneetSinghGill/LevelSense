@@ -59,6 +59,8 @@ class ProductDetailsViewController: ParallaxViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addBackButton()
+        
         self.registerTableCells()
         
         self.configureHeader()
@@ -94,8 +96,12 @@ class ProductDetailsViewController: ParallaxViewController {
 extension ProductDetailsViewController {
     
     @IBAction func cartAction(_ sender: Any) {
-        let cartController: CartNavigationController = self.storyboard!.instantiateViewController()
-        self.navigationController!.present(cartController, animated: true, completion: nil)
+        if CartController.shared.items.count != 0 {
+            let cartController: CartNavigationController = self.storyboard!.instantiateViewController()
+            self.navigationController!.present(cartController, animated: true, completion: nil)
+        } else {
+            Banner.showFailureWithTitle(title: "No items in cart")
+        }
     }
 }
 

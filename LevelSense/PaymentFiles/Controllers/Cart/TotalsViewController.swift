@@ -69,7 +69,7 @@ class TotalsViewController: UIViewController {
     private func loadPurchaseOptions() {
         
         let webCheckout = RoundedButton(type: .system)
-        webCheckout.backgroundColor = UIColor.applicationGreen
+        webCheckout.backgroundColor = blueColor//UIColor.applicationGreen
         webCheckout.addTarget(self, action: #selector(webCheckoutAction(_:)), for: .touchUpInside)
         webCheckout.setTitle("Checkout",  for: .normal)
         webCheckout.setTitleColor(.white, for: .normal)

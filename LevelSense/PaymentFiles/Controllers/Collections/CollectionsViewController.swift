@@ -43,10 +43,12 @@ class CollectionsViewController: LSViewController {
         
         self.configureTableView()
         
+        startAnimating()
         Client.shared.fetchCollections { collections in
             if let collections = collections {
                 self.collections = collections
                 self.tableView.reloadData()
+                self.stopAnimating()
             }
         }
     }
@@ -93,8 +95,12 @@ class CollectionsViewController: LSViewController {
 extension CollectionsViewController {
     
     @IBAction func cartAction(_ sender: Any) {
-        let cartController: CartNavigationController = self.storyboard!.instantiateViewController()
-        self.navigationController!.present(cartController, animated: true, completion: nil)
+        if CartController.shared.items.count != 0 {
+            let cartController: CartNavigationController = self.storyboard!.instantiateViewController()
+            self.navigationController!.present(cartController, animated: true, completion: nil)
+        } else {
+            Banner.showFailureWithTitle(title: "No items in cart")
+        }
     }
 }
 

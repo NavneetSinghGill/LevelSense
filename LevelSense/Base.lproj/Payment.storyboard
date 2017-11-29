@@ -6,12 +6,16 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="AppleSDGothicNeo.ttc">
             <string>AppleSDGothicNeo-Regular</string>
             <string>AppleSDGothicNeo-Thin</string>
+        </array>
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -91,7 +95,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N9E-fb-plh">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDy-Mb-gmW">
+                                <rect key="frame" x="0.0" y="333.5" width="375" height="333.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Items in Cart" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p79-C5-Jdk">
+                                        <rect key="frame" x="123.5" y="100" width="127.5" height="20"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="p79-C5-Jdk" firstAttribute="centerY" secondItem="cDy-Mb-gmW" secondAttribute="centerY" multiplier="0.66" id="LGz-0h-cld"/>
+                                    <constraint firstItem="p79-C5-Jdk" firstAttribute="centerX" secondItem="cDy-Mb-gmW" secondAttribute="centerX" id="U92-en-nzd"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N9E-fb-plh">
                                 <rect key="frame" x="0.0" y="222" width="375" height="445"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,6 +130,12 @@
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cDy-Mb-gmW" secondAttribute="trailing" id="hJf-l0-3UX"/>
+                            <constraint firstItem="6mD-WS-XEm" firstAttribute="top" secondItem="cDy-Mb-gmW" secondAttribute="bottom" id="lzS-II-nAA"/>
+                            <constraint firstItem="cDy-Mb-gmW" firstAttribute="leading" secondItem="xXB-tE-Dtm" secondAttribute="leading" id="nHJ-6O-YXh"/>
+                            <constraint firstItem="cDy-Mb-gmW" firstAttribute="height" secondItem="xXB-tE-Dtm" secondAttribute="height" multiplier="0.5" id="sTo-ka-mc3"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Cart" id="WM5-yl-c2M">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="6fS-by-e2w">
@@ -117,16 +143,11 @@
                                 <action selector="cancelAction:" destination="dau-ev-4t0" id="CZz-V2-Kra"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Cart" id="81Q-Gf-tr0" customClass="CartButton" customModule="Level_Sense" customModuleProvider="target">
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="userInteractionEnabled" value="NO"/>
-                            </userDefinedRuntimeAttributes>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="headerView" destination="t2u-Og-LPy" id="Zgx-5m-8MT"/>
-                        <outlet property="scrollView" destination="N9E-fb-plh" id="0zA-xU-R66"/>
-                        <outlet property="tableView" destination="N9E-fb-plh" id="114-Vj-d7K"/>
+                        <outlet property="scrollView" destination="N9E-fb-plh" id="9VL-f4-asX"/>
+                        <outlet property="tableView" destination="N9E-fb-plh" id="gUF-WX-IMc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4R4-CP-1NN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -298,7 +319,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4,643.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDh-hh-crX">
                                                     <rect key="frame" x="81" y="56" width="213" height="58"/>
                                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Thin" family="Apple SD Gothic Neo" pointSize="48"/>
-                                                    <color key="textColor" red="0.4763322351" green="0.72474470440000005" blue="0.44370955919999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.43137254899999999" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Excludes taxes &amp; applicable discounts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKm-BV-m0X">

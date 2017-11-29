@@ -118,7 +118,7 @@ class CartViewController: ParallaxViewController {
     }
     
     func authorizePaymentFor(_ shopName: String, in checkout: CheckoutViewModel) {
-        let payCurrency = PayCurrency(currencyCode: "CAD", countryCode: "CA")
+        let payCurrency = PayCurrency(currencyCode: "USD", countryCode: "US")
         let payItems    = checkout.lineItems.map { item in
             PayLineItem(price: item.totalPrice, quantity: item.quantity)
         }
@@ -387,6 +387,7 @@ extension CartViewController: UITableViewDataSource {
     //  MARK: - Data -
     //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.alpha = CartController.shared.items.count == 0 ? 0.01 : 1
         return CartController.shared.items.count
     }
     
