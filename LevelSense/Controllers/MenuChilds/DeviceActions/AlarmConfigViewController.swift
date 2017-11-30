@@ -482,7 +482,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         
         let unit: String = dict["sensorDisplayUnits"] as! String
         let value = dict["currentValue"] as? String ?? ""
-        let valueCGFloat: Float = Float(value)!
+        let valueCGFloat: Float = Float(value) ?? 0
         self.tempLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "")"
         self.temperatureNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Temperature")
         setCheckBoxesWith(dict: dict, andBaseTag: tempCheckBoxesBaseTag)
@@ -498,7 +498,7 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         
         let unit: String = dict["sensorDisplayUnits"] as! String
         let value = dict["currentValue"] as? String ?? ""
-        let valueCGFloat: Float = Float(value)!
+        let valueCGFloat: Float = Float(value) ?? 0
         self.humidityLabel.text = "\((value.characters.count) > 0 ? valueCGFloat.rounded(toPlaces: 1) : "--")\(unit.characters.count > 0 ? unit : "%")"
         self.humidityNameLabel.text = (dict["sensorDisplayName"] as? String ?? "Humidity")
         setCheckBoxesWith(dict: dict, andBaseTag: humidityCheckBoxesBaseTag)

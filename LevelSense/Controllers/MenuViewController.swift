@@ -27,7 +27,7 @@ class MenuViewController: LSViewController, UITableViewDelegate, UITableViewData
         let nib = UINib(nibName: "MenuTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MenuTableViewCell")
         
-        optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Products","Logout"]
+        optionNames = ["My Devices","Claim Device","Notifications","Personal Information","Get Hardware","Logout"]
         optionImageNames = ["myDevices","claimDevice","notifications","personalInfo","cart","logout"]
         
         refreshUser()
