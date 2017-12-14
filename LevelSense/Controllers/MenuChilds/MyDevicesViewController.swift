@@ -35,7 +35,7 @@ class MyDevicesViewController: LSViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         addMenuButton()

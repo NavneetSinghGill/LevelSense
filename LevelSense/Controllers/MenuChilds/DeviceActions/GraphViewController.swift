@@ -15,7 +15,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         case Week
     }
     
-    let colors: NSArray = [UIColor.green, UIColor.blue, UIColor.orange]
+    let colors: NSArray = [blueColor]//[UIColor.green, UIColor.blue, UIColor.orange]
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -76,8 +76,25 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             let deviceData = (allDeviceData[key] as? Dictionary<String, Any>)
             print("\(deviceData?["sensorDisplayName"] ?? "")")
             
+            let name: String = (deviceData?["sensorDisplayName"] ?? "") as! String
+            print("\(name).... \((deviceData?["sensorId"] ?? "") as! String)")
+            
+            var graphLineColor = blueColor
+            switch (deviceData?["sensorId"] ?? "") as! String {
+            case "2":
+                graphLineColor = blueColor
+            case "3":
+                graphLineColor = UIColor.black
+            case "9":
+                continue //Dont want this graph to appear on screen
+            case "11":
+                graphLineColor = onlineGreen
+            default:
+                graphLineColor = blueColor
+            }
+            
             let graphView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
-            let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: (colors.object(at: count%colors.count) as? UIColor)?.cgColor, fillColor: nil)
+            let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: graphLineColor.cgColor, fillColor: nil)
             
             if creationOfLayerSuccessful {
                 graphView.frame.size.height = (graphView.layer.sublayers?.first?.frame.size.height)!
@@ -123,8 +140,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     }
     
     func addDividerTo(parentView: UIView) {
-        let dividerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: parentView.frame.size.width, height: 1))
-        dividerView.backgroundColor = UIColor.black
+        let dividerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: parentView.frame.size.width, height: 20))
+        dividerView.backgroundColor = UIColor.white
         parentView.addSubview(dividerView)
     }
     
@@ -195,10 +212,13 @@ class GraphViewController: LSViewController, LineGraphProtocol {
                 for i in 0..<pointsCountToPlotY {
                     yValues.append(yMin + yMaxMinDiff * CGFloat(i))
                 }
-                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: nil, yAxisName: nil)
+                lineGraphLayer?.drawAxisWith(xValues: xValues, yValues: yValues, xAxisName: nil, yAxisName: nil, dividerLengthOnTop: 30)
             }
             
-            let graphName = "\(deviceData?["sensorDisplayName"] ?? "")"
+            var graphName = "\(deviceData?["sensorDisplayName"] ?? "")"
+            if graphName == "RSSI" {
+                graphName = "Wi-Fi Signal Strength in dBm"
+            }
             lineGraphLayer?.addLayerWith(stroke: strokeColor, fillColor: fillColor, values: values, graphOf: graphName)
             
             return true

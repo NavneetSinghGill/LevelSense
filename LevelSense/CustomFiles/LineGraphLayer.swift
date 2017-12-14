@@ -207,7 +207,7 @@ class LineGraphLayer: CAShapeLayer {
     
     var verticalPadding: CGFloat = 40.0
     var horizontalPadding: CGFloat = 40.0
-    var origin: CGPoint = CGPoint.init(x: 40, y: 40)
+    var origin: CGPoint = CGPoint.init(x: 60, y: 40)
     var percentOfLineWhichShowsData: CGFloat = 1
     
     //The view's layer where the graphs are being made
@@ -236,6 +236,7 @@ class LineGraphLayer: CAShapeLayer {
     
     var graphLayer: CAShapeLayer!
     var superTagLayer: CAShapeLayer!
+    var whiteBlankLayer: CAShapeLayer!
     
     //Dynamic height is the updated height the layer has and the view should have
     var dynamicHeight: CGFloat!
@@ -256,12 +257,18 @@ class LineGraphLayer: CAShapeLayer {
         lineGraphLayer.graphLayer.frame.origin = CGPoint(x: 0, y: 0)
         lineGraphLayer.graphLayer.frame.size = parentView.layer.frame.size
         
-        lineGraphLayer.addSublayer(lineGraphLayer.graphLayer)
+        lineGraphLayer.insertSublayer(lineGraphLayer.graphLayer, at: 1)
         
         //This will contains all the tags
         lineGraphLayer.superTagLayer = CAShapeLayer()
         lineGraphLayer.superTagLayer.frame.size = CGSize(width: parentView.layer.frame.size.width, height: 0)
-        lineGraphLayer.addSublayer(lineGraphLayer.superTagLayer)
+        lineGraphLayer.insertSublayer(lineGraphLayer.superTagLayer, at: 2)
+        
+        //Just a blank white divider view
+        lineGraphLayer.whiteBlankLayer = CAShapeLayer()
+        lineGraphLayer.whiteBlankLayer.frame.size = CGSize(width: parentView.layer.frame.size.width, height: 3)
+        lineGraphLayer.whiteBlankLayer.fillColor = UIColor.red.cgColor
+        lineGraphLayer.insertSublayer(lineGraphLayer.whiteBlankLayer, at: 3)//top
         
         let tapGesture = UITapGestureRecognizer(target: lineGraphLayer, action: #selector(LineGraphLayer.layerTapped(tapGesture:)))
         parentView.addGestureRecognizer(tapGesture)
@@ -269,7 +276,7 @@ class LineGraphLayer: CAShapeLayer {
         return lineGraphLayer
     }
     
-    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat], xAxisName: String?, yAxisName: String?) {
+    func drawAxisWith(xValues: [CGFloat], yValues: [CGFloat], xAxisName: String?, yAxisName: String?, dividerLengthOnTop: CGFloat? = nil) {
         
         self.xValues = xValues
         self.yValues = yValues
@@ -304,6 +311,10 @@ class LineGraphLayer: CAShapeLayer {
         superTagLayer.frame.size.height = axisNameLayer.frame.size.height
         self.superTagLayer.insertSublayer(axisNameLayer, at: 2)
         
+        //Divider
+        self.whiteBlankLayer.frame.origin = CGPoint(x: 0, y: self.superTagLayer.frame.size.height + self.superTagLayer.frame.origin.y)
+        self.whiteBlankLayer.frame.size.height = dividerLengthOnTop ?? 0
+        
         self.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
     }
     
@@ -326,7 +337,7 @@ class LineGraphLayer: CAShapeLayer {
         self.childLayers.append(lineGraphChildLayer)
         self.addSublayer(lineGraphChildLayer)
         
-        setDynamicHeight(height: superTagLayer.frame.size.height + graphLayer.frame.size.height)
+        setDynamicHeight(height: superTagLayer.frame.size.height + graphLayer.frame.size.height + whiteBlankLayer.frame.size.height)
     }
     
     func setDynamicHeight(height: CGFloat) {
@@ -435,7 +446,7 @@ class TagLayer: CustomShapeLayer {
 class AxisNameLayer: CustomShapeLayer {
     
     class func `init`(withXName xName: String?, withYName yName: String?, parentSize: CGSize) -> AxisNameLayer {
-        let top = CGFloat(5)
+        let top = CGFloat(5) //Set to 5 .. changed just to add some distance between name and layout top
         let height = CGFloat(20)
         let axisNameLayer = AxisNameLayer()
         axisNameLayer.frame = CGRect(x: 0, y: 0, width: parentSize.width/2, height: 0)

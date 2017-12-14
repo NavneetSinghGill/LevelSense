@@ -143,11 +143,11 @@ class DeviceDetailViewController: LSViewController, SelectedOptionProtocol {
             }
             
             self.firmwareTextField.text = deviceDetail["deviceFirmware"] as? String
-            self.subscriptionTextField.text = deviceDetail[""] as? String
+            self.subscriptionTextField.text = deviceDetail["deviceSubscriptionDate"] as? String
             self.macAddressTextField.text = deviceDetail["mac"] as? String
             
-            if let lastCheckinTime = deviceDetail["lastCheckinTime"] as? Dictionary<String,Any> {
-                self.lastCheckinTextField.text = lastCheckinTime["date"] as? String
+            if let lastCheckinTime = deviceDetail["lastCheckinTime"] as? String {
+                self.lastCheckinTextField.text = lastCheckinTime
             }
             
             if let sirenState = deviceDetail["sirenState"] as? Bool {
