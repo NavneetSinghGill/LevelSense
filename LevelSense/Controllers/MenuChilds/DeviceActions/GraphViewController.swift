@@ -79,22 +79,29 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             let name: String = (deviceData?["sensorDisplayName"] ?? "") as! String
             print("\(name).... \((deviceData?["sensorId"] ?? "") as! String)")
             
+            var fillColor: UIColor?
+            
             var graphLineColor = blueColor
             switch (deviceData?["sensorId"] ?? "") as! String {
             case "2":
+                //Temperature
                 graphLineColor = blueColor
+                fillColor = blueColor
             case "3":
+                //Humidity
                 graphLineColor = UIColor.black
             case "9":
+                //Device Run Time
                 continue //Dont want this graph to appear on screen
             case "11":
+                //RSSI wifi
                 graphLineColor = onlineGreen
             default:
                 graphLineColor = blueColor
             }
             
             let graphView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 20))
-            let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: graphLineColor.cgColor, fillColor: nil)
+            let creationOfLayerSuccessful = createLayerWith(deviceData: deviceData, andShowInView: graphView, strokeColor: graphLineColor.cgColor, fillColor: fillColor?.cgColor)
             
             if creationOfLayerSuccessful {
                 graphView.frame.size.height = (graphView.layer.sublayers?.first?.frame.size.height)!
@@ -160,7 +167,11 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         var values: [CGPoint] = [CGPoint]()
         
         for entry in (data as! Array<Dictionary<String, Any>>) {
-            values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
+            if (entry["value"] as? NSString) != nil {
+                values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
+            } else {
+                values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat(entry["value"] as! Float)))
+            }
         }
         if deviceData?["minTimestamp"] != nil {
             xMin = (deviceData?["minTimestamp"]) as? CGFloat
@@ -169,10 +180,31 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             xMax = (deviceData?["maxTimestamp"]) as? CGFloat
         }
         if deviceData?["minValue"] != nil {
-            yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+            if (deviceData?["minValue"] as? NSString) != nil {
+                yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+            } else {
+                yMin = CGFloat(deviceData?["minValue"] as! Float)
+            }
         }
         if deviceData?["maxValue"] != nil {
-            yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+            if (deviceData?["minValue"] as? NSString) != nil {
+                yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+            } else {
+                yMax = CGFloat(deviceData?["maxValue"] as! Float)
+            }
+        }
+        
+        switch (deviceData?["sensorId"] ?? "") as! String {
+        case "11":
+            //RSSI wifi
+            yMin = CGFloat(-100)
+            yMax = CGFloat(-30)
+        case "4":
+            //Battery
+            yMin = CGFloat(3.3)
+            yMax = CGFloat(4.2)
+        default:
+            break
         }
         
         
@@ -218,6 +250,8 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             var graphName = "\(deviceData?["sensorDisplayName"] ?? "")"
             if graphName == "RSSI" {
                 graphName = "Wi-Fi Signal Strength in dBm"
+            } else if (graphName.lowercased().range(of: "humidity") != nil) {
+                graphName = "Humidity"
             }
             lineGraphLayer?.addLayerWith(stroke: strokeColor, fillColor: fillColor, values: values, graphOf: graphName)
             

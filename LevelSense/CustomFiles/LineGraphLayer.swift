@@ -376,13 +376,13 @@ class LineGraphLayer: CAShapeLayer {
 
 class CustomShapeLayer: CAShapeLayer {
     
-    func getTextLayerWith(text: String) -> CATextLayer {
+    func getTextLayerWith(text: String, fontSize: CGFloat = 13, color: CGColor = UIColor.black.cgColor) -> CATextLayer {
         let label = CATextLayer()
         //        label.font = UIFont(name: "Helvetica", size: 5)
         //        label.contentsScale =  UIScreen.main.scale
         label.font = CTFontCreateWithName("HelveticaNeue" as CFString, 5, nil)//5 as CFTypeRef
-        label.fontSize = 13
-        label.foregroundColor = UIColor.black.cgColor
+        label.fontSize = screenWidth == 320 || screenWidth == 640 ? fontSize: fontSize + 2 //iphone5 and others
+        label.foregroundColor = color
         label.string = text
         
         label.setAffineTransform(CGAffineTransform.init(scaleX: 1, y: -1))
@@ -414,7 +414,7 @@ class TagLayer: CustomShapeLayer {
     
     class func `init`(withName name: String,lineColor: CGColor?, parentSize: CGSize) -> TagLayer {
         let tagLayer = TagLayer()
-        tagLayer.frame = CGRect(x: 0, y: 0, width: parentSize.width/2, height: 20)
+        tagLayer.frame = CGRect(x: 0, y: 0, width: parentSize.width, height: 20)
         tagLayer.masksToBounds = true
         
         let colorLayer = CAShapeLayer()
@@ -425,10 +425,10 @@ class TagLayer: CustomShapeLayer {
         colorLayer.cornerRadius = 1
         tagLayer.addSublayer(colorLayer)
         
-        let textLayer = tagLayer.getTextLayerWith(text: name)
+        let textLayer = tagLayer.getTextLayerWith(text: name, fontSize: 15)
         let textX = colorLayer.frame.size.width + colorLayer.frame.origin.x + 5
         let textY = CGFloat(0)
-        let textWidth = tagLayer.frame.size.width - textX - colorLayer.frame.size.width
+        let textWidth = tagLayer.frame.size.width// - textX - colorLayer.frame.size.width
         let textHeight = tagLayer.frame.size.height
         
         textLayer.frame = CGRect(x: textX, y: textY, width: textWidth, height: textHeight)
@@ -539,7 +539,7 @@ class VertialLine: CustomShapeLayer {
                 //Reduce to 2 decimal places
                 text = CGFloat(Double(text)!).rounded(toPlaces: 2)
             }
-            let textLayer = getTextLayerWith(text: text)
+            let textLayer = getTextLayerWith(text: text, color: blueColor.cgColor)
             textLayer.frame = CGRect(x: 0, y: yValue-10, width: lineStartX-3, height: 30)
             textLayer.alignmentMode = "right"
             addSublayer(textLayer)
@@ -617,7 +617,7 @@ class HorizontalLine: CustomShapeLayer {
             }
             
             let text: String = lineGraphDelegate?.getValueToShowOnXaxisFor(value: values![i], withHorizontalValues: values! as? [CGFloat]) as! String
-            let textLayer = getTextLayerWith(text: "\(text)")
+            let textLayer = getTextLayerWith(text: "\(text)", fontSize: 11, color: blueColor.cgColor)
             let height: CGFloat = 30.0
             textLayer.frame = CGRect(x: xValue - self.oneValueDistance/2, y: lineStartY-height-2, width: self.oneValueDistance, height: height)
             textLayer.alignmentMode = "center"
