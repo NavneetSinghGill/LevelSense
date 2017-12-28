@@ -97,7 +97,6 @@
 		5397E76E1F4D8EC90060F3C7 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */; };
 		539B69EA1F516BD4009CF09D /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */; };
 		539B69EB1F516BD4009CF09D /* NotificationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */; };
-		539DE35B1FCBE5A700A2906C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539DE35A1FCBE5A600A2906C /* PassKit.framework */; };
 		539DE35E1FCC0CD700A2906C /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DE35C1FCC0CD700A2906C /* CartTableViewCell.swift */; };
 		539DE35F1FCC0CD800A2906C /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539DE35D1FCC0CD700A2906C /* CartTableViewCell.xib */; };
 		539DEDD81F542A5F00662521 /* ContactRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539DEDD71F542A5F00662521 /* ContactRequestManager.swift */; };
@@ -311,7 +310,6 @@
 		5397E76D1F4D8EC90060F3C7 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		539B69E81F516BD4009CF09D /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		539B69E91F516BD4009CF09D /* NotificationsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsTableViewCell.xib; sourceTree = "<group>"; };
-		539DE35A1FCBE5A600A2906C /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		539DE35C1FCC0CD700A2906C /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		539DE35D1FCC0CD700A2906C /* CartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
 		539DEDD71F542A5F00662521 /* ContactRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestManager.swift; sourceTree = "<group>"; };
@@ -364,7 +362,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				530A67D71FCD6CFC00B2A5C5 /* Buy.framework in Frameworks */,
-				539DE35B1FCBE5A700A2906C /* PassKit.framework in Frameworks */,
 				53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */,
 				536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */,
 				536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */,
@@ -379,7 +376,6 @@
 		07413B0771216111676D104C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				539DE35A1FCBE5A600A2906C /* PassKit.framework */,
 				53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */,
 				536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */,
 				536656A51F4AE39F003A5E71 /* SnapKit.framework */,
@@ -865,10 +861,10 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Wallet = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -1305,7 +1301,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Level Sense.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AXC7N2L5W8;
 				INFOPLIST_FILE = LevelSense/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1327,16 +1323,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Level Sense.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AXC7N2L5W8;
 				INFOPLIST_FILE = LevelSense/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LevelSense.LS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e5f203d-5634-4fdf-a550-b613e2a771b1";
-				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDistribution;
+				PROVISIONING_PROFILE = "0003200b-a262-4034-957d-fcb10dcd23f3";
+				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDevelopment;
 				SWIFT_OBJC_BRIDGING_HEADER = "LevelSense/CustomFiles/LevelSense-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
