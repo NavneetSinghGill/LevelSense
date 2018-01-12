@@ -25,8 +25,7 @@
 //
 
 import Foundation
-import Buy
-import Pay
+import MobileBuySDK
 
 final class Client {
     

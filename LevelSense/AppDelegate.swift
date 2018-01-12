@@ -9,8 +9,7 @@
 import UIKit
 import CoreData
 import NVActivityIndicatorView
-import Buy
-import Pay
+import MobileBuySDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

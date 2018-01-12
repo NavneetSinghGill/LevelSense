@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-import Buy
+import MobileBuySDK
 
 struct PageableArray<T: ViewModel> {
     

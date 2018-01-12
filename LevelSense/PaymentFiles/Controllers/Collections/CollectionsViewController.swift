@@ -25,7 +25,7 @@
 //
 
 import UIKit
-import Buy
+import MobileBuySDK
 
 class CollectionsViewController: LSViewController {
 

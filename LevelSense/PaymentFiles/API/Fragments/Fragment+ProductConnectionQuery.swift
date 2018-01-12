@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-import Buy
+import MobileBuySDK
 
 extension Storefront.ProductConnectionQuery {
     

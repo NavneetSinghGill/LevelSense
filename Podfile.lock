@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.3.0)
   - CCBottomRefreshControl (0.5.2)
   - MarqueeLabel/Swift (3.1.2)
+  - Mobile-Buy-SDK (3.1.3)
   - NotificationBannerSwift (1.4.2):
     - MarqueeLabel/Swift
     - SnapKit (~> 3.2)
@@ -13,6 +14,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - CCBottomRefreshControl
+  - Mobile-Buy-SDK
   - NotificationBannerSwift
   - NVActivityIndicatorView
 
@@ -20,10 +22,11 @@ SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
   CCBottomRefreshControl: 389780b4488321c91d18f66a6da5ef9606df6de5
   MarqueeLabel: fcd7057a779422d86589be759036f1510b08c6a0
+  Mobile-Buy-SDK: b13db0864c8ca04379746b77e56a93ad5d4028b3
   NotificationBannerSwift: 23be55635199b78cd34ea63f980718f85011ad73
   NVActivityIndicatorView: d3738df7e2e476aca0ba6bf32a8c9fbcfc33d64b
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 7b5bd8351a5c4ca6efcb55dbb37c32008c42678b
+PODFILE CHECKSUM: 843885a2388ff8e6e06034f5cc70317beeede7b3
 
 COCOAPODS: 1.3.1

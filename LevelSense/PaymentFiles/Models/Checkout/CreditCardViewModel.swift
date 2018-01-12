@@ -25,7 +25,7 @@
 //
 
 import Foundation
-import Buy
+import MobileBuySDK
 
 final class CreditCardViewModel: ViewModel {
     

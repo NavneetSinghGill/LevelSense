@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		154029C9DFBE4BD2EA3D572F /* Pods_Level_Sense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FB7213ED7DE7BA81786555 /* Pods_Level_Sense.framework */; };
 		2A60C1BE1F45D29F003F4C9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A60C1BC1F45D29F003F4C9B /* Main.storyboard */; };
 		2A6D2AE71F46FDDD00C98631 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AE61F46FDDD00C98631 /* LoginViewController.swift */; };
 		2A6D2AE91F46FDF600C98631 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AE81F46FDF600C98631 /* MenuViewController.swift */; };
@@ -15,9 +16,6 @@
 		2A6D2AFA1F47232400C98631 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */; };
 		2A6D2AFB1F47232400C98631 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */; };
 		2A7C55E51F46D8BC00A3CD91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */; };
-		530A67D71FCD6CFC00B2A5C5 /* Buy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530A67CA1FCD6CB400B2A5C5 /* Buy.framework */; };
-		530A67D91FCD707800B2A5C5 /* Buy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 530A67CA1FCD6CB400B2A5C5 /* Buy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		530A67DC1FCD707800B2A5C5 /* Pay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 530A67D01FCD6CB400B2A5C5 /* Pay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		530D61751F4C6DB300AB583F /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530D61741F4C6DB300AB583F /* Device.swift */; };
 		53129CC21FCD7B5B0009AB66 /* Payment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53129CBB1FCD7B5A0009AB66 /* Payment.storyboard */; };
 		5324DAD71FCD8983007D366E /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53129D351FCD836C0009AB66 /* Currency.swift */; };
@@ -125,7 +123,6 @@
 		53CF87391FCDA010009D7CF4 /* CollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53129D151FCD7EAE0009AB66 /* CollectionCell.xib */; };
 		53CF873A1FCDA010009D7CF4 /* ProductHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53129D1C1FCD7EFC0009AB66 /* ProductHeaderCell.xib */; };
 		53CF873B1FCDA010009D7CF4 /* ProductDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53129D1D1FCD7F070009AB66 /* ProductDetailsCell.xib */; };
-		7D5CD34E198412BBCCA56C63 /* Pods_LevelSense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E033AA869FE6722239659C82 /* Pods_LevelSense.framework */; };
 		F19DAE5F1F3DB03D007F14FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */; };
 		F19DAE671F3DB03D007F14FF /* LevelSense.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE651F3DB03D007F14FF /* LevelSense.xcdatamodeld */; };
 		F19DAE691F3DB03D007F14FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F19DAE681F3DB03D007F14FF /* Assets.xcassets */; };
@@ -141,65 +138,6 @@
 		F19DAE8C1F3ECC1E007F14FF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19DAE8B1F3ECC1E007F14FF /* User.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		530A67C91FCD6CB400B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AEF60F31E5F42D90067FA90;
-			remoteInfo = Buy;
-		};
-		530A67CB1FCD6CB400B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AC2EFC81F6818180037E0D7;
-			remoteInfo = "Buy watchOS";
-		};
-		530A67CD1FCD6CB400B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AF256421F6FEE50005BB0C9;
-			remoteInfo = "Buy tvOS";
-		};
-		530A67CF1FCD6CB400B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9A4068DC1E8E7658000254CD;
-			remoteInfo = Pay;
-		};
-		530A67D11FCD6CB400B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AFA38EA1E64850A0056C5AA;
-			remoteInfo = BuyTests;
-		};
-		530A67D31FCD6CB400B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9A4068E41E8E7659000254CD;
-			remoteInfo = PayTests;
-		};
-		530A67D51FCD6CDC00B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9AEF60F21E5F42D90067FA90;
-			remoteInfo = Buy;
-		};
-		530A67DD1FCD709100B2A5C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9A4068DB1E8E7658000254CD;
-			remoteInfo = Pay;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		530A67D81FCD704E00B2A5C5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -207,8 +145,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				530A67D91FCD707800B2A5C5 /* Buy.framework in CopyFiles */,
-				530A67DC1FCD707800B2A5C5 /* Pay.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +161,6 @@
 		2A6D2AF81F47232400C98631 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		2A6D2AF91F47232400C98631 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		2A7C55E41F46D8BC00A3CD91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Buy.xcodeproj; path = "mobile-buy-sdk-ios/Buy.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		530D61741F4C6DB300AB583F /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		53129CBC1FCD7B5A0009AB66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Payment.storyboard; sourceTree = "<group>"; };
 		53129D121FCD7E9E0009AB66 /* ProductCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductCell.xib; sourceTree = "<group>"; };
@@ -336,9 +271,11 @@
 		53C5844A1FC835E90028BDFB /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		53C5844C1FC835F40028BDFB /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
 		53CDD6781F4B0B580003F166 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = "../../../Library/Developer/Xcode/DerivedData/LevelSense-ausqfcluqjqatffdnlvmlgamwenn/Build/Products/Debug-iphonesimulator/NVActivityIndicatorView/NVActivityIndicatorView.framework"; sourceTree = "<group>"; };
+		91638F09648ADFEF38CD61EB /* Pods-Level Sense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Level Sense.release.xcconfig"; path = "Pods/Target Support Files/Pods-Level Sense/Pods-Level Sense.release.xcconfig"; sourceTree = "<group>"; };
 		BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.release.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.release.xcconfig"; sourceTree = "<group>"; };
+		C9FB7213ED7DE7BA81786555 /* Pods_Level_Sense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Level_Sense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LevelSense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense.debug.xcconfig"; sourceTree = "<group>"; };
-		E033AA869FE6722239659C82 /* Pods_LevelSense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LevelSense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA4F988AA88DCF91BEE83D82 /* Pods-Level Sense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Level Sense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Level Sense/Pods-Level Sense.debug.xcconfig"; sourceTree = "<group>"; };
 		F19DAE5B1F3DB03D007F14FF /* Level Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Level Sense.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F19DAE5E1F3DB03D007F14FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F19DAE661F3DB03D007F14FF /* LevelSense.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LevelSense.xcdatamodel; sourceTree = "<group>"; };
@@ -361,12 +298,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				530A67D71FCD6CFC00B2A5C5 /* Buy.framework in Frameworks */,
 				53CDD6791F4B0B580003F166 /* NVActivityIndicatorView.framework in Frameworks */,
 				536656A81F4AE3A6003A5E71 /* MarqueeLabel.framework in Frameworks */,
 				536656A61F4AE39F003A5E71 /* SnapKit.framework in Frameworks */,
 				536656A41F4AE386003A5E71 /* NotificationBannerSwift.framework in Frameworks */,
-				7D5CD34E198412BBCCA56C63 /* Pods_LevelSense.framework in Frameworks */,
+				154029C9DFBE4BD2EA3D572F /* Pods_Level_Sense.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +316,7 @@
 				536656A71F4AE3A6003A5E71 /* MarqueeLabel.framework */,
 				536656A51F4AE39F003A5E71 /* SnapKit.framework */,
 				536656A31F4AE386003A5E71 /* NotificationBannerSwift.framework */,
-				E033AA869FE6722239659C82 /* Pods_LevelSense.framework */,
+				C9FB7213ED7DE7BA81786555 /* Pods_Level_Sense.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -438,21 +374,10 @@
 			children = (
 				D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */,
 				BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */,
+				DA4F988AA88DCF91BEE83D82 /* Pods-Level Sense.debug.xcconfig */,
+				91638F09648ADFEF38CD61EB /* Pods-Level Sense.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		530A67C01FCD6CB400B2A5C5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				530A67CA1FCD6CB400B2A5C5 /* Buy.framework */,
-				530A67CC1FCD6CB400B2A5C5 /* Buy.framework */,
-				530A67CE1FCD6CB400B2A5C5 /* Buy.framework */,
-				530A67D01FCD6CB400B2A5C5 /* Pay.framework */,
-				530A67D21FCD6CB400B2A5C5 /* BuyTests.xctest */,
-				530A67D41FCD6CB400B2A5C5 /* PayTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		53129D0E1FCD7E310009AB66 /* PaymentFiles */ = {
@@ -755,7 +680,6 @@
 				2A60C1BC1F45D29F003F4C9B /* Main.storyboard */,
 				2A7C55E31F46D8BC00A3CD91 /* LaunchScreen.storyboard */,
 				53129CBB1FCD7B5A0009AB66 /* Payment.storyboard */,
-				530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */,
 				F19DAE6D1F3DB03D007F14FF /* Info.plist */,
 				F19DAE651F3DB03D007F14FF /* LevelSense.xcdatamodeld */,
 			);
@@ -837,8 +761,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				530A67DE1FCD709100B2A5C5 /* PBXTargetDependency */,
-				530A67D61FCD6CDC00B2A5C5 /* PBXTargetDependency */,
 			);
 			name = "Level Sense";
 			productName = LevelSense;
@@ -881,63 +803,12 @@
 			mainGroup = F19DAE521F3DB03D007F14FF;
 			productRefGroup = F19DAE5C1F3DB03D007F14FF /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 530A67C01FCD6CB400B2A5C5 /* Products */;
-					ProjectRef = 530A67BF1FCD6CB400B2A5C5 /* Buy.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F19DAE5A1F3DB03D007F14FF /* Level Sense */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		530A67CA1FCD6CB400B2A5C5 /* Buy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Buy.framework;
-			remoteRef = 530A67C91FCD6CB400B2A5C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		530A67CC1FCD6CB400B2A5C5 /* Buy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Buy.framework;
-			remoteRef = 530A67CB1FCD6CB400B2A5C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		530A67CE1FCD6CB400B2A5C5 /* Buy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Buy.framework;
-			remoteRef = 530A67CD1FCD6CB400B2A5C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		530A67D01FCD6CB400B2A5C5 /* Pay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pay.framework;
-			remoteRef = 530A67CF1FCD6CB400B2A5C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		530A67D21FCD6CB400B2A5C5 /* BuyTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BuyTests.xctest;
-			remoteRef = 530A67D11FCD6CB400B2A5C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		530A67D41FCD6CB400B2A5C5 /* PayTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PayTests.xctest;
-			remoteRef = 530A67D31FCD6CB400B2A5C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F19DAE591F3DB03D007F14FF /* Resources */ = {
@@ -977,7 +848,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-LevelSense-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Level Sense-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -996,7 +867,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Level Sense/Pods-Level Sense-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E2409EA15A3F0D8F5C26042E /* [CP] Embed Pods Frameworks */ = {
@@ -1005,10 +876,11 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Level Sense/Pods-Level Sense-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CCBottomRefreshControl/CCBottomRefreshControl.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/Mobile-Buy-SDK/MobileBuySDK.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -1018,13 +890,14 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CCBottomRefreshControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileBuySDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LevelSense/Pods-LevelSense-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Level Sense/Pods-Level Sense-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1146,19 +1019,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		530A67D61FCD6CDC00B2A5C5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Buy;
-			targetProxy = 530A67D51FCD6CDC00B2A5C5 /* PBXContainerItemProxy */;
-		};
-		530A67DE1FCD709100B2A5C5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Pay;
-			targetProxy = 530A67DD1FCD709100B2A5C5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2A60C1BC1F45D29F003F4C9B /* Main.storyboard */ = {
@@ -1297,19 +1157,21 @@
 		};
 		F19DAE711F3DB03D007F14FF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D466DC869107B76DD2C58A25 /* Pods-LevelSense.debug.xcconfig */;
+			baseConfigurationReference = DA4F988AA88DCF91BEE83D82 /* Pods-Level Sense.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "Level Sense.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sump Alarm Inc. (AXC7N2L5W8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sump Alarm Inc. (AXC7N2L5W8)";
 				DEVELOPMENT_TEAM = AXC7N2L5W8;
 				INFOPLIST_FILE = LevelSense/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LevelSense.LS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0003200b-a262-4034-957d-fcb10dcd23f3";
-				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDevelopment;
+				PROVISIONING_PROFILE = "84782b8d-af4a-4cc5-80bf-da2c9177d34b";
+				PROVISIONING_PROFILE_SPECIFIER = LevelSenseAdHoc;
 				SWIFT_OBJC_BRIDGING_HEADER = "LevelSense/CustomFiles/LevelSense-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1319,19 +1181,21 @@
 		};
 		F19DAE721F3DB03D007F14FF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF33DE86EC820CBA73807160 /* Pods-LevelSense.release.xcconfig */;
+			baseConfigurationReference = 91638F09648ADFEF38CD61EB /* Pods-Level Sense.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "Level Sense.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sump Alarm Inc. (AXC7N2L5W8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sump Alarm Inc. (AXC7N2L5W8)";
 				DEVELOPMENT_TEAM = AXC7N2L5W8;
 				INFOPLIST_FILE = LevelSense/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LevelSense.LS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0003200b-a262-4034-957d-fcb10dcd23f3";
-				PROVISIONING_PROFILE_SPECIFIER = LevelSenseDevelopment;
+				PROVISIONING_PROFILE = "fa482552-9f47-49b8-b5f3-389713ee3574";
+				PROVISIONING_PROFILE_SPECIFIER = LevelSenseAdHoc;
 				SWIFT_OBJC_BRIDGING_HEADER = "LevelSense/CustomFiles/LevelSense-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

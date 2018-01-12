@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-import Pay
+import MobileBuySDK
 
 extension CheckoutViewModel {
 
