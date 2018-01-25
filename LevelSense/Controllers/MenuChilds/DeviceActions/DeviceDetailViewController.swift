@@ -77,7 +77,7 @@ class DeviceDetailViewController: LSViewController, SelectedOptionProtocol {
         
         for dict in checkinIntervals {
             if dict["label"] as? String == reportTextField.text {
-                checkInIntervalDict["configKey"] = "update_interval"
+                checkInIntervalDict["configKey"] = "checkin_interval"
                 checkInIntervalDict["configVal"] = dict["value"]
             }
         }

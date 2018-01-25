@@ -48,5 +48,22 @@ class ProductDetailsCell: UITableViewCell, ViewModelConfigurable {
         
         //TODO: uncomment
 //        self.contentLabel.attributedText = viewModel.summary.interpretAsHTML(font: "Apple SD Gothic Neo", size: 17.0)
+        do {
+            
+            //Replacing actually removes some unwanted characters
+            var newString = viewModel.summary
+            newString = newString.replacingOccurrences(of: "  ", with: " ")
+            newString = newString.replacingOccurrences(of: "<p> </p>", with: "")
+            let data = newString.data(using: String.Encoding.utf8, allowLossyConversion: true)
+            if let d = data {
+                let str = try NSAttributedString(data: d,
+                                                 options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+                                                 documentAttributes: nil)
+                self.contentLabel.attributedText = str
+                self.contentLabel.font = UIFont(name: "Apple SD Gothic Neo", size: 17)
+            }
+        } catch {
+            self.contentLabel.text = ""
+        }
     }
 }
