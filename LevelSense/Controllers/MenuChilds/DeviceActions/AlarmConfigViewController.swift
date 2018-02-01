@@ -394,14 +394,14 @@ class AlarmConfigViewController: LSViewController, SelectedOptionProtocol, UITex
         if floatSwitchDict != nil {
             var newFloatSwitchDict: Dictionary<String,Any> = [:]
             newFloatSwitchDict["sensorId"] = floatSwitchDict["sensorId"]
-            newFloatSwitchDict["currentValue"] = leakSensorLabel.text
-            newFloatSwitchDict["status"] = leakSensorOptionsLabel.text
+            newFloatSwitchDict["currentValue"] = floatSwitchLabel.text
+            newFloatSwitchDict["status"] = floatSwitchOptionsLabel.text
             newFloatSwitchDict["sensorSlug"] = floatSwitchDict["sensorSlug"]
             
-            newFloatSwitchDict["relay"] = getCheckBox(withTag: 1, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 2 : 0
-            newFloatSwitchDict["siren"] = getCheckBox(withTag: 2, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
-            newFloatSwitchDict["email"] = getCheckBox(withTag: 3, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
-            newFloatSwitchDict["voice"] = getCheckBox(withTag: 4, andBaseTag: leakSensorCheckBoxesBaseTag).isSelected ? 1 : 0
+            newFloatSwitchDict["relay"] = getCheckBox(withTag: 1, andBaseTag: floatSwitchCheckBoxesBaseTag).isSelected ? 2 : 0
+            newFloatSwitchDict["siren"] = getCheckBox(withTag: 2, andBaseTag: floatSwitchCheckBoxesBaseTag).isSelected ? 1 : 0
+            newFloatSwitchDict["email"] = getCheckBox(withTag: 3, andBaseTag: floatSwitchCheckBoxesBaseTag).isSelected ? 1 : 0
+            newFloatSwitchDict["voice"] = getCheckBox(withTag: 4, andBaseTag: floatSwitchCheckBoxesBaseTag).isSelected ? 1 : 0
             newFloatSwitchDict["sensorDisplayName"] = (self.floatSwitchNameButton.title(for: .normal))!
             
             if ((floatSwitchOptionsLabel.text?.range(of: "open")) != nil) {
