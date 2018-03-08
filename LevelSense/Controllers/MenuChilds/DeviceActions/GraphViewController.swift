@@ -168,9 +168,9 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         
         for entry in (data as! Array<Dictionary<String, Any>>) {
             if (entry["value"] as? NSString) != nil {
-                values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat((entry["value"] as! NSString).floatValue)))
+                values.append(CGPoint(x: CGFloat(entry["timeStamp"] as? Int ?? 0), y: CGFloat((entry["value"] as? NSString ?? "0").floatValue)))
             } else {
-                values.append(CGPoint(x: CGFloat(entry["timeStamp"] as! Int), y: CGFloat(entry["value"] as! Float)))
+                values.append(CGPoint(x: CGFloat(entry["timeStamp"] as? Int ?? 0), y: CGFloat(entry["value"] as? Float ?? 0)))
             }
         }
         if deviceData?["minTimestamp"] != nil {
@@ -181,16 +181,16 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         }
         if deviceData?["minValue"] != nil {
             if (deviceData?["minValue"] as? NSString) != nil {
-                yMin = CGFloat((deviceData?["minValue"] as! NSString).floatValue)
+                yMin = CGFloat((deviceData?["minValue"] as? NSString ?? "0").floatValue)
             } else {
-                yMin = CGFloat(deviceData?["minValue"] as! Float)
+                yMin = CGFloat(deviceData?["minValue"] as? Float ?? 0)
             }
         }
         if deviceData?["maxValue"] != nil {
             if (deviceData?["minValue"] as? NSString) != nil {
-                yMax = CGFloat((deviceData?["maxValue"] as! NSString).floatValue)
+                yMax = CGFloat((deviceData?["maxValue"] as? NSString ?? "0").floatValue)
             } else {
-                yMax = CGFloat(deviceData?["maxValue"] as! Float)
+                yMax = CGFloat(deviceData?["maxValue"] as? Float ?? 0)
             }
         }
         
@@ -388,7 +388,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
         for i in 0..<inValues.count {
             let values = inValues[i]
             if indexes[i] != Int.max && indexes[i] < values.count {
-                print("\(values[indexes[i]])")
+//                print("\(values[indexes[i]])")
                 self.showPopupWith(value: values[indexes[i]].y, andTimeStamp: values[indexes[i]].x, withHorizontalValues: withHorizontalValues, withVerticalValues: withVerticalValues)
                 someValueIsSelected = true
             }
@@ -400,7 +400,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
     }
     
     func getValueToShowOnXaxisFor(value: Any!, withHorizontalValues: [CGFloat]?) -> Any! {
-        return getDateFor(timeStamp: value as! CGFloat)
+        return getDateFor(timeStamp: value as? CGFloat ?? 0)
     }
     
     func getValueToShowOnYaxisFor(value: Any!, withVerticalValues: [CGFloat]?) -> Any! {
@@ -418,7 +418,7 @@ class GraphViewController: LSViewController, LineGraphProtocol {
             withVerticalValues!.first == 0 &&
             withVerticalValues!.last == 100 {
             
-            return "\((value as! Int))%"
+            return "\((value as? Int ?? 0))%"
         } else if value as? CGFloat != nil {
             return (value as! CGFloat).rounded(toPlaces: 1)
         }

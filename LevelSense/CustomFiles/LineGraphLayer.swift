@@ -185,7 +185,7 @@ class LineGraphChildLayer: CAShapeLayer {
         
         for i in 0..<self.points.count {
             let distanceBetweenBothPoints = sqrt(pow((self.points[i]).x - (point?.x)!, 2) + pow(self.points[i].y - (point?.y)!, 2))
-            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
+//            print("Index: \(i) .... distance: \(distanceBetweenBothPoints)")
             if range > distanceBetweenBothPoints && distanceBetweenBothPoints < closestRange {
                 closestRange = distanceBetweenBothPoints
                 resultantPoint = self.points[i]
